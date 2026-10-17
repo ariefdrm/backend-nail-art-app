@@ -1,0 +1,22 @@
+{
+  "name": "backend-nail-art-app",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "author": {
+    "name": "ariefdrm",
+    "email": "ariefdarmawan5522@gmail.com"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5"
+  },
+  "peerDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  }
+}
