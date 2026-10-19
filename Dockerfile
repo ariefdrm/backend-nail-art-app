@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # running the project
-CMD [ "bun", "./src/index.ts" ]
+CMD [ "bun", "run", "dev" ]
