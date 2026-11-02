@@ -31,7 +31,8 @@
     "noPropertyAccessFromIndexSignature": false
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "prisma7.config.ts"
   ],
   "exclude": [
     "node_modules"

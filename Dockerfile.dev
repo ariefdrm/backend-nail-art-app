@@ -16,5 +16,5 @@ COPY . .
 # expose port 3000
 EXPOSE 3000
 
-# running the project
+# running the project in development environment
 CMD [ "bun", "run", "dev" ]
