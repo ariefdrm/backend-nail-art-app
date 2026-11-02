@@ -1,6 +1,13 @@
 # backend-nail-art-app
 
-To install dependencies:
+Backend REST API built with Express.js, TypeScript, Bun, Prisma ORM, and PostgreSQL.
+
+> [!IMPORTANT]
+> Contributor Guide: Before contributing to this project, please read the [![Git Workflow](https://img.shields.io/badge/Contribution-Git_Workflow-blue?logo=git)](./GIT_WORKFLOW.md) to understand our branching strategy, commit conventions, and pull request process.
+
+## Project Overview
+
+---
 
 ```bash
 bun install
