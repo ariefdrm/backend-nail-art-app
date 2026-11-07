@@ -55,7 +55,8 @@ backend-nail-art-app/
 ├── package.json                 # Dependencies and scripts
 ├── prisma/                      # Prisma ORM schema and migrations
 │   ├── migrations/
-│   └── schema.prisma
+│   ├── schema.prisma
+│   └── seed.ts                  # Idempotent seed (artist, closed business hours)
 ├── prisma.config.ts             # Prisma 7 configuration (schema, migrations, datasource)
 ├── PRD_Backend_The_Nail_Palace.md  # Product requirements
 ├── scripts/

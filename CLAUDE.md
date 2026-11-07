@@ -21,7 +21,8 @@ bun run start            # node dist/server.js (production runtime is Node 26)
 bun run lint             # eslint .
 bun run typecheck        # tsc --noEmit
 bun run test:unit        # bun test tests/unit --coverage
-bun run test:integration # needs PostgreSQL (the *_test database)
+bun run db:test:reset    # recreate the *_test database from migrations (uses DATABASE_URL_TEST)
+bun run test:integration # data-model tests need DATABASE_URL_TEST and skip without it
 bun run verify           # lint + typecheck + unit tests + build
 bun run prisma:generate  # required after install/schema changes; output is gitignored
 bun --bun run prisma migrate dev
@@ -41,7 +42,9 @@ Layered: `routes → controller → services → repositories → PostgreSQL`. U
 Prisma specifics (v7):
 - Config lives in `prisma.config.ts`; the datasource URL is set there, not in `schema.prisma`.
 - Client is generated to `src/generated/prisma` (generator `prisma-client`, ESM with `.js` import extensions so `tsc` output works on Node) — import from there, not `@prisma/client`; the folder is generated, don't edit it. A driver adapter (`@prisma/adapter-pg`) is required when constructing the client.
-- Current schema has `Users` and `RefreshToken` (tokens stored as hashes). The PRD's target models (services, artists, bookings, booking_status_history, business_hours, blocked_slots, admins) are not yet in the schema; the PRD names the admin model `Admin`.
+- Schema (`prisma/schema.prisma`) covers all PRD models: `Admin`, `RefreshToken`, `Service`, `Artist`, `Booking`, `BookingStatusHistory`, `BusinessHour` (times are `"HH:mm"` strings in Asia/Jakarta, with optional break), `BlockedSlot` (`artistId` null = whole studio). UUID ids come from `gen_random_uuid()`, all timestamps are `timestamptz`, tables/columns are snake_case via `@@map`/`@map`.
+- The migration `*_data_model` holds what Prisma can't express: the `bookings_no_overlap` EXCLUDE constraint and CHECK constraints (booking/blocked-slot time order, service duration multiple of 15, business-hour formats). Prisma doesn't track these, so copy them forward if you ever regenerate. An exclusion violation surfaces as `PrismaClientKnownRequestError` code `P2039` with the Postgres code at `meta.driverAdapterError.cause.originalCode === "23P01"`.
+- `migrate dev` needs a TTY and `migrate reset` is refused for AI agents without user consent; to generate SQL non-interactively use `prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script` against a migrated scratch database. `bun run db:seed` is idempotent (one artist, seven closed business-hour rows); the admin account and services/hours data are not seeded yet.
 
 Rules from the PRD that shape new code:
 - **No double booking, enforced in the DB**: a Postgres `EXCLUDE USING gist` constraint on `bookings` (`artist_id` + `tstzrange(start_at, end_at)`, for `pending`/`confirmed`). Prisma can't express it, so it goes in a hand-edited migration (`prisma migrate dev --create-only`). Never edit released migrations. Map SQLSTATE `23P01` to `409 SLOT_UNAVAILABLE`.
