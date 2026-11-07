@@ -76,6 +76,11 @@ export default defineConfig(
       "no-restricted-imports": ["error", { patterns: [...bunImportPatterns, ...prismaImportPatterns] }],
     },
   },
+  {
+    // bun:test types `expect(...).rejects.*` as void although it returns a promise at runtime.
+    files: ["tests/**/*.ts"],
+    rules: { "@typescript-eslint/await-thenable": "off" },
+  },
   layer("src/routes/**/*.ts", ["services", "repositories"]),
   layer("src/controllers/**/*.ts", ["routes", "repositories"]),
   layer("src/services/**/*.ts", ["routes", "controllers"]),
