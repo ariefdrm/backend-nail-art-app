@@ -183,6 +183,40 @@ paths:
                 properties:
                   data: { $ref: '#/components/schemas/TokenPair' }
         '401': { $ref: '#/components/responses/Unauthorized' }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout (cabut refresh token)
+      description: |
+        Mencabut refresh token yang dikirim sehingga tidak bisa dipakai lagi di `/auth/refresh`.
+        Idempoten: token yang tidak dikenal atau sudah dicabut tetap dijawab 204, agar tidak
+        membocorkan apakah token itu valid. Tidak butuh access token (access token klien yang
+        sedang logout sering sudah kedaluwarsa). Hanya sesi dengan token ini yang berakhir; sesi di
+        perangkat lain tetap aktif. Access token yang sudah terbit tetap berlaku sampai kedaluwarsa
+        (maksimal 15 menit).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token: { type: string }
+      responses:
+        '204': { description: Sesi berakhir }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /auth/logout-all:
+    post:
+      tags: [Auth]
+      summary: Logout dari semua perangkat
+      description: |
+        Mencabut semua refresh token milik admin yang sedang login (misalnya setelah perangkat hilang).
+        Access token yang sudah terbit tetap berlaku sampai kedaluwarsa (maksimal 15 menit).
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Semua sesi berakhir }
+        '401': { $ref: '#/components/responses/Unauthorized' }
   /auth/me:
     get:
       tags: [Auth]

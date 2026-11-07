@@ -12,3 +12,5 @@ export const refreshSchemas = {
     refresh_token: z.string().min(1).max(512),
   }),
 };
+
+export const logoutSchemas = refreshSchemas;
