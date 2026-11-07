@@ -1,8 +1,11 @@
 import { Router } from "express";
-import route from "./app.route.ts";
+import appRoute from "./app.route.js";
+import healthRoutes from "./health.routes.js";
 
 const routes = Router();
 
-routes.use(route);
+routes.use("/health", healthRoutes);
+// API contract: documents/openapi.yaml (servers: /api/v1)
+routes.use("/api/v1", appRoute);
 
 export default routes;
