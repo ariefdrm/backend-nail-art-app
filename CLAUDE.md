@@ -11,6 +11,18 @@ Source-of-truth documents (the PRD is written in Indonesian):
 - `documents/openapi.yaml` — API contract. **If the PRD and openapi.yaml conflict, openapi.yaml wins** and the PRD gets updated. Update the contract first when changing an endpoint.
 - `GIT_WORKFLOW.md` — branch from `develop` (`feature/`, `fix/`, ...), commit message convention, PR process. Read before committing.
 
+## Git workflow rules
+
+Follow `GIT_WORKFLOW.md`. Everything reaches `main` only via `develop`.
+
+- **Never commit or push directly to `main` or `develop`**; work on a temporary branch (`feature/`, `fix/`, `docs/`, `chore/`, ...).
+- **Start every branch from an up-to-date `develop`**: `git switch develop && git fetch origin && git pull --ff-only origin develop`, then `git switch -c <branch>`. Do **not** stack a branch on another unmerged feature branch; finish and merge one module's PR before starting the next.
+- **Every PR's base is `develop`** (never another feature branch). Only `develop` → `main` PRs target `main`. Rebase on `origin/develop` before opening a PR; use `--force-with-lease`, never `--force`, and never rebase a branch others are using.
+- **Commits use Conventional Commits with a scope**: `type(scope): description`, e.g. `feat(catalog): add public services endpoints`. Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert.
+- **Merging needs at least one approval from another collaborator**; don't merge PRs yourself or with failing checks. Delete merged branches (local and remote) only when the user says so.
+- Never commit `.env` files or secrets (only `.env.example`). Keep PRs focused on one task.
+- The user does not want a `Co-Authored-By` line (or other attribution) in commit messages.
+
 ## Commands
 
 ```bash
