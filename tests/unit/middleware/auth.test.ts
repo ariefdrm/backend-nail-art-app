@@ -7,7 +7,9 @@ import { signAccessToken } from "../../../src/utils/tokens.js";
 const owner = { id: "6f1f7f0e-9a53-4f4e-8c1c-1c8f6b0f1a11", role: "owner" as const };
 
 async function runAuthenticate(authorization?: string) {
-  const req = { header: (name: string) => (name === "authorization" ? authorization : undefined) } as unknown as Request;
+  const req = {
+    header: (name: string) => (name === "authorization" ? authorization : undefined),
+  } as unknown as Request;
   const res = { locals: {} } as unknown as Response;
   const outcome = await new Promise<{ error?: unknown }>((resolve) => {
     void authenticate(req, res, (err?: unknown) => resolve({ error: err }));

@@ -60,7 +60,11 @@ suite("admin auth", () => {
   });
 
   test("login stores only a hash of the refresh token, plus client info", async () => {
-    const res = await post("/auth/login", { email: "owner@nailpalace.test", password: PASSWORD }, { "user-agent": "bun-test" });
+    const res = await post(
+      "/auth/login",
+      { email: "owner@nailpalace.test", password: PASSWORD },
+      { "user-agent": "bun-test" },
+    );
     const { data } = (await res.json()) as { data: { refresh_token: string } };
     const rows = await prisma.refreshToken.findMany();
     expect(rows).toHaveLength(1);
@@ -134,9 +138,11 @@ suite("admin auth", () => {
 
   test("the new access token from a refresh works", async () => {
     const first = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
-    const second = ((await (await post("/auth/refresh", { refresh_token: first.refresh_token })).json()) as {
-      data: { access_token: string };
-    }).data;
+    const second = (
+      (await (await post("/auth/refresh", { refresh_token: first.refresh_token })).json()) as {
+        data: { access_token: string };
+      }
+    ).data;
     const me = await fetch(`${base}/api/v1/auth/me`, { headers: { authorization: `Bearer ${second.access_token}` } });
     expect(me.status).toBe(200);
   });
@@ -164,7 +170,9 @@ suite("admin auth", () => {
     const login200 = await (await login()).text();
     expect(login200).not.toContain("argon2");
     const { data } = JSON.parse(login200) as { data: { access_token: string } };
-    const me = await (await fetch(`${base}/api/v1/auth/me`, { headers: { authorization: `Bearer ${data.access_token}` } })).text();
+    const me = await (
+      await fetch(`${base}/api/v1/auth/me`, { headers: { authorization: `Bearer ${data.access_token}` } })
+    ).text();
     expect(me).not.toContain("argon2");
     expect(me).not.toContain("passwordHash");
   });

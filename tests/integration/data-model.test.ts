@@ -23,10 +23,13 @@ suite("data model", () => {
         data: bookingData({ serviceId: service.id, artistId: artist.id, start: "10:00", end: "11:30" }),
       });
 
-      await expect(Promise.resolve(
-        prisma.booking.create({
-          data: bookingData({ serviceId: service.id, artistId: artist.id, start: "11:00", end: "12:30" }),
-        }))).rejects.toThrow(/bookings_no_overlap|23P01|exclusion/i);
+      await expect(
+        Promise.resolve(
+          prisma.booking.create({
+            data: bookingData({ serviceId: service.id, artistId: artist.id, start: "11:00", end: "12:30" }),
+          }),
+        ),
+      ).rejects.toThrow(/bookings_no_overlap|23P01|exclusion/i);
     });
 
     test("allows back-to-back bookings (end_at = start_at)", async () => {
@@ -72,8 +75,9 @@ suite("data model", () => {
       await prisma.booking.create({
         data: bookingData({ serviceId: service.id, artistId: artist.id, start: "10:00", end: "11:30" }),
       });
-      await expect(Promise.resolve(
-        prisma.booking.update({ where: { id: first.id }, data: { status: "confirmed" } }))).rejects.toThrow(/bookings_no_overlap|23P01|exclusion/i);
+      await expect(
+        Promise.resolve(prisma.booking.update({ where: { id: first.id }, data: { status: "confirmed" } })),
+      ).rejects.toThrow(/bookings_no_overlap|23P01|exclusion/i);
     });
 
     test("two concurrent requests for the same slot: exactly one succeeds", async () => {
@@ -94,52 +98,96 @@ suite("data model", () => {
   suite("check constraints", () => {
     test("booking must end after it starts", async () => {
       const { artist, service } = await seedBase(prisma);
-      await expect(Promise.resolve(
-        prisma.booking.create({
-          data: bookingData({ serviceId: service.id, artistId: artist.id, start: "11:00", end: "11:00" }),
-        }))).rejects.toThrow(/bookings_time_order_check|check/i);
+      await expect(
+        Promise.resolve(
+          prisma.booking.create({
+            data: bookingData({ serviceId: service.id, artistId: artist.id, start: "11:00", end: "11:00" }),
+          }),
+        ),
+      ).rejects.toThrow(/bookings_time_order_check|check/i);
     });
 
     test("service duration must be a positive multiple of 15", async () => {
       const base = { name: "x", category: "c", price: 1000 };
-      await expect(Promise.resolve(prisma.service.create({ data: { ...base, durationMinutes: 20 } }))).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.service.create({ data: { ...base, durationMinutes: 20 } })),
+      ).rejects.toThrow();
       await expect(Promise.resolve(prisma.service.create({ data: { ...base, durationMinutes: 0 } }))).rejects.toThrow();
-      await expect(Promise.resolve(prisma.service.create({ data: { ...base, durationMinutes: 15 } }))).resolves.toBeDefined();
+      await expect(
+        Promise.resolve(prisma.service.create({ data: { ...base, durationMinutes: 15 } })),
+      ).resolves.toBeDefined();
     });
 
     test("service price cannot be negative", async () => {
-      await expect(Promise.resolve(
-        prisma.service.create({ data: { name: "x", category: "c", price: -1, durationMinutes: 30 } }))).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.service.create({ data: { name: "x", category: "c", price: -1, durationMinutes: 30 } })),
+      ).rejects.toThrow();
     });
 
     test("blocked slot must end after it starts", async () => {
-      await expect(Promise.resolve(prisma.blockedSlot.create({ data: { startAt: at("10:00"), endAt: at("09:00") } }))).rejects.toThrow();
-      await expect(Promise.resolve(prisma.blockedSlot.create({ data: { startAt: at("10:00"), endAt: at("12:00") } }))).resolves.toBeDefined();
+      await expect(
+        Promise.resolve(prisma.blockedSlot.create({ data: { startAt: at("10:00"), endAt: at("09:00") } })),
+      ).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.blockedSlot.create({ data: { startAt: at("10:00"), endAt: at("12:00") } })),
+      ).resolves.toBeDefined();
     });
 
     test("business hours: open days need valid, ordered times; one row per weekday", async () => {
-      await expect(Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true } }))).rejects.toThrow();
-      await expect(Promise.resolve(
-        prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true, openTime: "20:00", closeTime: "10:00" } }))).rejects.toThrow();
-      await expect(Promise.resolve(
-        prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true, openTime: "9:00", closeTime: "20:00" } }))).rejects.toThrow();
-      await expect(Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 7, isOpen: false } }))).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true } })),
+      ).rejects.toThrow();
+      await expect(
+        Promise.resolve(
+          prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true, openTime: "20:00", closeTime: "10:00" } }),
+        ),
+      ).rejects.toThrow();
+      await expect(
+        Promise.resolve(
+          prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: true, openTime: "9:00", closeTime: "20:00" } }),
+        ),
+      ).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 7, isOpen: false } })),
+      ).rejects.toThrow();
 
       await prisma.businessHour.create({
-        data: { dayOfWeek: 1, isOpen: true, openTime: "10:00", closeTime: "20:00", breakStart: "12:00", breakEnd: "13:00" },
+        data: {
+          dayOfWeek: 1,
+          isOpen: true,
+          openTime: "10:00",
+          closeTime: "20:00",
+          breakStart: "12:00",
+          breakEnd: "13:00",
+        },
       });
-      await expect(Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: false } }))).rejects.toThrow();
+      await expect(
+        Promise.resolve(prisma.businessHour.create({ data: { dayOfWeek: 1, isOpen: false } })),
+      ).rejects.toThrow();
     });
 
     test("business hours: break must sit inside opening hours", async () => {
-      await expect(Promise.resolve(
-        prisma.businessHour.create({
-          data: { dayOfWeek: 2, isOpen: true, openTime: "10:00", closeTime: "20:00", breakStart: "08:00", breakEnd: "09:00" },
-        }))).rejects.toThrow();
-      await expect(Promise.resolve(
-        prisma.businessHour.create({
-          data: { dayOfWeek: 2, isOpen: true, openTime: "10:00", closeTime: "20:00", breakStart: "12:00" },
-        }))).rejects.toThrow();
+      await expect(
+        Promise.resolve(
+          prisma.businessHour.create({
+            data: {
+              dayOfWeek: 2,
+              isOpen: true,
+              openTime: "10:00",
+              closeTime: "20:00",
+              breakStart: "08:00",
+              breakEnd: "09:00",
+            },
+          }),
+        ),
+      ).rejects.toThrow();
+      await expect(
+        Promise.resolve(
+          prisma.businessHour.create({
+            data: { dayOfWeek: 2, isOpen: true, openTime: "10:00", closeTime: "20:00", breakStart: "12:00" },
+          }),
+        ),
+      ).rejects.toThrow();
     });
   });
 

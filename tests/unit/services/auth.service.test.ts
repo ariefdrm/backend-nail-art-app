@@ -76,7 +76,10 @@ beforeEach(() => {
 
 describe("login", () => {
   test("returns a token pair and stores only the refresh token hash", async () => {
-    const pair = await login("owner@nailpalace.test", "a-long-enough-password", { userAgent: "UA", ipAddress: "1.2.3.4" });
+    const pair = await login("owner@nailpalace.test", "a-long-enough-password", {
+      userAgent: "UA",
+      ipAddress: "1.2.3.4",
+    });
     expect(pair.token_type).toBe("Bearer");
     expect(pair.expires_in).toBe(900);
     expect(pair.access_token.split(".")).toHaveLength(3);

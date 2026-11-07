@@ -55,7 +55,9 @@ describe("access tokens", () => {
     const base = () => new SignJWT({ role: "owner" }).setProtectedHeader({ alg: "HS256" }).setSubject(admin.id);
 
     await rejectsAsUnauthorized(
-      verifyAccessToken(await base().setIssuer("nailpalace-api").setAudience("someone-else").setExpirationTime("5m").sign(secret)),
+      verifyAccessToken(
+        await base().setIssuer("nailpalace-api").setAudience("someone-else").setExpirationTime("5m").sign(secret),
+      ),
     );
     await rejectsAsUnauthorized(
       verifyAccessToken(
