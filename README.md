@@ -13,17 +13,30 @@ Backend REST API built with Express.js, TypeScript, Bun, Prisma ORM, and Postgre
 bun install
 ```
 
-To run:
+Development (Bun runs TypeScript directly):
 
 ```bash
-bun run index.ts
+bun run dev
 ```
+
+Production-style build (transpile with `tsc`, run on Node.js 26):
+
+```bash
+bun run build
+bun run start
+```
+
+Checks: `bun run lint`, `bun run typecheck`, `bun run test:unit`, or all at once with `bun run verify`.
 
 ## Running with docker compose
 
 ```bash
-docker compose -f compose.dev.yml up -d --build
+docker compose -f compose.dev.yaml up -d --build
 ```
+
+## Release
+
+`scripts/release.sh` is the only supported release path: integration tests in the dev container, then `Dockerfile.prod` (lint, typecheck, unit tests, build and a Node smoke test run in its `verify` stage), then `compose.prod.yaml`. Production secrets go in `.env.prod` (not committed).
 
 ## Project Directory
 
@@ -31,29 +44,36 @@ docker compose -f compose.dev.yml up -d --build
 backend-nail-art-app/
 │
 ├── bun.lock                     # Bun dependency lockfile
-├── compose.dev.yml              # Docker Compose configuration for development
-├── Dockerfile.dev               # Docker image configuration for development environment
-├── eslint.config.mjs            # ESLint configuration for code quality and linting
-├── package.json                 # Project metadata, dependencies, and npm scripts
-├── prisma/                      # Prisma ORM configuration and database management
-│   ├── migrations/              # Database migration history
-│   └── schema.prisma            # Database models, relations, and Prisma schema
-├── prisma7.config.ts            # Prisma 7 configuration (schema, migrations, datasource)
-├── README.md                    # Project documentation and setup instructions
-├── skills-lock.json             # Dependency lockfile for installed project skills
-├── src/                         # Main application source code
-│   ├── controller/              # Handles HTTP requests and HTTP responses
-│   │   └── app.controller.ts    # Application-level request handlers
-│   ├── index.ts                 # Express.js application entry point and initialization
-│   ├── middleware/              # Custom middleware (authentication, validation, error handling)
-│   ├── repositories/            # Handles database access and data persistence
-│   ├── routes/                  # Defines and organizes API endpoints
-│   │   ├── app.route.ts         # Application-specific API route definitions
-│   │   └── index.ts             # Centralizes and registers application routes
-│   ├── services/                # Contains business logic and application services
-│   │   └── app.service.ts       # Application-level business logic implementation
-│   └── utils/                   # Reusable utility functions and helper modules
-└── tsconfig.json                # TypeScript compiler configuration
+├── bunfig.toml                  # Bun test runner settings
+├── compose.dev.yaml             # Docker/Podman Compose for development (app + PostgreSQL)
+├── compose.prod.yaml            # Compose for production (db, migrate, api)
+├── Dockerfile.dev               # Development image (Bun, hot reload)
+├── Dockerfile.prod              # Multi-stage production image (tsc build, Node.js 26)
+├── documents/
+│   └── openapi.yaml             # API contract (source of truth)
+├── eslint.config.mjs            # ESLint config incl. layer boundaries and Bun-API ban
+├── package.json                 # Dependencies and scripts
+├── prisma/                      # Prisma ORM schema and migrations
+│   ├── migrations/
+│   └── schema.prisma
+├── prisma.config.ts             # Prisma 7 configuration (schema, migrations, datasource)
+├── PRD_Backend_The_Nail_Palace.md  # Product requirements
+├── scripts/
+│   ├── db-init.sh               # Creates the *_test database on first start
+│   ├── dev-entrypoint.sh        # Dev container entrypoint (generate, migrate, watch)
+│   └── release.sh               # Release gate: tests, build images, start production
+├── src/
+│   ├── app.ts                   # Builds the Express app (no listen, easy to test)
+│   ├── server.ts                # Entry point: listen and graceful shutdown
+│   ├── controllers/             # Handle HTTP requests and responses
+│   ├── middleware/              # Auth, validation, error handling
+│   ├── repositories/            # Database access (only layer that imports Prisma)
+│   ├── routes/                  # Endpoint definitions (mounted at /api/v1, plus /health)
+│   ├── scripts/smoke.ts         # Node smoke test run against the compiled build
+│   ├── services/                # Business logic
+│   └── utils/                   # Helpers
+├── tsconfig.build.json          # Production build (src only, emits to dist/)
+└── tsconfig.json                # Editor/typecheck config
 ```
 
 ## Dependencies

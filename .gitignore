@@ -36,3 +36,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 /src/generated/prisma
 
 /generated/prisma
+
+# other dotenv files (keep only .env.example)
+.env.*
+!.env.example

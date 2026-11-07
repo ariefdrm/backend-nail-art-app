@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { indexApp } from "../controller/app.controller.ts";
+import { indexApp } from "../controllers/app.controller.js";
 
 const route = Router();
 
