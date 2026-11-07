@@ -1,11 +1,9 @@
 import { Router } from "express";
+import { live, ready } from "../controllers/health.controller.js";
 
 const health = Router();
 
-// Liveness only for now; readiness should also check the database once
-// the Prisma client is wired up.
-health.get("/live", (_req, res) => {
-  res.status(200).json({ status: "ok" });
-});
+health.get("/live", live);
+health.get("/ready", ready);
 
 export default health;
