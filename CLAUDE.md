@@ -89,3 +89,30 @@ Rules from the PRD that shape new code:
 - Time: store `timestamptz` (UTC); API speaks ISO 8601 with `+07:00`; business-hour rules computed in Asia/Jakarta. Phones normalized to E.164.
 - Bun-dev / Node-prod parity: production runs `tsc` output on Node 26 (`Dockerfile.prod`, multi-stage; the `verify` stage runs lint, typecheck, unit tests, build and the Node smoke test, and the runtime/migrator images copy from it). Don't use `Bun.*` / `bun:*` in `src/`, and relative imports must use `.js` extensions (`module: NodeNext`).
 - Admin auth (implemented per `openapi.yaml`: `POST /auth/login`, `POST /auth/refresh`, `GET /auth/me`): passwords are argon2id (`@node-rs/argon2`, prebuilt for Bun, Node and musl); access tokens are 15-minute HS256 JWTs via `jose` (issuer/audience checked, `role` claim); refresh tokens are opaque random strings stored only as an HMAC (keyed with `JWT_REFRESH_SECRET`) and rotated on every use. Presenting an already-used refresh token, or losing a rotation race, revokes all of that admin's sessions. Login returns the same 401 for unknown email and wrong password (it verifies against a dummy hash to keep timing similar). Protect routes with `authenticate` (+ `requireRole("owner")`) from `middleware/auth.ts` and read the caller with `getAuthAdmin(res)`. There is no logout endpoint because the contract has none. Customers book without accounts (lookup by booking code + phone, mismatch returns 404 not 403).
+
+## Conventions
+
+Match the existing modules (the auth module is the reference slice) instead of inventing new patterns. Formatting is enforced by Prettier (`bun run format` to fix, `format:check` is part of `verify`): double quotes, semicolons, 2 spaces, trailing commas, 120 columns.
+
+### Adding a module (vertical slice), in this order
+1. **Contract first**: update `documents/openapi.yaml` if an endpoint, field, or error changes; code follows the contract.
+2. `src/schemas/<feature>.schema.ts`: zod schemas exported as `{ body?, query?, params? }` objects (e.g. `loginSchemas`), passed to `validate()` and typed with `getValidated<typeof xSchemas>(res)`.
+3. `src/repositories/<entity>.repository.ts`: the only layer using Prisma (`getPrisma()`); plain exported functions, no business rules. Map database errors here or in the service (e.g. `23P01` to `AppError.slotUnavailable()`).
+4. `src/services/<feature>.service.ts`: business rules; throws `AppError`; no Express types and no Prisma imports. Returns plain API-shaped objects (snake_case as in the contract), never raw Prisma rows (no `passwordHash`).
+5. `src/controllers/<feature>.controller.ts`: thin; read validated input, call the service, respond with `ok(...)` / `paginated(...)` and an explicit status. No try/catch (Express 5 forwards async errors to the error handler).
+6. `src/routes/<feature>.routes.ts`: `validate(...)` per route, `authenticate` (+ `requireRole(...)`) for admin routes under `/admin/*`; mount the router on `v1` in `src/routes/index.ts`.
+7. Tests (see below), then update docs (flip the module's row in the development plan, README/`.env.example` if env or commands changed).
+
+### Naming and style
+- Files: `<name>.<layer>.ts` in lowercase kebab-case (`refresh-token.repository.ts`). Functions/variables camelCase, types PascalCase, env vars UPPER_SNAKE.
+- JSON in/out is snake_case (the contract); TypeScript and Prisma fields are camelCase; database tables/columns are snake_case via `@@map`/`@map`.
+- Imports always end in `.js`; use `import type` for type-only imports (ESLint enforces both). Named exports for functions; default export for routers and the app.
+- User-facing error messages are in Indonesian and match the examples in `openapi.yaml`; new error codes must be added to `ErrorCode` in `utils/errors.ts` and to the contract.
+- Log with `utils/logger.ts`, not `console` (only boot-time failure output in `server.ts` and scripts use `console`). Never log secrets or phone numbers.
+- Money is an integer in Rupiah; timestamps are `timestamptz` in the database and ISO 8601 with `+07:00` in the API.
+
+### Tests
+- `tests/unit/**`: mock repositories with `await mock.module(...)` and then `await import(...)` the unit under test. Because `mock.module` is process-wide, unit and integration suites must run in separate processes (`bun run test` already does).
+- `tests/integration/**`: drive the real Express app over HTTP (`app.listen(0)` and `fetch`); database-backed suites use `tests/helpers/db.ts`, run only when `DATABASE_URL_TEST` is set, and clean tables in `beforeEach`.
+- Wrap Prisma calls in `Promise.resolve(...)` inside `expect(...).rejects/.resolves`; Bun needs a real Promise and Prisma returns a lazy one.
+- Cover the failure paths the PRD calls out (validation, 401/403, 404 vs 403 for customer lookups, `SLOT_UNAVAILABLE`, invalid status transitions). Unit coverage target for `services/` and `utils/` is 80% or more.
