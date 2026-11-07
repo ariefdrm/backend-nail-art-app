@@ -1,0 +1,744 @@
+openapi: 3.0.3
+info:
+  title: The Nail Palace Booking API
+  version: 1.0.0
+  description: |
+    Kontrak API backend sistem reservasi The Nail Palace (studio nail art, Kota Jambi).
+    Konvensi: JSON, snake_case, waktu ISO 8601 dengan offset +07:00 (WIB), harga dalam Rupiah (integer),
+    nomor telepon format E.164 (+62...).
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development
+tags:
+  - name: Public
+    description: Endpoint untuk customer (tanpa login)
+  - name: Auth
+    description: Autentikasi admin
+  - name: Admin
+    description: Endpoint untuk pemilik/admin (wajib token)
+
+paths:
+  /services:
+    get:
+      tags: [Public]
+      summary: Daftar layanan aktif
+      parameters:
+        - { name: category, in: query, schema: { type: string, example: gel_polish } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Service' } }
+  /services/{id}:
+    get:
+      tags: [Public]
+      summary: Detail layanan
+      parameters: [{ $ref: '#/components/parameters/IdPath' }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Service' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /availability:
+    get:
+      tags: [Public]
+      summary: Slot waktu yang tersedia pada satu tanggal
+      description: Jika artist_id tidak diisi, slot dikembalikan beserta daftar artist yang tersedia pada slot tersebut.
+      parameters:
+        - { name: service_id, in: query, required: true, schema: { type: string, format: uuid } }
+        - { name: date, in: query, required: true, schema: { type: string, format: date, example: '2026-11-10' } }
+        - { name: artist_id, in: query, required: false, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Availability' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /bookings:
+    post:
+      tags: [Public]
+      summary: Buat reservasi
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BookingCreate' }
+      responses:
+        '201':
+          description: Reservasi dibuat (status awal pending)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '409': { $ref: '#/components/responses/SlotUnavailable' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /bookings/{booking_code}:
+    get:
+      tags: [Public]
+      summary: Cek status reservasi (kode booking + nomor telepon)
+      parameters:
+        - { name: booking_code, in: path, required: true, schema: { type: string, example: NP-20261110-A7K2 } }
+        - { name: phone, in: query, required: true, schema: { type: string, example: '+6281234567890' } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bookings/{booking_code}/cancel:
+    patch:
+      tags: [Public]
+      summary: Batalkan reservasi oleh customer
+      parameters:
+        - { name: booking_code, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone]
+              properties:
+                phone: { type: string, example: '+6281234567890' }
+                reason: { type: string, maxLength: 255 }
+      responses:
+        '200':
+          description: Dibatalkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Status tidak dapat dibatalkan (INVALID_STATUS_TRANSITION)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenPair' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Perbarui access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/TokenPair' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Profil admin yang sedang login
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Admin' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /admin/bookings:
+    get:
+      tags: [Admin]
+      summary: Daftar reservasi (untuk dashboard jadwal)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: date_from, in: query, schema: { type: string, format: date } }
+        - { name: date_to, in: query, schema: { type: string, format: date } }
+        - { name: status, in: query, schema: { $ref: '#/components/schemas/BookingStatus' } }
+        - { name: artist_id, in: query, schema: { type: string, format: uuid } }
+        - { name: q, in: query, description: Cari nama/telepon/kode, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer, default: 1, minimum: 1 } }
+        - { name: per_page, in: query, schema: { type: integer, default: 20, minimum: 1, maximum: 100 } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Booking' } }
+                  meta: { $ref: '#/components/schemas/Pagination' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    post:
+      tags: [Admin]
+      summary: Buat reservasi manual (walk-in / dari chat)
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BookingCreate' }
+      responses:
+        '201':
+          description: Dibuat (status langsung confirmed)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '409': { $ref: '#/components/responses/SlotUnavailable' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/bookings/{id}:
+    parameters: [{ $ref: '#/components/parameters/IdPath' }]
+    get:
+      tags: [Admin]
+      summary: Detail reservasi
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Admin]
+      summary: Jadwal ulang / ubah data reservasi
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_at: { type: string, format: date-time }
+                artist_id: { type: string, format: uuid }
+                service_id: { type: string, format: uuid }
+                customer_note: { type: string }
+                admin_note: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '409': { $ref: '#/components/responses/SlotUnavailable' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/bookings/{id}/status:
+    patch:
+      tags: [Admin]
+      summary: Ubah status reservasi
+      security: [{ bearerAuth: [] }]
+      parameters: [{ $ref: '#/components/parameters/IdPath' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { $ref: '#/components/schemas/BookingStatus' }
+                reason: { type: string, maxLength: 255, description: Wajib untuk cancelled }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Booking' }
+        '409':
+          description: Transisi status tidak valid (INVALID_STATUS_TRANSITION)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /admin/services:
+    get:
+      tags: [Admin]
+      summary: Daftar semua layanan (termasuk nonaktif)
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Service' } }
+    post:
+      tags: [Admin]
+      summary: Tambah layanan
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ServiceInput' }
+      responses:
+        '201':
+          description: Dibuat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Service' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/services/{id}:
+    parameters: [{ $ref: '#/components/parameters/IdPath' }]
+    put:
+      tags: [Admin]
+      summary: Ubah layanan
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ServiceInput' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Service' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Admin]
+      summary: Hapus layanan (soft delete / nonaktifkan jika sudah punya reservasi)
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Dihapus }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /admin/artists:
+    get:
+      tags: [Admin]
+      summary: Daftar semua nail artist
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Artist' } }
+    post:
+      tags: [Admin]
+      summary: Tambah nail artist
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ArtistInput' }
+      responses:
+        '201':
+          description: Dibuat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Artist' }
+  /admin/artists/{id}:
+    parameters: [{ $ref: '#/components/parameters/IdPath' }]
+    put:
+      tags: [Admin]
+      summary: Ubah nail artist
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ArtistInput' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/Artist' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Admin]
+      summary: Nonaktifkan nail artist
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Dinonaktifkan }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /admin/business-hours:
+    get:
+      tags: [Admin]
+      summary: Jam operasional mingguan
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+    put:
+      tags: [Admin]
+      summary: Ganti seluruh jam operasional mingguan
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [hours]
+              properties:
+                hours: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/blocked-slots:
+    get:
+      tags: [Admin]
+      summary: Daftar waktu yang diblokir (libur, istirahat, cuti artist)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: date_from, in: query, schema: { type: string, format: date } }
+        - { name: date_to, in: query, schema: { type: string, format: date } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/BlockedSlot' } }
+    post:
+      tags: [Admin]
+      summary: Blokir rentang waktu
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BlockedSlotInput' }
+      responses:
+        '201':
+          description: Dibuat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/BlockedSlot' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/blocked-slots/{id}:
+    delete:
+      tags: [Admin]
+      summary: Hapus blokir
+      security: [{ bearerAuth: [] }]
+      parameters: [{ $ref: '#/components/parameters/IdPath' }]
+      responses:
+        '204': { description: Dihapus }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /admin/dashboard/summary:
+    get:
+      tags: [Admin]
+      summary: Ringkasan dashboard (indikator keberhasilan)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { name: date_from, in: query, required: true, schema: { type: string, format: date } }
+        - { name: date_to, in: query, required: true, schema: { type: string, format: date } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/DashboardSummary' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    NotFound:
+      description: Data tidak ditemukan
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: NOT_FOUND, message: Data tidak ditemukan } }
+    Unauthorized:
+      description: Token tidak ada/tidak valid atau kredensial salah
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: UNAUTHORIZED, message: Email atau password salah } }
+    ValidationError:
+      description: Input tidak valid
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example:
+            error:
+              code: VALIDATION_ERROR
+              message: Input tidak valid
+              details:
+                - { field: customer_phone, message: Format nomor telepon tidak valid }
+    SlotUnavailable:
+      description: Slot sudah terisi atau diblokir
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: SLOT_UNAVAILABLE, message: Jadwal yang dipilih sudah tidak tersedia } }
+  schemas:
+    BookingStatus:
+      type: string
+      enum: [pending, confirmed, completed, cancelled, no_show]
+    Service:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string, example: Gel Polish + Nail Art Simple }
+        description: { type: string }
+        category: { type: string, example: gel_polish }
+        price: { type: integer, example: 150000, description: Rupiah }
+        duration_minutes: { type: integer, example: 90 }
+        image_url: { type: string, nullable: true }
+        is_active: { type: boolean }
+    ServiceInput:
+      type: object
+      required: [name, category, price, duration_minutes]
+      properties:
+        name: { type: string, maxLength: 120 }
+        description: { type: string }
+        category: { type: string }
+        price: { type: integer, minimum: 0 }
+        duration_minutes: { type: integer, minimum: 15, multipleOf: 15 }
+        image_url: { type: string, nullable: true }
+        is_active: { type: boolean, default: true }
+    Artist:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        photo_url: { type: string, nullable: true }
+        is_active: { type: boolean }
+    ArtistInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, maxLength: 80 }
+        photo_url: { type: string, nullable: true }
+        is_active: { type: boolean, default: true }
+    Slot:
+      type: object
+      properties:
+        start_at: { type: string, format: date-time, example: '2026-11-10T10:00:00+07:00' }
+        end_at: { type: string, format: date-time, example: '2026-11-10T11:30:00+07:00' }
+        available_artist_ids:
+          type: array
+          items: { type: string, format: uuid }
+    Availability:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        service_id: { type: string, format: uuid }
+        slots: { type: array, items: { $ref: '#/components/schemas/Slot' } }
+    BookingCreate:
+      type: object
+      required: [service_id, start_at, customer_name, customer_phone]
+      properties:
+        service_id: { type: string, format: uuid }
+        artist_id: { type: string, format: uuid, nullable: true, description: Kosong = sistem memilih artist yang tersedia }
+        start_at: { type: string, format: date-time }
+        customer_name: { type: string, maxLength: 100 }
+        customer_phone: { type: string, example: '+6281234567890' }
+        customer_note: { type: string, maxLength: 500 }
+        reference_image_url: { type: string, nullable: true }
+    Booking:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        booking_code: { type: string, example: NP-20261110-A7K2 }
+        status: { $ref: '#/components/schemas/BookingStatus' }
+        service: { $ref: '#/components/schemas/Service' }
+        artist: { $ref: '#/components/schemas/Artist' }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time }
+        customer_name: { type: string }
+        customer_phone: { type: string }
+        customer_note: { type: string, nullable: true }
+        reference_image_url: { type: string, nullable: true }
+        total_price: { type: integer }
+        source: { type: string, enum: [online, admin] }
+        cancel_reason: { type: string, nullable: true }
+        admin_note: { type: string, nullable: true }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    BusinessHour:
+      type: object
+      required: [day_of_week, is_open]
+      properties:
+        day_of_week: { type: integer, minimum: 0, maximum: 6, description: '0 = Minggu ... 6 = Sabtu' }
+        is_open: { type: boolean }
+        open_time: { type: string, example: '10:00', nullable: true }
+        close_time: { type: string, example: '20:00', nullable: true }
+    BlockedSlot:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        artist_id: { type: string, format: uuid, nullable: true, description: null = seluruh studio }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time }
+        reason: { type: string, nullable: true }
+    BlockedSlotInput:
+      type: object
+      required: [start_at, end_at]
+      properties:
+        artist_id: { type: string, format: uuid, nullable: true }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time }
+        reason: { type: string, maxLength: 255 }
+    Admin:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        email: { type: string, format: email }
+        role: { type: string, enum: [owner, staff] }
+    TokenPair:
+      type: object
+      properties:
+        access_token: { type: string }
+        refresh_token: { type: string }
+        token_type: { type: string, example: Bearer }
+        expires_in: { type: integer, example: 900, description: Detik }
+    Pagination:
+      type: object
+      properties:
+        page: { type: integer }
+        per_page: { type: integer }
+        total: { type: integer }
+        total_pages: { type: integer }
+    DashboardSummary:
+      type: object
+      properties:
+        period: { type: object, properties: { date_from: { type: string, format: date }, date_to: { type: string, format: date } } }
+        total_bookings: { type: integer }
+        by_status:
+          type: object
+          properties:
+            pending: { type: integer }
+            confirmed: { type: integer }
+            completed: { type: integer }
+            cancelled: { type: integer }
+            no_show: { type: integer }
+        no_show_rate: { type: number, example: 0.08, description: no_show / (completed + no_show) }
+        online_booking_ratio: { type: number, example: 0.75 }
+        revenue_completed: { type: integer, description: Rupiah }
+        avg_confirmation_minutes: { type: number, nullable: true }
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, example: VALIDATION_ERROR }
+            message: { type: string }
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field: { type: string }
+                  message: { type: string }
