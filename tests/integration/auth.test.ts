@@ -166,6 +166,96 @@ suite("admin auth", () => {
     expect((await post("/auth/refresh", { refresh_token: "never-issued" })).status).toBe(401);
   });
 
+  describe("logout", () => {
+    async function loginTokens(email = "owner@nailpalace.test") {
+      const res = await login(email);
+      return ((await res.json()) as { data: { access_token: string; refresh_token: string } }).data;
+    }
+
+    test("POST /auth/logout answers 204 and the token can no longer be refreshed", async () => {
+      const { refresh_token } = await loginTokens();
+      const res = await post("/auth/logout", { refresh_token });
+      expect(res.status).toBe(204);
+      expect(await res.text()).toBe("");
+
+      expect((await post("/auth/refresh", { refresh_token })).status).toBe(401);
+      expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(0);
+    });
+
+    test("logout needs no access token", async () => {
+      const { refresh_token } = await loginTokens();
+      const res = await post("/auth/logout", { refresh_token }, { authorization: "Bearer expired.or.invalid" });
+      expect(res.status).toBe(204);
+    });
+
+    test("only the given session ends; another device stays logged in", async () => {
+      const phone = await loginTokens();
+      const laptop = await loginTokens();
+      await post("/auth/logout", { refresh_token: phone.refresh_token });
+
+      expect((await post("/auth/refresh", { refresh_token: laptop.refresh_token })).status).toBe(200);
+      expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(1);
+    });
+
+    test("is idempotent: unknown, malformed and already-revoked tokens all answer 204", async () => {
+      const { refresh_token } = await loginTokens();
+      expect((await post("/auth/logout", { refresh_token })).status).toBe(204);
+      expect((await post("/auth/logout", { refresh_token })).status).toBe(204);
+      expect((await post("/auth/logout", { refresh_token: "never-issued" })).status).toBe(204);
+    });
+
+    test("logging out twice does not revoke the admin's other sessions", async () => {
+      const first = await loginTokens();
+      const second = await loginTokens();
+      await post("/auth/logout", { refresh_token: first.refresh_token });
+      await post("/auth/logout", { refresh_token: first.refresh_token });
+
+      expect((await post("/auth/refresh", { refresh_token: second.refresh_token })).status).toBe(200);
+    });
+
+    test("a missing refresh_token is a 422", async () => {
+      const res = await post("/auth/logout", {});
+      expect(res.status).toBe(422);
+      expect(await res.json()).toMatchObject({ error: { code: "VALIDATION_ERROR" } });
+    });
+  });
+
+  describe("logout-all", () => {
+    test("requires a valid access token", async () => {
+      expect((await post("/auth/logout-all", {})).status).toBe(401);
+      expect((await post("/auth/logout-all", {}, { authorization: "Bearer nope" })).status).toBe(401);
+    });
+
+    test("ends every session of the admin, but not other admins' sessions", async () => {
+      const other = await prisma.admin.create({
+        data: {
+          email: "staff@nailpalace.test",
+          passwordHash: await hashPassword(PASSWORD),
+          name: "Staff",
+          role: "staff",
+        },
+      });
+      const a = ((await (await login()).json()) as { data: { access_token: string; refresh_token: string } }).data;
+      const b = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
+      const staff = ((await (await login("staff@nailpalace.test")).json()) as { data: { refresh_token: string } }).data;
+
+      const res = await post("/auth/logout-all", {}, { authorization: `Bearer ${a.access_token}` });
+      expect(res.status).toBe(204);
+
+      expect(await prisma.refreshToken.count({ where: { adminId: adminId, revokedAt: null } })).toBe(0);
+      expect(await prisma.refreshToken.count({ where: { adminId: other.id, revokedAt: null } })).toBe(1);
+      expect((await post("/auth/refresh", { refresh_token: b.refresh_token })).status).toBe(401);
+      expect((await post("/auth/refresh", { refresh_token: staff.refresh_token })).status).toBe(200);
+    });
+
+    test("the current access token keeps working until it expires (stateless JWT)", async () => {
+      const { access_token } = ((await (await login()).json()) as { data: { access_token: string } }).data;
+      await post("/auth/logout-all", {}, { authorization: `Bearer ${access_token}` });
+      const me = await fetch(`${base}/api/v1/auth/me`, { headers: { authorization: `Bearer ${access_token}` } });
+      expect(me.status).toBe(200);
+    });
+  });
+
   test("responses never leak the password hash", async () => {
     const login200 = await (await login()).text();
     expect(login200).not.toContain("argon2");
