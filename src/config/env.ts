@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DURATION_PATTERN } from "../utils/duration.js";
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -6,8 +7,8 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   JWT_ACCESS_SECRET: z.string().min(32, "must be at least 32 characters"),
   JWT_REFRESH_SECRET: z.string().min(32, "must be at least 32 characters"),
-  ACCESS_TOKEN_TTL: z.string().min(1).default("15m"),
-  REFRESH_TOKEN_TTL: z.string().min(1).default("7d"),
+  ACCESS_TOKEN_TTL: z.string().regex(DURATION_PATTERN, "use a duration like 15m, 2h or 7d").default("15m"),
+  REFRESH_TOKEN_TTL: z.string().regex(DURATION_PATTERN, "use a duration like 15m, 2h or 7d").default("7d"),
   // Comma-separated list of allowed origins.
   CORS_ORIGINS: z
     .string()
