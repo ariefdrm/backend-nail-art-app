@@ -23,6 +23,30 @@ Follow `GIT_WORKFLOW.md`. Everything reaches `main` only via `develop`.
 - Never commit `.env` files or secrets (only `.env.example`). Keep PRs focused on one task.
 - The user does not want a `Co-Authored-By` line (or other attribution) in commit messages.
 
+## Development plan (modules)
+
+The backend is built module by module, in the order below, following the PRD's FR numbers. **One module = one branch = one PR into `develop`**, started from an up-to-date `develop` (see the git rules above). A module's "Needs" column lists modules that must already be merged into `develop`; modules with no unmet needs can be built in parallel by different people. Each module includes its own unit/integration tests (PRD Definition of Done) and updates `documents/openapi.yaml` first if the contract changes. **When a module's PR is ready, flip its row to `done` in this table in the same PR**, so the plan stays accurate for the next session.
+
+| # | Branch | Scope | Needs | Status |
+|---|---|---|---|---|
+| 1 | `feature/core-infrastructure` | env validation, `AppError` + error handler, request-id, logging, `validate()`, Prisma singleton, health routes | none | done (PR #2) |
+| 2 | `feature/data-model` | all PRD tables, `bookings_no_overlap` EXCLUDE + CHECK constraints, seed | 1 | done (PR #7) |
+| 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole` | 2 | done (PR #7) |
+| 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | next |
+| 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | todo |
+| 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | todo |
+| 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | todo |
+| 8 | `feature/admin-booking` | FR-07, FR-13: list/filter, status transitions, reschedule, manual booking, `wa.me` reminder link | 3, 7 | todo |
+| 9 | `feature/dashboard` | FR-10: `/admin/dashboard/summary` | 8 | todo |
+| 10 | `security/hardening` | FR-12, FR-14: rate limits (login, `POST /bookings`), helmet, CORS allowlist, `trust proxy`, protected `/docs`, contract tests against `openapi.yaml`, PRD security checklist | 8 | todo |
+| 11 | `feature/export-csv` | FR-15, FR-16 (P2, optional) | 8 | todo |
+
+Open items to settle during the relevant module:
+- `BusinessHour` has nullable `break_start` / `break_end` columns that `openapi.yaml` does not define; decide whether to add them to the contract (module 5).
+- Services and real business hours are not seeded yet (waiting for the `services.csv` / `jam_operasional.csv` files); the seed only creates one artist, closed hours, and the admin from `ADMIN_SEED_*` (module 4/5).
+- No logout endpoint (not in the contract); no login rate limit and `req.ip` is the proxy's address until `trust proxy` is set (module 10).
+- Commits on modules 1-3 lack a scope; that is history, so only new commits need `type(scope):`.
+
 ## Commands
 
 ```bash
