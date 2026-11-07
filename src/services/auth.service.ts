@@ -8,12 +8,7 @@ import {
 import type { AdminRoleName } from "../types/auth.js";
 import { AppError } from "../utils/errors.js";
 import { hashPassword, verifyPassword } from "../utils/password.js";
-import {
-  generateRefreshToken,
-  hashRefreshToken,
-  refreshTokenExpiry,
-  signAccessToken,
-} from "../utils/tokens.js";
+import { generateRefreshToken, hashRefreshToken, refreshTokenExpiry, signAccessToken } from "../utils/tokens.js";
 
 export interface ClientMeta {
   userAgent?: string | undefined;

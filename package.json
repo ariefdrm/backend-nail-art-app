@@ -23,6 +23,7 @@
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
     "eslint": "^10.13.0",
+    "prettier": "^3.9.10",
     "prisma": "^7.10.1",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.72.0"
@@ -37,6 +38,8 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "test": "bun run test:unit && bun run test:integration",
     "test:unit": "bun test tests/unit --coverage --pass-with-no-tests",
@@ -46,6 +49,6 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:seed": "bun prisma/seed.ts",
     "db:test:reset": "DATABASE_URL=\"$DATABASE_URL_TEST\" prisma migrate reset --force",
-    "verify": "bun run lint && bun run typecheck && bun run test:unit && bun run build"
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run test:unit && bun run build"
   }
 }

@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+src/generated
+prisma/migrations
+bun.lock
+*.md
+documents
+.agents
+.claude
+.github/workflows/*.lock.yml

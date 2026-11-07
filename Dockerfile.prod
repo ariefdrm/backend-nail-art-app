@@ -15,6 +15,7 @@ FROM deps AS verify
 ENV DATABASE_URL=postgresql://build:build@localhost:5432/build
 COPY . .
 RUN bun run prisma:generate \
+ && bun run format:check \
  && bun run lint \
  && bun run typecheck \
  && bun run test:unit \
