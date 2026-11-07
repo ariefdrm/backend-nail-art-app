@@ -1,0 +1,51 @@
+# Production image: TypeScript is transpiled with tsc and runs on Node.js.
+# Stages `runtime` and `migrator` copy from `verify`, so a failing lint,
+# typecheck, unit test, build or Node smoke test means no image is produced.
+
+# ---- Stage 1: deps (Node + Bun, used only at build time) ----
+FROM docker.io/node:26-alpine AS deps
+COPY --from=docker.io/oven/bun:1.4.3-alpine /usr/local/bin/bun /usr/local/bin/bun
+WORKDIR /app
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+# ---- Stage 2: verify (quality gate A) ----
+FROM deps AS verify
+# Prisma 7 reads DATABASE_URL from prisma.config.ts; `generate` does not connect.
+ENV DATABASE_URL=postgresql://build:build@localhost:5432/build
+COPY . .
+RUN bun run prisma:generate \
+ && bun run lint \
+ && bun run typecheck \
+ && bun run test:unit \
+ && bun run build \
+ && node dist/scripts/smoke.js
+
+# ---- Stage 3: prod-deps ----
+FROM docker.io/node:26-alpine AS prod-deps
+COPY --from=docker.io/oven/bun:1.4.3-alpine /usr/local/bin/bun /usr/local/bin/bun
+WORKDIR /app
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --production
+
+# ---- Stage 4: migrator (target for the `migrate` container) ----
+FROM docker.io/node:26-alpine AS migrator
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=verify /app/node_modules ./node_modules
+COPY --from=verify /app/package.json ./package.json
+COPY --from=verify /app/prisma ./prisma
+COPY --from=verify /app/prisma.config.ts ./prisma.config.ts
+USER node
+CMD [ "node_modules/.bin/prisma", "migrate", "deploy" ]
+
+# ---- Stage 5: runtime (target for the `api` container) ----
+FROM docker.io/node:26-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=verify /app/package.json ./package.json
+COPY --from=verify /app/dist ./dist
+USER node
+EXPOSE 3000
+CMD [ "node", "dist/server.js" ]

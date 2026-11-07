@@ -46,3 +46,10 @@ temp
 README*
 CHANGELOG*
 LICENSE*
+
+# Not needed in images
+.agents
+.claude
+skills-lock.json
+compose*.yaml
+Dockerfile*
