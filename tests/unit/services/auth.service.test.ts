@@ -21,7 +21,12 @@ interface TokenRow {
 let admins: AdminRow[] = [];
 let tokens: TokenRow[] = [];
 let rotateResult = true;
-const calls = { revokeAll: [] as string[], created: [] as unknown[], rotated: [] as unknown[] };
+const calls = {
+  revokeAll: [] as string[],
+  revokedHashes: [] as string[],
+  created: [] as unknown[],
+  rotated: [] as unknown[],
+};
 
 await mock.module("../../../src/repositories/admin.repository.js", () => ({
   findAdminByEmail: (email: string) => Promise.resolve(admins.find((a) => a.email === email) ?? null),
@@ -37,13 +42,17 @@ await mock.module("../../../src/repositories/refresh-token.repository.js", () =>
     calls.revokeAll.push(adminId);
     return Promise.resolve();
   },
+  revokeRefreshTokenByHash: (tokenHash: string) => {
+    calls.revokedHashes.push(tokenHash);
+    return Promise.resolve();
+  },
   rotateRefreshToken: (currentId: string, next: unknown) => {
     calls.rotated.push({ currentId, next });
     return Promise.resolve(rotateResult);
   },
 }));
 
-const { getProfile, login, refresh } = await import("../../../src/services/auth.service.js");
+const { getProfile, login, logout, logoutAll, refresh } = await import("../../../src/services/auth.service.js");
 
 const ADMIN_ID = "6f1f7f0e-9a53-4f4e-8c1c-1c8f6b0f1a11";
 
@@ -70,6 +79,7 @@ beforeEach(() => {
   tokens = [];
   rotateResult = true;
   calls.revokeAll = [];
+  calls.revokedHashes = [];
   calls.created = [];
   calls.rotated = [];
 });
@@ -149,6 +159,28 @@ describe("refresh", () => {
   test("rejects a token whose admin no longer exists", async () => {
     const raw = storeToken({ adminId: "00000000-0000-0000-0000-000000000000" });
     expect(await code(refresh(raw, {}))).toBe("UNAUTHORIZED");
+  });
+});
+
+describe("logout", () => {
+  test("revokes only the presented token, by its hash", async () => {
+    await logout("raw-token-to-revoke");
+    expect(calls.revokedHashes).toEqual([hashRefreshToken("raw-token-to-revoke")]);
+    expect(calls.revokeAll).toHaveLength(0);
+  });
+
+  test("is idempotent and never throws for unknown tokens", async () => {
+    await logout("never-issued");
+    await logout("never-issued");
+    expect(calls.revokedHashes).toHaveLength(2);
+  });
+});
+
+describe("logoutAll", () => {
+  test("revokes every session of the given admin", async () => {
+    await logoutAll(ADMIN_ID);
+    expect(calls.revokeAll).toEqual([ADMIN_ID]);
+    expect(calls.revokedHashes).toHaveLength(0);
   });
 });
 

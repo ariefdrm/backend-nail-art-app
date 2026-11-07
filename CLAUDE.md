@@ -32,7 +32,7 @@ The backend is built module by module, in the order below, following the PRD's F
 |---|---|---|---|---|
 | 1 | `feature/core-infrastructure` | env validation, `AppError` + error handler, request-id, logging, `validate()`, Prisma singleton, health routes | none | done (PR #2) |
 | 2 | `feature/data-model` | all PRD tables, `bookings_no_overlap` EXCLUDE + CHECK constraints, seed | 1 | done (PR #7) |
-| 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole` | 2 | done (PR #7) |
+| 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole`; logout and logout-all added later in `feature/auth-logout` | 2 | done (PR #7) |
 | 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | next |
 | 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | todo |
 | 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | todo |
@@ -45,7 +45,7 @@ The backend is built module by module, in the order below, following the PRD's F
 Open items to settle during the relevant module:
 - `BusinessHour` has nullable `break_start` / `break_end` columns that `openapi.yaml` does not define; decide whether to add them to the contract (module 5).
 - Services and real business hours are not seeded yet (waiting for the `services.csv` / `jam_operasional.csv` files); the seed only creates one artist, closed hours, and the admin from `ADMIN_SEED_*` (module 4/5).
-- No logout endpoint (not in the contract); no login rate limit and `req.ip` is the proxy's address until `trust proxy` is set (module 10).
+- No login rate limit, and `req.ip` is the proxy's address until `trust proxy` is set (module 10).
 - Commits on modules 1-3 lack a scope; that is history, so only new commits need `type(scope):`.
 
 ## Commands
@@ -89,7 +89,7 @@ Rules from the PRD that shape new code:
 - Errors: throw `AppError(code, httpStatus, message, details?)`; a central handler returns `{ error: { code, message, details } }`; unknown errors become `500 INTERNAL_ERROR` without leaking details.
 - Time: store `timestamptz` (UTC); API speaks ISO 8601 with `+07:00`; business-hour rules computed in Asia/Jakarta. Phones normalized to E.164.
 - Bun-dev / Node-prod parity: production runs `tsc` output on Node 26 (`Dockerfile.prod`, multi-stage; the `verify` stage runs lint, typecheck, unit tests, build and the Node smoke test, and the runtime/migrator images copy from it). Don't use `Bun.*` / `bun:*` in `src/`, and relative imports must use `.js` extensions (`module: NodeNext`).
-- Admin auth (implemented per `openapi.yaml`: `POST /auth/login`, `POST /auth/refresh`, `GET /auth/me`): passwords are argon2id (`@node-rs/argon2`, prebuilt for Bun, Node and musl); access tokens are 15-minute HS256 JWTs via `jose` (issuer/audience checked, `role` claim); refresh tokens are opaque random strings stored only as an HMAC (keyed with `JWT_REFRESH_SECRET`) and rotated on every use. Presenting an already-used refresh token, or losing a rotation race, revokes all of that admin's sessions. Login returns the same 401 for unknown email and wrong password (it verifies against a dummy hash to keep timing similar). Protect routes with `authenticate` (+ `requireRole("owner")`) from `middleware/auth.ts` and read the caller with `getAuthAdmin(res)`. There is no logout endpoint because the contract has none. Customers book without accounts (lookup by booking code + phone, mismatch returns 404 not 403).
+- Admin auth (implemented per `openapi.yaml`: `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`, `POST /auth/logout-all`, `GET /auth/me`): passwords are argon2id (`@node-rs/argon2`, prebuilt for Bun, Node and musl); access tokens are 15-minute HS256 JWTs via `jose` (issuer/audience checked, `role` claim); refresh tokens are opaque random strings stored only as an HMAC (keyed with `JWT_REFRESH_SECRET`) and rotated on every use. Presenting an already-used refresh token, or losing a rotation race, revokes all of that admin's sessions. Login returns the same 401 for unknown email and wrong password (it verifies against a dummy hash to keep timing similar). Protect routes with `authenticate` (+ `requireRole("owner")`) from `middleware/auth.ts` and read the caller with `getAuthAdmin(res)`. `logout` takes a refresh token and is idempotent (always 204, never reveals whether the token existed, and does not trigger the reuse/theft revocation); `logout-all` needs a bearer token and revokes all of that admin's refresh tokens. Access tokens are stateless, so they stay valid until their 15 minutes run out. Customers book without accounts (lookup by booking code + phone, mismatch returns 404 not 403).
 
 ## Conventions
 

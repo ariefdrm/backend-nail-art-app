@@ -16,7 +16,15 @@ export function findRefreshTokenByHash(tokenHash: string) {
   return getPrisma().refreshToken.findUnique({ where: { tokenHash } });
 }
 
-/** Revokes every active token of an admin (used when token reuse is detected). */
+/** Revokes one active token by its hash. Does nothing if it is unknown or already revoked. */
+export async function revokeRefreshTokenByHash(tokenHash: string, now: Date): Promise<void> {
+  await getPrisma().refreshToken.updateMany({
+    where: { tokenHash, revokedAt: null },
+    data: { revokedAt: now },
+  });
+}
+
+/** Revokes every active token of an admin (logout-all, and when token reuse is detected). */
 export async function revokeAllRefreshTokens(adminId: string, now: Date): Promise<void> {
   await getPrisma().refreshToken.updateMany({
     where: { adminId, revokedAt: null },

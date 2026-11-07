@@ -3,6 +3,7 @@ import {
   createRefreshToken,
   findRefreshTokenByHash,
   revokeAllRefreshTokens,
+  revokeRefreshTokenByHash,
   rotateRefreshToken,
 } from "../repositories/refresh-token.repository.js";
 import type { AdminRoleName } from "../types/auth.js";
@@ -101,6 +102,21 @@ export async function refresh(presentedToken: string, meta: ClientMeta): Promise
     throw AppError.unauthorized(INVALID_REFRESH);
   }
   return buildTokenPair(admin, nextToken);
+}
+
+/**
+ * Ends the session of one refresh token. Idempotent: an unknown or already
+ * revoked token is not an error, so the endpoint cannot be used to probe
+ * which tokens exist. Unlike `refresh`, presenting a revoked token here is
+ * not treated as theft and does not touch the admin's other sessions.
+ */
+export async function logout(presentedToken: string): Promise<void> {
+  await revokeRefreshTokenByHash(hashRefreshToken(presentedToken), new Date());
+}
+
+/** Ends every session of the admin (all of their refresh tokens). */
+export async function logoutAll(adminId: string): Promise<void> {
+  await revokeAllRefreshTokens(adminId, new Date());
 }
 
 export async function getProfile(adminId: string): Promise<AdminProfile> {
