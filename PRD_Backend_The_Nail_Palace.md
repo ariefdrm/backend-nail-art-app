@@ -34,7 +34,7 @@ Dokumen ini mendefinisikan kebutuhan **backend REST API** yang menjadi inti sist
 ### 2.2 Non-tujuan (di luar MVP)
 
 - Pembayaran online / DP / payment gateway.
-- Integrasi WhatsApp API otomatis (pengingat hanya berupa tautan `wa.me` yang disiapkan backend).
+- Integrasi WhatsApp API otomatis (pengingat hanya berupa tautan `wa.me` yang disiapkan backend). Notifikasi untuk admin lewat Web Push (FR-17) bukan bagian dari pengecualian ini karena tidak memakai WhatsApp.
 - Akun customer (login customer, riwayat lintas perangkat).
 - Aplikasi mobile native.
 - Multi-cabang / multi-studio.
@@ -87,6 +87,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 | FR-14 | Dokumentasi interaktif dari `openapi.yaml` | P1 | `GET /docs` (hanya non-production atau dilindungi) |
 | FR-15 | Ekspor reservasi ke CSV untuk tim data science | P2 | `GET /admin/export/bookings.csv` |
 | FR-16 | Titik sambung skor risiko no-show dari layanan ML | P2 | field opsional pada booking |
+| FR-17 | Notifikasi pembaruan untuk admin: kotak masuk dalam aplikasi dan Web Push (reservasi baru, dibatalkan customer, belum dikonfirmasi, pengingat jadwal) | P1 | `/admin/notifications*`, `/admin/push-subscriptions`, `/admin/push/public-key` |
 
 ### 4.1 Kriteria penerimaan inti
 
@@ -109,6 +110,13 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 **FR-07 Transisi status**
 - Hanya transisi yang valid (lihat `Kontrak_API_dan_Format_Data.md`, bagian 3); selainnya `409 INVALID_STATUS_TRANSITION`.
 - Setiap perubahan tercatat di riwayat status (FR-11).
+
+**FR-17 Notifikasi admin**
+- Pemicu: reservasi baru dari customer (`source=online`), pembatalan oleh customer, reservasi `pending` lebih lama dari `NOTIFY_UNCONFIRMED_AFTER_MINUTES` (default 15), dan reservasi `confirmed` yang dimulai dalam `NOTIFY_UPCOMING_MINUTES_BEFORE` (default 120).
+- Notifikasi dibuat dalam transaksi database yang sama dengan perubahan reservasi, dan tiap peristiwa hanya menghasilkan satu notifikasi (`dedupe_key` unik) walau penjadwal berjalan berulang.
+- Status baca disimpan per admin; daftar mendukung filter belum dibaca dan paginasi, dan ada endpoint jumlah belum dibaca.
+- Web Push bersifat best effort dan tidak boleh menggagalkan atau memperlambat reservasi; langganan yang dijawab 404/410 oleh layanan push dihapus.
+- Teks notifikasi dan payload push memuat kode booking, layanan, waktu, dan nama depan saja, tanpa nomor telepon (UU No. 27 Tahun 2022).
 
 ---
 
@@ -451,8 +459,8 @@ Tanggal belum ditetapkan karena menunggu jadwal program Asah; urutan di bawah da
 | **0. Fondasi** | Repo, TypeScript, ESLint, struktur folder, `config/env.ts`, Prisma 7 + adapter pg, kedua Dockerfile dan compose, health check | `podman compose -f compose.dev.yaml up` berjalan; build prod menghasilkan image dan smoke test lolos |
 | **1. Inti reservasi (P0 publik)** | Model data + migrasi + constraint anti-bentrok, FR-01 s.d. FR-05, seed | Alur pilih layanan → cek slot → booking → cek status berjalan; tes konkurensi lolos |
 | **2. Admin (P0)** | FR-06 s.d. FR-10, riwayat status (FR-11) | Pemilik dapat login, mengelola reservasi, jadwal, layanan, dan melihat dashboard |
-| **3. Pengerasan** | FR-12 s.d. FR-14, contract test, cakupan tes, `release.sh`, audit keamanan | Daftar periksa keamanan terpenuhi; satu kali rilis penuh lewat `release.sh` sukses |
-| **4. Opsional** | FR-15 s.d. FR-17 | Sesuai kebutuhan tim data/AI |
+| **3. Pengerasan** | FR-12 s.d. FR-14, FR-17, contract test, cakupan tes, `release.sh`, audit keamanan | Daftar periksa keamanan terpenuhi; satu kali rilis penuh lewat `release.sh` sukses |
+| **4. Opsional** | FR-15 s.d. FR-16 | Sesuai kebutuhan tim data/AI |
 
 ### Definition of Done (per fitur)
 1. Sesuai `openapi.yaml` (atau kontrak diperbarui lebih dulu).
