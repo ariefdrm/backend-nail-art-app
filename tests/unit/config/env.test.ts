@@ -38,6 +38,12 @@ describe("parseEnv", () => {
     }
   });
 
+  test("rejects token TTLs that are not durations like 15m or 7d", () => {
+    expect(() => parseEnv({ ...valid, ACCESS_TOKEN_TTL: "15 minutes" })).toThrow(EnvError);
+    expect(() => parseEnv({ ...valid, REFRESH_TOKEN_TTL: "7" })).toThrow(EnvError);
+    expect(parseEnv({ ...valid, ACCESS_TOKEN_TTL: "30m", REFRESH_TOKEN_TTL: "14d" }).REFRESH_TOKEN_TTL).toBe("14d");
+  });
+
   test("rejects an invalid port", () => {
     expect(() => parseEnv({ ...valid, PORT: "99999" })).toThrow(EnvError);
   });
