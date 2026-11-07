@@ -1,11 +1,12 @@
 import { Router } from "express";
-import appRoute from "./app.route.js";
 import healthRoutes from "./health.routes.js";
 
 const routes = Router();
+const v1 = Router();
 
-routes.use("/health", healthRoutes);
+// Feature routers (auth, catalog, bookings, admin, ...) mount on `v1`.
 // API contract: documents/openapi.yaml (servers: /api/v1)
-routes.use("/api/v1", appRoute);
+routes.use("/health", healthRoutes);
+routes.use("/api/v1", v1);
 
 export default routes;
