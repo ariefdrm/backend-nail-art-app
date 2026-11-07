@@ -65,13 +65,15 @@ backend-nail-art-app/
 ├── src/
 │   ├── app.ts                   # Builds the Express app (no listen, easy to test)
 │   ├── server.ts                # Entry point: listen and graceful shutdown
+│   ├── config/env.ts            # Environment validation (fail-fast)
 │   ├── controllers/             # Handle HTTP requests and responses
-│   ├── middleware/              # Auth, validation, error handling
+│   ├── middleware/              # Request id, logging, validation, error handling
 │   ├── repositories/            # Database access (only layer that imports Prisma)
 │   ├── routes/                  # Endpoint definitions (mounted at /api/v1, plus /health)
 │   ├── scripts/smoke.ts         # Node smoke test run against the compiled build
 │   ├── services/                # Business logic
 │   └── utils/                   # Helpers
+├── tests/                       # unit/ (mocked repositories) and integration/
 ├── tsconfig.build.json          # Production build (src only, emits to dist/)
 └── tsconfig.json                # Editor/typecheck config
 ```

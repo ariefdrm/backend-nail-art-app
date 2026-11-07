@@ -30,13 +30,13 @@ docker compose -f compose.dev.yaml up -d --build   # app + postgres (podman comp
 scripts/release.sh       # only supported release path (integration tests -> prod image build -> compose.prod.yaml)
 ```
 
-Single test: `bun test path/to/file.test.ts`. No tests exist yet (scripts use `--pass-with-no-tests`).
+Single test: `bun test path/to/file.test.ts`. `tests/unit` mocks repositories (`mock.module`); `tests/integration/http.test.ts` runs the app over HTTP and needs no database.
 
-Env: copy `.env.example` to `.env` (all PRD variables are listed there). Compose builds the container `DATABASE_URL` from `POSTGRES_*`; Prisma CLI on the host needs `DATABASE_URL` in `.env` (read by `prisma.config.ts`). Production secrets go in `.env.prod` (gitignored).
+Env: copy `.env.example` to `.env` (all PRD variables are listed there). `JWT_ACCESS_SECRET` and `JWT_REFRESH_SECRET` (>= 32 chars) and `DATABASE_URL` are required; the server refuses to start without them. Compose builds the container `DATABASE_URL` from `POSTGRES_*`; Prisma CLI on the host needs `DATABASE_URL` in `.env` (read by `prisma.config.ts`). Production secrets go in `.env.prod` (gitignored).
 
 ## Architecture
 
-Layered: `routes → controller → services → repositories → PostgreSQL`. Upper layers call lower ones only; the PRD requires that **only `repositories/` imports Prisma Client** (intended to be enforced via ESLint). ESLint enforces this (layer imports, Prisma only in `repositories/` and `utils/prisma.ts`, no Bun APIs in `src/`). `src/app.ts` builds the Express app and `src/server.ts` listens (with graceful shutdown); routes mount at `/api/v1` plus `/health/live`. Currently only a placeholder hello-world slice exists (`routes/app.route.ts` → `controllers/app.controller.ts` → `services/app.service.ts`); `repositories/`, `middleware/`, `utils/` are empty.
+Layered: `routes → controller → services → repositories → PostgreSQL`. Upper layers call lower ones only; the PRD requires that **only `repositories/` imports Prisma Client** (intended to be enforced via ESLint). ESLint enforces this (layer imports, Prisma only in `repositories/` and `utils/prisma.ts`, no Bun APIs in `src/`). `src/app.ts` builds the Express app and `src/server.ts` listens (with graceful shutdown); routes mount at `/api/v1` plus `/health/live`. Shared infrastructure already exists: `config/env.ts` (zod; `getEnv()` memoizes and `server.ts` exits on invalid config, while `app.ts` never calls it so tests and the smoke test import without env), `utils/errors.ts` (`AppError` + factories), `utils/response.ts` (`ok`/`paginated`), `utils/logger.ts` (pino, redacts secrets and phones), `utils/prisma.ts` (lazy singleton `getPrisma()`), and middleware for request-id, http logging, `validate()` (parsed input is read with `getValidated(res)`, since Express 5 `req.query` is read-only), not-found and the error handler. Feature routers mount on the `v1` router in `routes/index.ts`; `/health/live` and `/health/ready` (DB ping) sit outside `/api/v1`. Malformed JSON is mapped to 422 `VALIDATION_ERROR`.
 
 Prisma specifics (v7):
 - Config lives in `prisma.config.ts`; the datasource URL is set there, not in `schema.prisma`.
