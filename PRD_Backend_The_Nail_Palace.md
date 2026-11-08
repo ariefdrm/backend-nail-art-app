@@ -117,7 +117,10 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - Respons status reservasi menyertakan `schedule_conflict: true` bila reservasi bertabrakan dengan blokir waktu (FR-09), agar halaman cek status dapat menampilkan banner bahwa pemilik akan menghubungi customer.
 
 **FR-07 Transisi status**
-- Hanya transisi yang valid (lihat `Kontrak_API_dan_Format_Data.md`, bagian 3); selainnya `409 INVALID_STATUS_TRANSITION`.
+- Hanya transisi yang valid; selainnya `409 INVALID_STATUS_TRANSITION`: `pending` → `confirmed` | `cancelled`; `confirmed` → `completed` | `cancelled` | `no_show`; `completed`, `cancelled`, dan `no_show` adalah status akhir.
+- Pembatalan wajib menyertakan alasan. `completed` dan `no_show` hanya boleh setelah waktu mulai reservasi, karena status itu melepas slot.
+- Jadwal ulang hanya untuk `pending`/`confirmed` dan mengikuti aturan slot, jeda, dan blokir yang sama dengan reservasi baru; reservasi itu sendiri tidak dihitung sebagai penghalang.
+- Detail reservasi admin menyertakan `reminder_url` (FR-13) untuk reservasi `pending`/`confirmed`.
 - Setiap perubahan tercatat di riwayat status (FR-11).
 
 **FR-17 Notifikasi admin**

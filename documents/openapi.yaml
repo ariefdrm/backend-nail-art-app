@@ -264,6 +264,9 @@ paths:
     get:
       tags: [Admin]
       summary: Daftar reservasi (untuk dashboard jadwal)
+      description: |
+        Diurutkan menurut start_at naik. date_from/date_to (WIB, inklusif) menyaring berdasarkan start_at;
+        date_from tidak boleh setelah date_to (422). q mencari nama, nomor telepon (08..., 62..., atau +62...) dan kode booking.
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: date_from, in: query, schema: { type: string, format: date } }
@@ -284,9 +287,13 @@ paths:
                   data: { type: array, items: { $ref: '#/components/schemas/Booking' } }
                   meta: { $ref: '#/components/schemas/Pagination' }
         '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/ValidationError' }
     post:
       tags: [Admin]
       summary: Buat reservasi manual (walk-in / dari chat)
+      description: |
+        Status langsung confirmed dan source admin. Aturan slot, jeda, dan blokir waktu sama dengan reservasi online:
+        start_at harus salah satu slot dari GET /availability. artist_id kosong = sistem memilih artist yang tersedia.
       security: [{ bearerAuth: [] }]
       requestBody:
         required: true
@@ -302,6 +309,8 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
         '409': { $ref: '#/components/responses/SlotUnavailable' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /admin/bookings/{id}:
@@ -309,6 +318,7 @@ paths:
     get:
       tags: [Admin]
       summary: Detail reservasi
+      description: Menyertakan reminder_url (tautan wa.me dengan pesan pengingat siap kirim) untuk reservasi pending/confirmed.
       security: [{ bearerAuth: [] }]
       responses:
         '200':
@@ -319,10 +329,17 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '404': { $ref: '#/components/responses/NotFound' }
     patch:
       tags: [Admin]
       summary: Jadwal ulang / ubah data reservasi
+      description: |
+        Minimal satu field. Mengubah start_at, artist_id, atau service_id hanya untuk reservasi pending/confirmed
+        (selain itu 409 INVALID_STATUS_TRANSITION) dan harus tetap berupa slot yang tersedia (aturan sama dengan reservasi baru,
+        reservasi ini sendiri tidak dihitung sebagai penghalang); gagal = 409 SLOT_UNAVAILABLE. Bila hanya start_at atau service_id
+        berubah, artist tetap. Mengganti layanan menyalin ulang harga layanan baru ke total_price. customer_note dan admin_note
+        dapat diubah pada status apa pun; string kosong menghapus catatan.
       security: [{ bearerAuth: [] }]
       requestBody:
         required: true
@@ -330,12 +347,13 @@ paths:
           application/json:
             schema:
               type: object
+              minProperties: 1
               properties:
                 start_at: { type: string, format: date-time }
                 artist_id: { type: string, format: uuid }
                 service_id: { type: string, format: uuid }
-                customer_note: { type: string }
-                admin_note: { type: string }
+                customer_note: { type: string, maxLength: 500 }
+                admin_note: { type: string, maxLength: 1000 }
       responses:
         '200':
           description: OK
@@ -345,12 +363,23 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Booking' }
-        '409': { $ref: '#/components/responses/SlotUnavailable' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Slot tidak tersedia (SLOT_UNAVAILABLE) atau status tidak mengizinkan jadwal ulang (INVALID_STATUS_TRANSITION)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /admin/bookings/{id}/status:
     patch:
       tags: [Admin]
       summary: Ubah status reservasi
+      description: |
+        Transisi yang diizinkan: pending → confirmed | cancelled; confirmed → completed | cancelled | no_show.
+        completed, cancelled, dan no_show adalah status akhir. completed dan no_show hanya setelah waktu mulai reservasi
+        (status itu melepas slot, jadi tidak boleh diberikan sebelum jadwal berjalan). cancelled wajib menyertakan reason (422).
+        Setiap perubahan tercatat di riwayat status dengan admin yang melakukannya.
       security: [{ bearerAuth: [] }]
       parameters: [{ $ref: '#/components/parameters/IdPath' }]
       requestBody:
@@ -372,11 +401,14 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Booking' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
         '409':
           description: Transisi status tidak valid (INVALID_STATUS_TRANSITION)
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
+        '422': { $ref: '#/components/responses/ValidationError' }
   /admin/services:
     get:
       tags: [Admin]
@@ -789,6 +821,7 @@ components:
         source: { type: string, enum: [online, admin] }
         cancel_reason: { type: string, nullable: true }
         admin_note: { type: string, nullable: true }
+        reminder_url: { type: string, nullable: true, description: 'Hanya pada respons admin. Tautan wa.me dengan pesan pengingat; null bila status bukan pending/confirmed' }
         schedule_conflict: { type: boolean, description: 'true bila reservasi aktif bertabrakan dengan blokir waktu; pemilik akan menghubungi customer' }
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }

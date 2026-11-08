@@ -1,4 +1,5 @@
 import { Router } from "express";
+import adminBookingRoutes from "./admin-booking.routes.js";
 import adminScheduleRoutes from "./admin-schedule.routes.js";
 import adminCatalogRoutes from "./admin-catalog.routes.js";
 import availabilityRoutes from "./availability.routes.js";
@@ -15,6 +16,7 @@ const v1 = Router();
 routes.use("/health", healthRoutes);
 v1.use("/auth", authRoutes);
 v1.use("/admin", adminScheduleRoutes);
+v1.use("/admin", adminBookingRoutes);
 v1.use(catalogRoutes);
 v1.use(availabilityRoutes);
 v1.use(bookingRoutes);

@@ -29,6 +29,8 @@ export interface AvailabilityOptions {
   maxAdvanceDays?: number;
   bufferMinutes?: number;
   now?: Date;
+  /** Ignore this booking when looking for conflicts, so it can be moved without blocking itself. */
+  excludeBookingId?: string;
 }
 
 /** "HH:mm" to minutes since midnight. */
@@ -92,6 +94,7 @@ export async function getAvailability(
   const { bookings, blocks } = await availabilityRepo.findBusyRanges({
     startAt: new Date(dayStart.getTime() - bufferMs),
     endAt: new Date(dayEnd.getTime() + bufferMs),
+    ...(options.excludeBookingId ? { excludeBookingId: options.excludeBookingId } : {}),
   });
 
   const open = toMinutes(hours.openTime);

@@ -11,10 +11,12 @@ export function listActiveArtists() {
 }
 
 /** Active bookings and blocked slots touching [startAt, endAt), for all artists. */
-export async function findBusyRanges(range: { startAt: Date; endAt: Date }) {
-  const [bookings, blocks] = await Promise.all([
-    findActiveBookingsOverlapping(range),
+export async function findBusyRanges(range: { startAt: Date; endAt: Date; excludeBookingId?: string }) {
+  const { excludeBookingId, ...timeRange } = range;
+  const [overlapping, blocks] = await Promise.all([
+    findActiveBookingsOverlapping(timeRange),
     listBlockedSlots({ from: range.startAt, to: range.endAt }),
   ]);
+  const bookings = excludeBookingId ? overlapping.filter((b) => b.id !== excludeBookingId) : overlapping;
   return { bookings, blocks };
 }
