@@ -21,6 +21,15 @@ describe("AppError", () => {
     });
   });
 
+  test("blockHasBookings answers 409 and carries the conflicts in the error body", () => {
+    const conflicts = [{ id: "b1", booking_code: "NP-20261110-A7K2" }];
+    const error = AppError.blockHasBookings(conflicts);
+    expect([error.code, error.httpStatus]).toEqual(["BLOCK_HAS_BOOKINGS", 409]);
+    expect(toErrorBody(error)).toEqual({
+      error: { code: "BLOCK_HAS_BOOKINGS", message: "Ada reservasi pada waktu yang akan diblokir", conflicts },
+    });
+  });
+
   test("toErrorBody omits details when there are none", () => {
     expect(toErrorBody(AppError.notFound())).toEqual({
       error: { code: "NOT_FOUND", message: "Data tidak ditemukan" },
