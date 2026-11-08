@@ -10,6 +10,7 @@ export function createTestPrisma(): PrismaClient {
 }
 
 export async function cleanDatabase(prisma: PrismaClient): Promise<void> {
+  await prisma.pushSubscription.deleteMany();
   await prisma.notification.deleteMany(); // reads go with them
   await prisma.bookingStatusHistory.deleteMany();
   await prisma.booking.deleteMany();

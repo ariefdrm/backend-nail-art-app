@@ -141,6 +141,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - Pemicu: reservasi baru dari customer (`source=online`), pembatalan oleh customer, reservasi `pending` lebih lama dari `NOTIFY_UNCONFIRMED_AFTER_MINUTES` (default 15), dan reservasi `confirmed` yang dimulai dalam `NOTIFY_UPCOMING_MINUTES_BEFORE` (default 120).
 - Notifikasi dibuat dalam transaksi database yang sama dengan perubahan reservasi, dan tiap peristiwa hanya menghasilkan satu notifikasi (`dedupe_key` unik) walau penjadwal berjalan berulang.
 - Status baca disimpan per admin; daftar mendukung filter belum dibaca dan paginasi, dan ada endpoint jumlah belum dibaca.
+- Endpoint langganan harus https dan milik layanan push browser yang dikenal (Chrome/FCM, Firefox, Safari, Edge), karena server yang menghubungi alamat itu; selain itu ditolak `422` (mencegah SSRF). Pengirim berjalan terpisah dari permintaan reservasi, tiap notifikasi dikirim paling banyak sekali (ditandai `pushed_at` saat diambil), dan notifikasi lebih tua dari 15 menit tidak dikirim.
 - Web Push bersifat best effort dan tidak boleh menggagalkan atau memperlambat reservasi; langganan yang dijawab 404/410 oleh layanan push dihapus.
 - Teks notifikasi dan payload push memuat kode booking, layanan, waktu, dan nama depan saja, tanpa nomor telepon (UU No. 27 Tahun 2022).
 
@@ -435,6 +436,7 @@ Reverse proxy dengan HTTPS (Caddy/Nginx) tidak termasuk dalam dua compose ini; l
 | `TRUST_PROXY` | kosong | Jumlah reverse proxy di depan aplikasi; kosong = 1 di production, 0 di lainnya |
 | `RATE_LIMIT_LOGIN_MAX` / `RATE_LIMIT_BOOKING_MAX` / `RATE_LIMIT_LOOKUP_MAX` / `RATE_LIMIT_GENERAL_MAX` | `10` / `10` / `30` / `300` | Batas permintaan per IP per jendela: login (hanya yang gagal, 15 menit), buat reservasi (1 jam), cek/batal reservasi (15 menit), seluruh API (1 menit) |
 | `NOTIFY_UNCONFIRMED_AFTER_MINUTES` / `NOTIFY_UPCOMING_MINUTES_BEFORE` | `15` / `120` | Menit sebelum reservasi `pending` diingatkan, dan menit sebelum reservasi `confirmed` dimulai untuk pengingat jadwal (FR-17) |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | kosong | Web Push (FR-17): ketiganya diisi atau tidak sama sekali; kosong = Web Push mati. `VAPID_SUBJECT` berupa `mailto:` atau URL https; kunci dibuat dengan `bunx web-push generate-vapid-keys` |
 | `DOCS_USER`, `DOCS_PASSWORD` | `docs` / kosong | `/docs` terbuka di luar production; di production hanya aktif bila `DOCS_PASSWORD` (≥ 12 karakter) diisi, dengan HTTP Basic auth |
 | `TZ` | `Asia/Jakarta` | |
 | `LOG_LEVEL` | `info` | |

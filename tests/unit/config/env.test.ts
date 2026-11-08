@@ -54,6 +54,34 @@ describe("parseEnv", () => {
     );
   });
 
+  test("Web Push is off unless all three VAPID variables are set; a half set is refused", () => {
+    expect(parseEnv(valid).VAPID_PUBLIC_KEY).toBeUndefined();
+    const all = { VAPID_PUBLIC_KEY: "pub", VAPID_PRIVATE_KEY: "priv", VAPID_SUBJECT: "mailto:owner@nailpalace.test" };
+    expect(parseEnv({ ...valid, ...all }).VAPID_SUBJECT).toBe("mailto:owner@nailpalace.test");
+    expect(parseEnv({ ...valid, ...all, VAPID_SUBJECT: "https://nailpalace.test" }).VAPID_SUBJECT).toBe(
+      "https://nailpalace.test",
+    );
+    expect(() => parseEnv({ ...valid, VAPID_PUBLIC_KEY: "pub" })).toThrow(EnvError);
+    expect(() => parseEnv({ ...valid, VAPID_PUBLIC_KEY: "pub", VAPID_PRIVATE_KEY: "priv" })).toThrow(/VAPID_SUBJECT/);
+    // blank values from a .env template count as unset
+    expect(
+      parseEnv({ ...valid, VAPID_PUBLIC_KEY: "", VAPID_PRIVATE_KEY: "", VAPID_SUBJECT: "" }).VAPID_PUBLIC_KEY,
+    ).toBeUndefined();
+  });
+
+  test("VAPID_SUBJECT must be mailto: or https", () => {
+    const keys = { VAPID_PUBLIC_KEY: "pub", VAPID_PRIVATE_KEY: "priv" };
+    for (const subject of ["owner@nailpalace.test", "http://nailpalace.test", "ftp://x.test", "mailto:"]) {
+      expect(() => parseEnv({ ...valid, ...keys, VAPID_SUBJECT: subject })).toThrow(EnvError);
+    }
+  });
+
+  test("notification timings default to 15 and 120 minutes", () => {
+    const env = parseEnv(valid);
+    expect([env.NOTIFY_UNCONFIRMED_AFTER_MINUTES, env.NOTIFY_UPCOMING_MINUTES_BEFORE]).toEqual([15, 120]);
+    expect(() => parseEnv({ ...valid, NOTIFY_UPCOMING_MINUTES_BEFORE: "0" })).toThrow(EnvError);
+  });
+
   test("coerces numbers and splits CORS origins", () => {
     const env = parseEnv({ ...valid, PORT: "8080", CORS_ORIGINS: "https://a.test, https://b.test," });
     expect(env.PORT).toBe(8080);

@@ -54,6 +54,6 @@ export function api(base: string, token?: string) {
     post: (path: string, body: unknown) => send("POST", path, body),
     put: (path: string, body: unknown) => send("PUT", path, body),
     patch: (path: string, body: unknown) => send("PATCH", path, body),
-    delete: (path: string) => send("DELETE", path),
+    delete: (path: string, body?: unknown) => send("DELETE", path, body),
   };
 }

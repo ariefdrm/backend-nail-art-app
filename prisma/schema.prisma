@@ -54,6 +54,7 @@ model Admin {
   refreshTokens     RefreshToken[]
   statusChanges     BookingStatusHistory[]
   notificationReads NotificationRead[]
+  pushSubscriptions PushSubscription[]
 
   @@map("admins")
 }
@@ -230,12 +231,15 @@ model Notification {
   // One notification per event, however many times the scheduler runs: e.g. "unconfirmed_reminder:<booking id>".
   dedupeKey String           @unique @map("dedupe_key") @db.VarChar(120)
   createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  // Set when the Web Push sender has taken the notification (at most once); null = not sent yet.
+  pushedAt  DateTime?        @map("pushed_at") @db.Timestamptz(3)
 
   booking Booking?           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   reads   NotificationRead[]
 
   @@index([createdAt])
   @@index([bookingId, type])
+  @@index([pushedAt, createdAt])
   @@map("notifications")
 }
 
@@ -251,4 +255,19 @@ model NotificationRead {
   @@id([notificationId, adminId])
   @@index([adminId])
   @@map("notification_reads")
+}
+
+// A browser/device an admin enabled notifications on. The sender POSTs to `endpoint`, so only known push services are accepted.
+model PushSubscription {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  adminId   String   @map("admin_id") @db.Uuid
+  endpoint  String   @unique
+  p256dh    String   @db.VarChar(255)
+  auth      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@map("push_subscriptions")
 }
