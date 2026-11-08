@@ -12,6 +12,9 @@ try {
   process.exit(1);
 }
 
+// Needs the validated env, so it is set here rather than in app.ts (which must import without env).
+app.set("trust proxy", env.TRUST_PROXY);
+
 const server = app.listen(env.PORT, "0.0.0.0", () => {
   logger.info(`Server listening on port ${env.PORT}`);
 });

@@ -424,6 +424,9 @@ Reverse proxy dengan HTTPS (Caddy/Nginx) tidak termasuk dalam dua compose ini; l
 | `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET` | acak ≥ 32 byte | Wajib; tidak boleh ada di image |
 | `ACCESS_TOKEN_TTL` / `REFRESH_TOKEN_TTL` | `15m` / `7d` | |
 | `CORS_ORIGINS` | `https://...` | Daftar origin diizinkan |
+| `TRUST_PROXY` | kosong | Jumlah reverse proxy di depan aplikasi; kosong = 1 di production, 0 di lainnya |
+| `RATE_LIMIT_LOGIN_MAX` / `RATE_LIMIT_BOOKING_MAX` / `RATE_LIMIT_LOOKUP_MAX` / `RATE_LIMIT_GENERAL_MAX` | `10` / `10` / `30` / `300` | Batas permintaan per IP per jendela: login (hanya yang gagal, 15 menit), buat reservasi (1 jam), cek/batal reservasi (15 menit), seluruh API (1 menit) |
+| `DOCS_USER`, `DOCS_PASSWORD` | `docs` / kosong | `/docs` terbuka di luar production; di production hanya aktif bila `DOCS_PASSWORD` (≥ 12 karakter) diisi, dengan HTTP Basic auth |
 | `TZ` | `Asia/Jakarta` | |
 | `LOG_LEVEL` | `info` | |
 | `SLOT_STEP_MINUTES` | `30` | |
@@ -463,11 +466,11 @@ Kasus uji wajib:
 - [ ] Secret tidak ada di repository maupun layer image
 - [ ] Container production berjalan non-root, filesystem read-only
 - [ ] Database tidak terekspos ke host/publik di production
-- [ ] Rate limit aktif pada `/auth/login` dan `POST /bookings`
-- [ ] `helmet` dan CORS allowlist aktif
+- [x] Rate limit aktif pada `/auth/login` dan `POST /bookings` (juga cek/batal reservasi dan batas umum API)
+- [x] `helmet` dan CORS allowlist aktif
 - [ ] Nomor HP diredaksi di log
 - [ ] Pesan error tidak membocorkan detail internal
-- [ ] `/docs` dinonaktifkan atau dilindungi di production
+- [x] `/docs` dinonaktifkan atau dilindungi di production (404 bila `DOCS_PASSWORD` kosong, selain itu Basic auth)
 - [ ] Dependensi diaudit (`bun audit`/setara) sebelum rilis
 - [ ] Backup database terjadwal (lihat pertanyaan terbuka)
 
