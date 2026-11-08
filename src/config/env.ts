@@ -30,6 +30,9 @@ const baseSchema = z.object({
   BOOKING_BUFFER_MINUTES: z.coerce.number().int().min(0).default(15),
   MAX_ADVANCE_DAYS: z.coerce.number().int().positive().default(60),
   CANCEL_MIN_HOURS_BEFORE: z.coerce.number().int().min(0).default(0),
+  // Admin notifications (FR-17): nudge when a booking waits for confirmation this long, and when a confirmed one starts this soon.
+  NOTIFY_UNCONFIRMED_AFTER_MINUTES: z.coerce.number().int().positive().default(15),
+  NOTIFY_UPCOMING_MINUTES_BEFORE: z.coerce.number().int().positive().default(120),
   // Requests per IP in each window (windows are fixed in middleware/rate-limit.ts).
   RATE_LIMIT_LOGIN_MAX: z.coerce.number().int().positive().default(10),
   RATE_LIMIT_BOOKING_MAX: z.coerce.number().int().positive().default(10),

@@ -51,8 +51,9 @@ model Admin {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  refreshTokens RefreshToken[]
-  statusChanges BookingStatusHistory[]
+  refreshTokens     RefreshToken[]
+  statusChanges     BookingStatusHistory[]
+  notificationReads NotificationRead[]
 
   @@map("admins")
 }
@@ -143,9 +144,10 @@ model Booking {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  service Service                @relation(fields: [serviceId], references: [id], onDelete: Restrict)
-  artist  Artist                 @relation(fields: [artistId], references: [id], onDelete: Restrict)
-  history BookingStatusHistory[]
+  service       Service                @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  artist        Artist                 @relation(fields: [artistId], references: [id], onDelete: Restrict)
+  history       BookingStatusHistory[]
+  notifications Notification[]
 
   @@index([artistId, startAt])
   @@index([startAt])
@@ -206,4 +208,47 @@ model BlockedSlot {
   @@index([startAt, endAt])
   @@index([artistId])
   @@map("blocked_slots")
+}
+
+enum NotificationType {
+  new_booking
+  booking_cancelled
+  unconfirmed_reminder
+  upcoming_reminder
+  schedule_conflict
+
+  @@map("notification_type")
+}
+
+// An event for the admins. Text never contains a phone number (UU No. 27 Tahun 2022).
+model Notification {
+  id        String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type      NotificationType
+  bookingId String?          @map("booking_id") @db.Uuid
+  title     String           @db.VarChar(120)
+  body      String           @db.VarChar(500)
+  // One notification per event, however many times the scheduler runs: e.g. "unconfirmed_reminder:<booking id>".
+  dedupeKey String           @unique @map("dedupe_key") @db.VarChar(120)
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  booking Booking?           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  reads   NotificationRead[]
+
+  @@index([createdAt])
+  @@index([bookingId, type])
+  @@map("notifications")
+}
+
+// Read state is per admin: one admin reading a notification does not clear it for the others.
+model NotificationRead {
+  notificationId String   @map("notification_id") @db.Uuid
+  adminId        String   @map("admin_id") @db.Uuid
+  readAt         DateTime @default(now()) @map("read_at") @db.Timestamptz(3)
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  admin        Admin        @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@id([notificationId, adminId])
+  @@index([adminId])
+  @@map("notification_reads")
 }
