@@ -379,6 +379,45 @@ suite("API contract", () => {
     );
   });
 
+  test("CSV export", async () => {
+    await prisma.booking.create({
+      data: {
+        bookingCode: "NP-20261110-CSV1",
+        serviceId: base.service.id,
+        artistId: base.artist.id,
+        startAt: at("10:00", day),
+        endAt: at("11:30", day),
+        customerName: "Siti",
+        customerPhone: "+6281234567890",
+        totalPrice: 150000,
+      },
+    });
+    const csv = await expectContract(
+      await admin().get("/admin/export/bookings.csv"),
+      "GET",
+      "/admin/export/bookings.csv",
+      200,
+    );
+    // for a CSV the "body" returned by expectContract is the raw text
+    const text: unknown = csv;
+    expect(typeof text === "string" ? text.split("\r\n")[0] : "").toStartWith("booking_id,status,source");
+    await expectContract(
+      await admin().get("/admin/export/bookings.csv?date_from=nope"),
+      "GET",
+      "/admin/export/bookings.csv",
+      422,
+    );
+    await expectContract(await anon().get("/admin/export/bookings.csv"), "GET", "/admin/export/bookings.csv", 401);
+    const { loginAdmin } = await import("../helpers/http.js");
+    const staff = await loginAdmin(prisma, server.base, "staff@nailpalace.test", "staff");
+    await expectContract(
+      await api(server.base, staff).get("/admin/export/bookings.csv"),
+      "GET",
+      "/admin/export/bookings.csv",
+      403,
+    );
+  });
+
   test("dashboard", async () => {
     await expectContract(
       await admin().get(`/admin/dashboard/summary?date_from=${day}&date_to=${day}`),

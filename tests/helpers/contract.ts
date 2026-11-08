@@ -90,8 +90,18 @@ export async function checkResponse(res: Response, method: string, specPath: str
     };
   }
 
-  const media = (resolve(documented)["content"] as Record<string, { schema?: Node }> | undefined)?.["application/json"];
+  const content = resolve(documented)["content"] as Record<string, { schema?: Node }> | undefined;
+  const media = content?.["application/json"];
   if (!media?.schema) {
+    // A documented non-JSON body (the CSV export): check the type and that something was sent, not a JSON schema.
+    const other = Object.keys(content ?? {})[0];
+    if (other) {
+      if (!(res.headers.get("content-type") ?? "").startsWith(other)) {
+        problems.push(`${method} ${specPath} ${res.status} should be ${other}`);
+      }
+      if (text === "") problems.push(`${method} ${specPath} ${res.status} has an empty body`);
+      return { problems, body: text };
+    }
     if (text !== "") problems.push(`${method} ${specPath} ${res.status} should have no body`);
     return { problems, body: undefined };
   }
