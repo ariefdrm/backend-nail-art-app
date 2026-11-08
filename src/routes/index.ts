@@ -1,4 +1,5 @@
 import { Router } from "express";
+import adminScheduleRoutes from "./admin-schedule.routes.js";
 import authRoutes from "./auth.routes.js";
 import healthRoutes from "./health.routes.js";
 
@@ -9,6 +10,7 @@ const v1 = Router();
 // API contract: documents/openapi.yaml (servers: /api/v1)
 routes.use("/health", healthRoutes);
 v1.use("/auth", authRoutes);
+v1.use("/admin", adminScheduleRoutes);
 routes.use("/api/v1", v1);
 
 export default routes;

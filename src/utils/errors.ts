@@ -5,6 +5,7 @@ export type ErrorCode =
   | "NOT_FOUND"
   | "SLOT_UNAVAILABLE"
   | "INVALID_STATUS_TRANSITION"
+  | "BLOCK_HAS_BOOKINGS"
   | "INTERNAL_ERROR";
 
 export interface ErrorDetail {
@@ -17,13 +18,22 @@ export class AppError extends Error {
   readonly code: ErrorCode;
   readonly httpStatus: number;
   readonly details: ErrorDetail[] | undefined;
+  /** Extra payload for BLOCK_HAS_BOOKINGS: the bookings that stand in the way. */
+  readonly conflicts: readonly unknown[] | undefined;
 
-  constructor(code: ErrorCode, httpStatus: number, message: string, details?: ErrorDetail[]) {
+  constructor(
+    code: ErrorCode,
+    httpStatus: number,
+    message: string,
+    details?: ErrorDetail[],
+    conflicts?: readonly unknown[],
+  ) {
     super(message);
     this.name = "AppError";
     this.code = code;
     this.httpStatus = httpStatus;
     this.details = details;
+    this.conflicts = conflicts;
   }
 
   static validation(details?: ErrorDetail[], message = "Input tidak valid"): AppError {
@@ -46,13 +56,20 @@ export class AppError extends Error {
     return new AppError("SLOT_UNAVAILABLE", 409, message);
   }
 
+  static blockHasBookings(
+    conflicts: readonly unknown[],
+    message = "Ada reservasi pada waktu yang akan diblokir",
+  ): AppError {
+    return new AppError("BLOCK_HAS_BOOKINGS", 409, message, undefined, conflicts);
+  }
+
   static invalidStatusTransition(message = "Perubahan status tidak diizinkan"): AppError {
     return new AppError("INVALID_STATUS_TRANSITION", 409, message);
   }
 }
 
 export interface ErrorBody {
-  error: { code: ErrorCode; message: string; details?: ErrorDetail[] };
+  error: { code: ErrorCode; message: string; details?: ErrorDetail[]; conflicts?: readonly unknown[] };
 }
 
 export function toErrorBody(error: AppError): ErrorBody {
@@ -61,6 +78,7 @@ export function toErrorBody(error: AppError): ErrorBody {
       code: error.code,
       message: error.message,
       ...(error.details ? { details: error.details } : {}),
+      ...(error.conflicts ? { conflicts: error.conflicts } : {}),
     },
   };
 }

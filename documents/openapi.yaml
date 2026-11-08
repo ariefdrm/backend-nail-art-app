@@ -475,6 +475,7 @@ paths:
     get:
       tags: [Admin]
       summary: Jam operasional mingguan
+      description: Satu baris per hari (0 = Minggu sampai 6 = Sabtu), diurutkan menurut hari.
       security: [{ bearerAuth: [] }]
       responses:
         '200':
@@ -485,9 +486,15 @@ paths:
                 type: object
                 properties:
                   data: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
     put:
       tags: [Admin]
       summary: Ganti seluruh jam operasional mingguan
+      description: |
+        Wajib memuat tepat 7 hari (0 sampai 6, tanpa duplikat); perubahan bersifat atomik.
+        Hari buka wajib punya `open_time` lebih awal dari `close_time`. Jam istirahat bersifat opsional,
+        harus diisi berpasangan, dan berada di dalam jam buka. Hari tutup disimpan tanpa jam.
+        Jam baru hanya berlaku untuk slot ke depan; reservasi yang sudah ada tidak berubah.
       security: [{ bearerAuth: [] }]
       requestBody:
         required: true
@@ -497,7 +504,11 @@ paths:
               type: object
               required: [hours]
               properties:
-                hours: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+                hours:
+                  type: array
+                  minItems: 7
+                  maxItems: 7
+                  items: { $ref: '#/components/schemas/BusinessHour' }
       responses:
         '200':
           description: OK
@@ -507,11 +518,13 @@ paths:
                 type: object
                 properties:
                   data: { type: array, items: { $ref: '#/components/schemas/BusinessHour' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /admin/blocked-slots:
     get:
       tags: [Admin]
       summary: Daftar waktu yang diblokir (libur, istirahat, cuti artist)
+      description: Memuat blokir yang beririsan dengan rentang tanggal (zona waktu Asia/Jakarta), diurutkan menurut waktu mulai.
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: date_from, in: query, schema: { type: string, format: date } }
@@ -525,9 +538,19 @@ paths:
                 type: object
                 properties:
                   data: { type: array, items: { $ref: '#/components/schemas/BlockedSlot' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/ValidationError' }
     post:
       tags: [Admin]
       summary: Blokir rentang waktu
+      description: |
+        Boleh memblokir waktu yang sudah berisi reservasi `pending` atau `confirmed`, tetapi harus lewat
+        langkah sadar: jika ada reservasi yang bertabrakan dan `acknowledge_conflicts` bukan `true`,
+        permintaan ditolak `409 BLOCK_HAS_BOOKINGS` beserta daftar reservasinya dan tidak ada yang dibuat.
+        Dengan `acknowledge_conflicts: true`, blokir dibuat dan reservasi yang terdampak dikembalikan di
+        `affected_bookings`. Sistem tidak membatalkan reservasi apa pun; pemilik menyepakati jadwal ulang
+        atau pembatalan dengan customer lewat chat (`contact_url`) lalu mencatatnya.
+        Blokir tanpa `artist_id` berlaku untuk seluruh studio (bertabrakan dengan reservasi semua artist).
       security: [{ bearerAuth: [] }]
       requestBody:
         required: true
@@ -542,7 +565,31 @@ paths:
               schema:
                 type: object
                 properties:
-                  data: { $ref: '#/components/schemas/BlockedSlot' }
+                  data: { $ref: '#/components/schemas/BlockedSlotCreated' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { $ref: '#/components/responses/BlockHasBookings' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  /admin/blocked-slots/check:
+    post:
+      tags: [Admin]
+      summary: Periksa reservasi yang terdampak sebelum memblokir
+      description: Tidak menyimpan apa pun. `acknowledge_conflicts` pada body diabaikan.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BlockedSlotInput' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/BlockCheck' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /admin/blocked-slots/{id}:
     delete:
@@ -552,6 +599,7 @@ paths:
       parameters: [{ $ref: '#/components/parameters/IdPath' }]
       responses:
         '204': { description: Dihapus }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '404': { $ref: '#/components/responses/NotFound' }
   /admin/dashboard/summary:
     get:
@@ -613,6 +661,24 @@ components:
         application/json:
           schema: { $ref: '#/components/schemas/Error' }
           example: { error: { code: SLOT_UNAVAILABLE, message: Jadwal yang dipilih sudah tidak tersedia } }
+    BlockHasBookings:
+      description: Ada reservasi aktif pada rentang yang diblokir dan acknowledge_conflicts belum true
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example:
+            error:
+              code: BLOCK_HAS_BOOKINGS
+              message: Ada reservasi pada waktu yang akan diblokir
+              conflicts:
+                - id: 6f1f7f0e-9a53-4f4e-8c1c-1c8f6b0f1a11
+                  booking_code: NP-20261110-A7K2
+                  status: confirmed
+                  start_at: '2026-11-10T10:00:00+07:00'
+                  end_at: '2026-11-10T11:30:00+07:00'
+                  customer_name: Siti
+                  service_name: Gel Polish
+                  contact_url: https://wa.me/6281234567890?text=Halo%20Siti
   schemas:
     BookingStatus:
       type: string
@@ -704,8 +770,10 @@ components:
       properties:
         day_of_week: { type: integer, minimum: 0, maximum: 6, description: '0 = Minggu ... 6 = Sabtu' }
         is_open: { type: boolean }
-        open_time: { type: string, example: '10:00', nullable: true }
-        close_time: { type: string, example: '20:00', nullable: true }
+        open_time: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$', example: '10:00', nullable: true }
+        close_time: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$', example: '20:00', nullable: true }
+        break_start: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$', example: '12:00', nullable: true, description: Opsional; harus berpasangan dengan break_end }
+        break_end: { type: string, pattern: '^([01][0-9]|2[0-3]):[0-5][0-9]$', example: '13:00', nullable: true }
     BlockedSlot:
       type: object
       properties:
@@ -718,10 +786,33 @@ components:
       type: object
       required: [start_at, end_at]
       properties:
-        artist_id: { type: string, format: uuid, nullable: true }
+        artist_id: { type: string, format: uuid, nullable: true, description: Kosong = seluruh studio }
+        start_at: { type: string, format: date-time }
+        end_at: { type: string, format: date-time, description: Harus setelah start_at; rentang maksimal 366 hari }
+        reason: { type: string, maxLength: 255 }
+        acknowledge_conflicts: { type: boolean, default: false, description: Wajib true untuk memblokir waktu yang berisi reservasi aktif }
+    AffectedBooking:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        booking_code: { type: string, example: NP-20261110-A7K2 }
+        status: { $ref: '#/components/schemas/BookingStatus' }
         start_at: { type: string, format: date-time }
         end_at: { type: string, format: date-time }
-        reason: { type: string, maxLength: 255 }
+        customer_name: { type: string }
+        service_name: { type: string }
+        contact_url: { type: string, format: uri, description: Tautan wa.me dengan pesan siap kirim; pemilik menekan kirim sendiri }
+    BlockedSlotCreated:
+      allOf:
+        - { $ref: '#/components/schemas/BlockedSlot' }
+        - type: object
+          properties:
+            affected_bookings: { type: array, items: { $ref: '#/components/schemas/AffectedBooking' } }
+    BlockCheck:
+      type: object
+      properties:
+        can_block: { type: boolean, description: true bila tidak ada reservasi aktif yang bertabrakan }
+        conflicts: { type: array, items: { $ref: '#/components/schemas/AffectedBooking' } }
     Admin:
       type: object
       properties:
@@ -776,3 +867,7 @@ components:
                 properties:
                   field: { type: string }
                   message: { type: string }
+            conflicts:
+              type: array
+              description: Hanya untuk BLOCK_HAS_BOOKINGS
+              items: { $ref: '#/components/schemas/AffectedBooking' }
