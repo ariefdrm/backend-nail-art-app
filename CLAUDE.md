@@ -33,8 +33,8 @@ The backend is built module by module, in the order below, following the PRD's F
 | 1 | `feature/core-infrastructure` | env validation, `AppError` + error handler, request-id, logging, `validate()`, Prisma singleton, health routes | none | done (PR #2) |
 | 2 | `feature/data-model` | all PRD tables, `bookings_no_overlap` EXCLUDE + CHECK constraints, seed | 1 | done (PR #7) |
 | 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole`; logout and logout-all added later in `feature/auth-logout` | 2 | done (PR #7) |
-| 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | next |
-| 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | todo |
+| 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | done (PR #17) |
+| 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | next |
 | 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | todo |
 | 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | todo |
 | 8 | `feature/admin-booking` | FR-07, FR-13: list/filter, status transitions, reschedule, manual booking, `wa.me` reminder link | 3, 7 | todo |
@@ -84,7 +84,7 @@ Prisma specifics (v7):
 - Config lives in `prisma.config.ts`; the datasource URL is set there, not in `schema.prisma`.
 - Client is generated to `src/generated/prisma` (generator `prisma-client`, ESM with `.js` import extensions so `tsc` output works on Node) — import from there, not `@prisma/client`; the folder is generated, don't edit it. A driver adapter (`@prisma/adapter-pg`) is required when constructing the client.
 - Schema (`prisma/schema.prisma`) covers all PRD models: `Admin`, `RefreshToken`, `Service`, `Artist`, `Booking`, `BookingStatusHistory`, `BusinessHour` (times are `"HH:mm"` strings in Asia/Jakarta, with optional break), `BlockedSlot` (`artistId` null = whole studio). UUID ids come from `gen_random_uuid()`, all timestamps are `timestamptz`, tables/columns are snake_case via `@@map`/`@map`.
-- The migration `*_data_model` holds what Prisma can't express: the `bookings_no_overlap` EXCLUDE constraint and CHECK constraints (booking/blocked-slot time order, service duration multiple of 15, business-hour formats). Prisma doesn't track these, so copy them forward if you ever regenerate. An exclusion violation surfaces as `PrismaClientKnownRequestError` code `P2039` with the Postgres code at `meta.driverAdapterError.cause.originalCode === "23P01"`.
+- The migration `*_data_model` holds what Prisma can't express: the `bookings_no_overlap` EXCLUDE constraint and CHECK constraints (booking/blocked-slot time order, service duration multiple of 15, business-hour formats). Prisma doesn't track these, so copy them forward if you ever regenerate. An exclusion violation surfaces as `PrismaClientKnownRequestError` code `P2039` with the Postgres code at `meta.driverAdapterError.cause.originalCode === "23P01"`. A foreign key `RESTRICT` violation (e.g. deleting a service that has bookings) surfaces as code `P2003` (Postgres reports `23001`, not `23503`); `prismaErrorCode()` and `sqlState()` in `utils/prisma.ts` read these.
 - `migrate dev` needs a TTY and `migrate reset` is refused for AI agents without user consent; to generate SQL non-interactively use `prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --script` against a migrated scratch database. `bun run db:seed` is idempotent (one artist, seven closed business-hour rows, and the owner admin when `ADMIN_SEED_EMAIL`/`ADMIN_SEED_PASSWORD` (>= 12 chars) are set; an existing admin is never overwritten); services and real business hours are not seeded yet.
 
 Rules from the PRD that shape new code:

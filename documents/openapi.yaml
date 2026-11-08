@@ -48,6 +48,19 @@ paths:
                 properties:
                   data: { $ref: '#/components/schemas/Service' }
         '404': { $ref: '#/components/responses/NotFound' }
+  /artists:
+    get:
+      tags: [Public]
+      summary: Daftar nail artist aktif
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Artist' } }
   /availability:
     get:
       tags: [Public]
@@ -622,7 +635,7 @@ components:
       properties:
         id: { type: string, format: uuid }
         name: { type: string, example: Gel Polish + Nail Art Simple }
-        description: { type: string }
+        description: { type: string, nullable: true }
         category: { type: string, example: gel_polish }
         price: { type: integer, example: 150000, description: Rupiah }
         duration_minutes: { type: integer, example: 90 }
@@ -632,12 +645,12 @@ components:
       type: object
       required: [name, category, price, duration_minutes]
       properties:
-        name: { type: string, maxLength: 120 }
-        description: { type: string }
-        category: { type: string }
-        price: { type: integer, minimum: 0 }
-        duration_minutes: { type: integer, minimum: 15, multipleOf: 15 }
-        image_url: { type: string, nullable: true }
+        name: { type: string, minLength: 1, maxLength: 120 }
+        description: { type: string, maxLength: 1000 }
+        category: { type: string, minLength: 1, maxLength: 50 }
+        price: { type: integer, minimum: 0, maximum: 100000000, description: Rupiah }
+        duration_minutes: { type: integer, minimum: 15, maximum: 480, multipleOf: 15 }
+        image_url: { type: string, format: uri, maxLength: 2048, nullable: true, description: URL http atau https }
         is_active: { type: boolean, default: true }
     Artist:
       type: object
@@ -650,8 +663,8 @@ components:
       type: object
       required: [name]
       properties:
-        name: { type: string, maxLength: 80 }
-        photo_url: { type: string, nullable: true }
+        name: { type: string, minLength: 1, maxLength: 80 }
+        photo_url: { type: string, format: uri, maxLength: 2048, nullable: true, description: URL http atau https }
         is_active: { type: boolean, default: true }
     Slot:
       type: object
