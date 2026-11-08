@@ -57,6 +57,18 @@ Open items to settle during the relevant module:
 - Notifications (12a/12b, FR-17) were designed after the PRD: Web Push is allowed (it is not the excluded WhatsApp API). Defaults to confirm during review: all admins receive them with per-admin read state, the frontend polls `unread-count` (SSE later), 15 min unconfirmed nudge, 120 min upcoming reminder, no phone numbers in any notification text or push payload. The scheduler starts in `server.ts` only, never in `app.ts`. The service worker and "enable notifications" UI belong to `nail-art-frontend-app`.
 - Commits on modules 1-3 lack a scope; that is history, so only new commits need `type(scope):`.
 
+### Working in parallel
+- The chain is 5, then 6 (which also needs 4), then 7. After module 7 is merged, modules 8, 9, 10 and 12a do not depend on each other, so different people or sessions can build them at the same time.
+- Files every module touches, so keep edits there to a line or two and rebase on `origin/develop` before opening the PR: `src/routes/index.ts` (one `import` and one `use` per router), `documents/openapi.yaml`, the plan table above (flip only your own row), and `prisma/migrations` (only 12a and 12b add tables; give them to one person).
+- The frontend (`nail-art-frontend-app`) can work against a mock server generated from `documents/openapi.yaml` (for example Prism), so it does not wait for the backend. Change the contract first and tell the frontend. Web Push needs a service worker in that repo: confirm they have capacity before starting 12b.
+- Reviews (one approval required) are the likely bottleneck, so keep each PR small and single-purpose.
+
+### Still undecided (PRD section 14)
+- Deploy location and the HTTPS reverse proxy (question 3), database backup (question 5), and what the AI team needs from the backend (question 7, which keeps FR-15 and FR-16 tentative). None of them blocks modules 5 to 9. Question 4 (CI) is settled: GitHub Actions.
+
+### Repository settings (GitHub, not stored in git)
+Branch protection for `develop` and `main`, the required check names, and the "delete head branches on merge" setting are recommended in `GIT_WORKFLOW.md` section 10. The repository cannot show whether they are enabled: check Settings, Rules.
+
 ## Commands
 
 ```bash

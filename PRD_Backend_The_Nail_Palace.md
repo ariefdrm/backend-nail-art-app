@@ -155,13 +155,15 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 | Runtime development | **Bun** | Menjalankan TypeScript langsung, watch mode, dan test runner (`bun test`) |
 | Runtime production | **Node.js 26 (LTS)** | Menjalankan JavaScript hasil transpile. Node 26 resmi masuk Active LTS pada 28 Oktober 2026 |
 | Linting | **ESLint** (flat config) + `typescript-eslint` | Termasuk aturan batas antar-layer |
+| Format kode | **Prettier** + `.editorconfig` | Kutip ganda, titik koma, 2 spasi, koma di akhir, 120 kolom. `format:check` dijalankan di `verify`, CI, dan tahap `verify` `Dockerfile.prod`. Markdown, migrasi, kode hasil generate, dan `documents/` dikecualikan lewat `.prettierignore` |
+| CI | **GitHub Actions** | `ci.yml`: format, lint, typecheck, tes unit, build, dan smoke test di Node 26, ditambah tes integrasi dengan container PostgreSQL. `pr-base.yml`: PR ke `main` hanya boleh berasal dari `develop` |
 | Container | **Podman** (rootless) + `podman compose` | Build dan run; file `Dockerfile.*` tetap kompatibel dengan Podman |
-| Validasi | `zod` | Validasi body, query, dan environment (usulan) |
-| Autentikasi | `jose` atau `jsonwebtoken`, `@node-rs/argon2` | Usulan; dipilih agar jalan di Bun dan Node (alternatif hash: `bcryptjs`) |
+| Validasi | `zod` | Validasi body, query, params, dan environment (dipakai) |
+| Autentikasi | `jose`, `@node-rs/argon2` | Dipakai: JWT HS256 lewat `jose`, hash argon2id; keduanya jalan di Bun dan Node (termasuk Alpine/musl) |
 | Keamanan HTTP | `helmet`, `cors`, `express-rate-limit` | Usulan |
-| Logging | `pino`, `pino-http` | Usulan |
-| Tanggal/zona waktu | `luxon` atau `date-fns-tz` | Usulan; tidak memakai Temporal agar perilaku sama di Bun dan Node |
-| Pengujian | `bun test`, `supertest` | Unit dan integrasi |
+| Logging | `pino`, `pino-http` | Dipakai; header otorisasi, kata sandi, token, dan nomor telepon diredaksi |
+| Tanggal/zona waktu | Offset tetap +07:00 (`src/utils/datetime.ts`), tanpa library | Asia/Jakarta tidak memakai waktu musim panas, jadi offset tetap sudah tepat. Tidak memakai Temporal agar perilaku sama di Bun dan Node |
+| Pengujian | `bun test` dan `fetch` ke `app.listen(0)` | Unit (repository di-mock) dan integrasi (Express + PostgreSQL asli). Tidak memakai `supertest` |
 
 > Item bertanda "usulan" bukan keputusan final dan boleh diganti selama memenuhi kebutuhan non-fungsional.
 
@@ -228,7 +230,8 @@ nailpalace-api/
 │   ├── schemas/                # skema zod per endpoint
 │   ├── utils/
 │   │   ├── prisma.ts           # instance PrismaClient + adapter pg (singleton)
-│   │   ├── datetime.ts         # konversi WIB, kelipatan slot
+│   │   ├── datetime.ts         # konversi WIB (offset tetap +07:00), kelipatan slot
+│   │   ├── whatsapp.ts         # pembuat tautan wa.me (dipakai FR-09 dan FR-13)
 │   │   ├── phone.ts            # normalisasi E.164
 │   │   ├── booking-code.ts     # NP-YYYYMMDD-XXXX
 │   │   ├── errors.ts           # kelas AppError + kode error
@@ -248,20 +251,22 @@ nailpalace-api/
 ├── scripts/
 │   ├── dev-entrypoint.sh
 │   └── release.sh              # gerbang rilis (bagian 9.4)
-├── docs/
-│   ├── PRD.md
-│   └── openapi.yaml
+├── documents/
+│   └── openapi.yaml            # kontrak API (PRD ada di root: PRD_Backend_The_Nail_Palace.md)
+├── .github/workflows/          # ci.yml dan pr-base.yml
 ├── Dockerfile.dev
 ├── Dockerfile.prod
 ├── compose.dev.yaml
 ├── compose.prod.yaml
-├── eslint.config.js
+├── eslint.config.mjs
+├── .prettierrc.json
+├── .editorconfig
 ├── tsconfig.json
 ├── tsconfig.build.json         # untuk build production (tanpa tests)
 ├── bunfig.toml
 ├── package.json                # "type": "module"
 ├── .env.example
-├── .containerignore
+├── .dockerignore               # dibaca juga oleh Podman
 └── .gitignore
 ```
 
@@ -499,6 +504,8 @@ Kasus uji wajib:
 | R6 | Tes integrasi tidak ikut dalam `podman build` | Image bisa dibangun tanpa tes integrasi bila orang melewati skrip | Wajibkan `release.sh` sebagai satu-satunya jalur rilis; blok di CI |
 | R7 | Pemilik studio hanya satu orang, tidak punya waktu mengisi data | Data awal minim | Seed dari file yang sudah disiapkan; admin diberi halaman minimal dan cepat |
 | R8 | Data dummy berbeda dengan perilaku asli | Model/analisis salah arah | Tandai data sintetis; ganti dengan data nyata setelah sistem dipakai |
+| R9 | Antrean review menahan modul (aturan satu persetujuan dari kolaborator lain) | Modul menumpuk dan tenggat 8 Desember 2026 terlewat | Sepakati waktu respons review; PR kecil dan berfokus satu hal; setelah modul 7, modul 8, 9, 10, dan 12a dikerjakan paralel |
+| R10 | Frontend bergantung pada kontrak yang masih berubah, dan Web Push butuh service worker di repo frontend | Integrasi terlambat | Frontend memakai server tiruan dari `openapi.yaml`; kontrak diubah lebih dulu dan diumumkan; konfirmasi kapasitas frontend sebelum modul 12b |
 
 ---
 
@@ -507,7 +514,7 @@ Kasus uji wajib:
 1. **Konfirmasi reservasi:** manual oleh pemilik (`pending` → `confirmed`) atau otomatis? Draf memakai manual. **Diputuskan (8 Nov 2026): manual.**
 2. **Artist:** karena pemilik satu-satunya pelaku, apakah `artist_id` disembunyikan dari alur customer? **Diputuskan (8 Nov 2026):** `artist_id` opsional di API dan disembunyikan secara default di frontend; bila kosong, sistem memilih artist yang tersedia.
 3. **Lokasi deploy:** VPS, mesin lokal, atau layanan cloud? Menentukan reverse proxy, HTTPS, dan backup.
-4. **CI:** memakai apa (GitHub Actions, GitLab CI)? Bagaimana menjalankan Podman di sana?
+4. **CI:** memakai apa (GitHub Actions, GitLab CI)? Bagaimana menjalankan Podman di sana? **Diputuskan: GitHub Actions** (`ci.yml`, `pr-base.yml`). CI tidak memakai Podman; tes integrasi memakai container layanan PostgreSQL, dan image produksi tetap dibangun lewat `scripts/release.sh`.
 5. **Backup database:** frekuensi dan lokasi penyimpanan.
 6. **Tenggat Asah:** tanggal demo/penilaian untuk memetakan fase 0–4. **Diputuskan: 8 Desember 2026** (lihat bagian 12).
 7. **Pembagian kerja:** apa yang dibutuhkan tim AI engineer dari backend (mis. endpoint, webhook, skor risiko no-show)? Poin FR-15 s.d. FR-16 masih tentatif sampai ini jelas.
@@ -515,7 +522,7 @@ Kasus uji wajib:
 
 ---
 
-## Lampiran A — Skrip `package.json` (usulan)
+## Lampiran A — Skrip `package.json` (sesuai kondisi saat ini)
 
 ```json
 {
@@ -525,15 +532,18 @@ Kasus uji wajib:
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test": "bun test",
-    "test:unit": "bun test tests/unit --coverage",
-    "test:integration": "bun test tests/integration",
+    "test": "bun run test:unit && bun run test:integration",
+    "test:unit": "bun test tests/unit --coverage --pass-with-no-tests",
+    "test:integration": "bun test tests/integration --pass-with-no-tests",
     "prisma:generate": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:seed": "bun prisma/seed.ts",
-    "verify": "bun run lint && bun run typecheck && bun run test:unit && bun run build"
+    "db:test:reset": "DATABASE_URL=\"$DATABASE_URL_TEST\" prisma migrate reset --force",
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run test:unit && bun run build"
   }
 }
 ```

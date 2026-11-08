@@ -441,3 +441,33 @@ The purpose of this workflow is to establish a consistent development process ac
 Every collaborator is responsible for maintaining code quality, writing meaningful commit messages, reviewing changes, and following the established branching conventions.
 
 **Remember:** No changes should reach the production branch without proper review and validation.
+
+---
+
+## 10. Repository Settings (recommended)
+
+These live in GitHub (Settings, Rules, Rulesets), not in the repository, so they are listed here to keep them reviewable. The check names below are those of the backend repository (`.github/workflows`); the frontend repository uses its own.
+
+| Setting | `develop` | `main` |
+| --- | --- | --- |
+| Ruleset enforcement | Active | Active |
+| Target | `refs/heads/develop` | `refs/heads/main` (exact name, not `main*`) |
+| Restrict deletions | On | On |
+| Block force pushes | On | On |
+| Require a pull request | On | On |
+| Required approvals | 1 | 1 |
+| Dismiss stale approvals on new commits | On | On |
+| Require approval of the most recent push | Off | On |
+| Require conversation resolution | On | On |
+| Required status checks | `Lint, typecheck, unit tests, build`, `Integration tests (PostgreSQL)` | the same two, plus `PR base` |
+| Require branches to be up to date | On | On |
+| Allowed merge methods | Squash (PR titles follow Conventional Commits) | Merge commit |
+| Bypass | Admins for pull requests only | None |
+
+General settings: turn on "Automatically delete head branches". The default branch stays `main`, so open feature pull requests with base `develop` explicitly.
+
+Notes:
+
+- A check can only be selected after its workflow has run once on GitHub.
+- GitHub does not let an author approve their own pull request, so one approval needs a second collaborator; if none is available, set approvals to 0 temporarily instead of using the admin bypass.
+- State at 8 November 2026: a `main-protection` ruleset existed but was disabled and matched `main*`, and `develop` was unprotected. Recheck before relying on this section.
