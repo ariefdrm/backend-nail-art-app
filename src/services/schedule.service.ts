@@ -2,6 +2,7 @@ import * as scheduleRepo from "../repositories/schedule.repository.js";
 import type { BlockedSlotInput, BusinessHourInput } from "../schemas/schedule.schema.js";
 import { addDays, formatJakartaLong, jakartaDayStart, toJakartaIso } from "../utils/datetime.js";
 import { AppError } from "../utils/errors.js";
+import { STUDIO_NAME, firstName } from "../utils/studio.js";
 import { buildWhatsAppUrl } from "../utils/whatsapp.js";
 
 // Structural row types: repositories return Prisma rows, but this layer must not import Prisma.
@@ -67,8 +68,6 @@ export interface BlockCheckDto {
   can_block: boolean;
   conflicts: AffectedBookingDto[];
 }
-
-const STUDIO_NAME = "The Nail Palace";
 
 // --- business hours (FR-09) ---
 
@@ -137,9 +136,8 @@ function toBlockedSlotDto(row: BlockedSlotRow): BlockedSlotDto {
  * owner's internal reason for the block; the owner can edit it before sending.
  */
 function buildContactMessage(row: ConflictRow): string {
-  const firstName = row.customerName.trim().split(/\s+/)[0] ?? row.customerName;
   return (
-    `Halo ${firstName}, kami dari ${STUDIO_NAME}. Mohon maaf, jadwal Anda (${row.bookingCode}) pada ` +
+    `Halo ${firstName(row.customerName)}, kami dari ${STUDIO_NAME}. Mohon maaf, jadwal Anda (${row.bookingCode}) pada ` +
     `${formatJakartaLong(row.startAt)} terkena perubahan jadwal studio. Apakah Anda bersedia memilih jadwal ` +
     `pengganti? Jika tidak, kami siap membantu membatalkannya. Terima kasih atas pengertiannya.`
   );

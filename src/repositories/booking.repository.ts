@@ -43,6 +43,12 @@ export interface NewBooking {
   customerNote: string | null;
   referenceImageUrl: string | null;
   totalPrice: number;
+  /** Default: an online, pending booking made by the customer. */
+  source?: "online" | "admin" | undefined;
+  status?: "pending" | "confirmed" | undefined;
+  /** Admin who made the booking; recorded in the first history row. */
+  changedBy?: string | null | undefined;
+  confirmedAt?: Date | null | undefined;
 }
 
 /** Why a booking could not be inserted under the schedule lock. */
@@ -52,8 +58,16 @@ export type CreateResult =
   { created: true; booking: Awaited<ReturnType<typeof insertBooking>> } | { created: false; reason: CreateRefusal };
 
 function insertBooking(tx: Pick<PrismaClient, "booking">, data: NewBooking) {
+  const { source, status, changedBy, confirmedAt, ...fields } = data;
+  const initial = status ?? "pending";
   return tx.booking.create({
-    data: { ...data, history: { create: { fromStatus: null, toStatus: "pending", changedBy: null } } },
+    data: {
+      ...fields,
+      status: initial,
+      ...(source ? { source } : {}),
+      ...(confirmedAt ? { confirmedAt } : {}),
+      history: { create: { fromStatus: null, toStatus: initial, changedBy: changedBy ?? null } },
+    },
     include: withRelations,
   });
 }
