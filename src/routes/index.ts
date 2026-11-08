@@ -10,6 +10,7 @@ import catalogRoutes from "./catalog.routes.js";
 import dashboardRoutes from "./dashboard.routes.js";
 import exportRoutes from "./export.routes.js";
 import notificationRoutes from "./notification.routes.js";
+import pushRoutes from "./push.routes.js";
 import healthRoutes from "./health.routes.js";
 
 const routes = Router();
@@ -26,6 +27,7 @@ v1.use("/admin", adminBookingRoutes);
 v1.use("/admin", dashboardRoutes);
 v1.use("/admin", exportRoutes);
 v1.use("/admin", notificationRoutes);
+v1.use("/admin", pushRoutes);
 v1.use(catalogRoutes);
 v1.use(availabilityRoutes);
 v1.use(bookingRoutes);

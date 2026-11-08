@@ -1,6 +1,7 @@
 import app from "./app.js";
 import { EnvError, getEnv, type Env } from "./config/env.js";
 import { startNotificationScheduler } from "./jobs/notification-scheduler.js";
+import { startPushSender } from "./jobs/push-sender.js";
 import { logger } from "./utils/logger.js";
 import { disconnectPrisma } from "./utils/prisma.js";
 
@@ -22,10 +23,13 @@ const server = app.listen(env.PORT, "0.0.0.0", () => {
 
 // In-process timer (FR-17); the database dedupe key keeps a second instance from duplicating notifications.
 const scheduler = startNotificationScheduler();
+// Sends the notifications as Web Push, apart from the request that created them (FR-17).
+const pushSender = startPushSender();
 
 function shutdown(signal: string): void {
   logger.info(`${signal} received, shutting down`);
   scheduler.stop();
+  pushSender.stop();
   // Force exit if connections do not drain in time.
   setTimeout(() => process.exit(1), 10_000).unref();
   server.close((err) => {

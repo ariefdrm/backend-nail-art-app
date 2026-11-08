@@ -480,6 +480,62 @@ suite("API contract", () => {
     );
   });
 
+  test("web push", async () => {
+    const key = await expectContract(await admin().get("/admin/push/public-key"), "GET", "/admin/push/public-key", 200);
+    expect(key["data"].public_key).toBeDefined();
+    await expectContract(await anon().get("/admin/push/public-key"), "GET", "/admin/push/public-key", 401);
+
+    const subscription = {
+      endpoint: "https://fcm.googleapis.com/fcm/send/contract",
+      keys: {
+        p256dh: "BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM",
+        auth: "tBHItJI5svbpez7KI4CCXg",
+      },
+    };
+    await expectContract(
+      await admin().post("/admin/push-subscriptions", subscription),
+      "POST",
+      "/admin/push-subscriptions",
+      201,
+    );
+    await expectContract(
+      await admin().post("/admin/push-subscriptions", subscription),
+      "POST",
+      "/admin/push-subscriptions",
+      200,
+    );
+    await expectContract(
+      await admin().post("/admin/push-subscriptions", { ...subscription, endpoint: "https://evil.test/x" }),
+      "POST",
+      "/admin/push-subscriptions",
+      422,
+    );
+    await expectContract(
+      await anon().post("/admin/push-subscriptions", subscription),
+      "POST",
+      "/admin/push-subscriptions",
+      401,
+    );
+    await expectContract(
+      await admin().delete("/admin/push-subscriptions", { endpoint: subscription.endpoint }),
+      "DELETE",
+      "/admin/push-subscriptions",
+      204,
+    );
+    await expectContract(
+      await admin().delete("/admin/push-subscriptions", {}),
+      "DELETE",
+      "/admin/push-subscriptions",
+      422,
+    );
+    await expectContract(
+      await anon().delete("/admin/push-subscriptions", {}),
+      "DELETE",
+      "/admin/push-subscriptions",
+      401,
+    );
+  });
+
   test("dashboard", async () => {
     await expectContract(
       await admin().get(`/admin/dashboard/summary?date_from=${day}&date_to=${day}`),

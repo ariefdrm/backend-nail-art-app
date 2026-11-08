@@ -827,6 +827,82 @@ paths:
         '404': { $ref: '#/components/responses/NotFound' }
         '422': { $ref: '#/components/responses/ValidationError' }
 
+  /admin/push/public-key:
+    get:
+      tags: [Admin]
+      summary: Kunci publik VAPID untuk berlangganan Web Push
+      description: |
+        Dipakai browser pada pushManager.subscribe({ applicationServerKey }). Mengembalikan 404 bila Web Push belum
+        dikonfigurasi di server (VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, dan VAPID_SUBJECT belum diisi).
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      public_key: { type: string, description: Kunci publik VAPID (base64url) }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /admin/push-subscriptions:
+    post:
+      tags: [Admin]
+      summary: Daftarkan perangkat/browser untuk menerima notifikasi Web Push
+      description: |
+        Body adalah hasil PushSubscription.toJSON() dari browser. Idempoten menurut endpoint: mendaftarkan endpoint yang
+        sama lagi memperbarui kuncinya dan memindahkannya ke admin yang sedang login (mis. perangkat dipakai bergantian).
+        Endpoint harus https dan milik layanan push browser yang dikenal (Chrome/FCM, Firefox, Safari, Edge); selain itu 422.
+        201 untuk langganan baru, 200 bila endpoint sudah terdaftar. 404 bila Web Push belum dikonfigurasi.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PushSubscriptionInput' }
+      responses:
+        '200':
+          description: Endpoint sudah terdaftar; kunci diperbarui
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/PushSubscription' }
+        '201':
+          description: Langganan baru
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: '#/components/schemas/PushSubscription' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+    delete:
+      tags: [Admin]
+      summary: Berhenti berlangganan Web Push untuk perangkat ini
+      description: Menghapus langganan milik admin yang sedang login dengan endpoint tersebut. Idempoten (204 walau tidak ada).
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [endpoint]
+              properties:
+                endpoint: { type: string, format: uri }
+      responses:
+        '204': { description: Dihapus }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+
 components:
   securitySchemes:
     bearerAuth:
@@ -1070,6 +1146,22 @@ components:
         created_at: { type: string, format: date-time }
         read: { type: boolean, description: Sudah dibaca oleh admin yang sedang login }
         read_at: { type: string, format: date-time, nullable: true }
+    PushSubscriptionInput:
+      type: object
+      required: [endpoint, keys]
+      properties:
+        endpoint: { type: string, format: uri, example: 'https://fcm.googleapis.com/fcm/send/abc' }
+        keys:
+          type: object
+          required: [p256dh, auth]
+          properties:
+            p256dh: { type: string, description: Kunci publik klien (base64url) }
+            auth: { type: string, description: Rahasia autentikasi (base64url) }
+    PushSubscription:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        created_at: { type: string, format: date-time }
     Pagination:
       type: object
       properties:
