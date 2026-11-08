@@ -8,6 +8,7 @@ import { AppError } from "../utils/errors.js";
 import { normalizePhone } from "../utils/phone.js";
 import { prismaErrorCode, sqlState } from "../utils/prisma.js";
 import type { AvailabilityDto, AvailabilityQuery } from "./availability.service.js";
+import { cancelledContent, newBookingContent } from "./notification.messages.js";
 import { toBookingDto, type BookingDto, type BookingRow } from "./booking.dto.js";
 
 export type { BookingDto, BookingRow };
@@ -85,9 +86,10 @@ export async function placeBooking(
   for (const artistId of candidates) {
     for (let attempt = 0; attempt < CODE_ATTEMPTS; attempt += 1) {
       try {
+        const bookingCode = generateBookingCode(startAt);
         const result = await bookingRepo.createBookingLocked(
           {
-            bookingCode: generateBookingCode(startAt),
+            bookingCode,
             serviceId: service.id,
             artistId,
             startAt,
@@ -101,6 +103,16 @@ export async function placeBooking(
             status: origin.status,
             changedBy: origin.changedBy,
             confirmedAt: origin.status === "confirmed" ? now : null,
+            // Only a customer's own booking is news to the admins; one they made themselves is not.
+            notification:
+              origin.source === "online"
+                ? newBookingContent({
+                    bookingCode,
+                    customerName: input.customer_name,
+                    serviceName: service.name,
+                    startAt,
+                  })
+                : undefined,
           },
           bufferMinutes,
         );
@@ -153,7 +165,18 @@ export async function cancelBooking(
     );
   }
 
-  const cancelled = await bookingRepo.cancelActiveBooking(row.id, row.status, reason || null);
+  // The customer's reason is free text and may contain personal data, so it stays out of the notification.
+  const cancelled = await bookingRepo.cancelActiveBooking(
+    row.id,
+    row.status,
+    reason || null,
+    cancelledContent({
+      bookingCode: row.bookingCode,
+      customerName: row.customerName,
+      serviceName: row.service.name,
+      startAt: row.startAt,
+    }),
+  );
   if (!cancelled) throw AppError.invalidStatusTransition("Reservasi sudah tidak dapat dibatalkan");
   return toBookingDto(cancelled, false);
 }

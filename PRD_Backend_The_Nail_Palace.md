@@ -137,6 +137,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - FR-16 (titik sambung skor risiko no-show) belum dikerjakan: menunggu jawaban pertanyaan terbuka nomor 7.
 
 **FR-17 Notifikasi admin**
+- Pemicu tambahan: reservasi aktif yang bertabrakan dengan blokir waktu (`schedule_conflict`, sekali per reservasi). Reservasi yang dibuat atau dibatalkan admin sendiri tidak memicu notifikasi.
 - Pemicu: reservasi baru dari customer (`source=online`), pembatalan oleh customer, reservasi `pending` lebih lama dari `NOTIFY_UNCONFIRMED_AFTER_MINUTES` (default 15), dan reservasi `confirmed` yang dimulai dalam `NOTIFY_UPCOMING_MINUTES_BEFORE` (default 120).
 - Notifikasi dibuat dalam transaksi database yang sama dengan perubahan reservasi, dan tiap peristiwa hanya menghasilkan satu notifikasi (`dedupe_key` unik) walau penjadwal berjalan berulang.
 - Status baca disimpan per admin; daftar mendukung filter belum dibaca dan paginasi, dan ada endpoint jumlah belum dibaca.
@@ -433,6 +434,7 @@ Reverse proxy dengan HTTPS (Caddy/Nginx) tidak termasuk dalam dua compose ini; l
 | `CORS_ORIGINS` | `https://...` | Daftar origin diizinkan |
 | `TRUST_PROXY` | kosong | Jumlah reverse proxy di depan aplikasi; kosong = 1 di production, 0 di lainnya |
 | `RATE_LIMIT_LOGIN_MAX` / `RATE_LIMIT_BOOKING_MAX` / `RATE_LIMIT_LOOKUP_MAX` / `RATE_LIMIT_GENERAL_MAX` | `10` / `10` / `30` / `300` | Batas permintaan per IP per jendela: login (hanya yang gagal, 15 menit), buat reservasi (1 jam), cek/batal reservasi (15 menit), seluruh API (1 menit) |
+| `NOTIFY_UNCONFIRMED_AFTER_MINUTES` / `NOTIFY_UPCOMING_MINUTES_BEFORE` | `15` / `120` | Menit sebelum reservasi `pending` diingatkan, dan menit sebelum reservasi `confirmed` dimulai untuk pengingat jadwal (FR-17) |
 | `DOCS_USER`, `DOCS_PASSWORD` | `docs` / kosong | `/docs` terbuka di luar production; di production hanya aktif bila `DOCS_PASSWORD` (≥ 12 karakter) diisi, dengan HTTP Basic auth |
 | `TZ` | `Asia/Jakarta` | |
 | `LOG_LEVEL` | `info` | |

@@ -262,13 +262,15 @@ describe("cancelBooking", () => {
   test("cancels a pending booking, recording who it came from and the reason", async () => {
     const result = await cancelBooking("NP-20261110-A7K2", "+6281234567890", "berhalangan", options);
     expect(result.status).toBe("cancelled");
-    expect(calls.cancelled).toEqual([["b1", "pending", "berhalangan"]]);
+    expect(calls.cancelled).toHaveLength(1);
+    expect(calls.cancelled[0]?.slice(0, 3)).toEqual(["b1", "pending", "berhalangan"]);
   });
 
   test("a confirmed booking can be cancelled too, and the reason is optional", async () => {
     found = bookingRow({ status: "confirmed" });
     await cancelBooking("NP-20261110-A7K2", "+6281234567890", undefined, options);
-    expect(calls.cancelled).toEqual([["b1", "confirmed", null]]);
+    expect(calls.cancelled).toHaveLength(1);
+    expect(calls.cancelled[0]?.slice(0, 3)).toEqual(["b1", "confirmed", null]);
   });
 
   test("404 for a wrong phone, without touching the booking", async () => {

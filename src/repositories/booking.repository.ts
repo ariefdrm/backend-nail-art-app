@@ -1,5 +1,7 @@
 import type { PrismaClient } from "../generated/prisma/client.js";
+import type { NotificationType } from "../generated/prisma/enums.js";
 import { getPrisma } from "../utils/prisma.js";
+import type { NewNotification } from "./notification.repository.js";
 import { SCHEDULE_LOCK_KEY } from "./schedule-lock.js";
 
 /** Bookings that occupy time: only these block a slot or conflict with a blocked range. */
@@ -49,6 +51,8 @@ export interface NewBooking {
   /** Admin who made the booking; recorded in the first history row. */
   changedBy?: string | null | undefined;
   confirmedAt?: Date | null | undefined;
+  /** Written in the same transaction, so a booking never exists without its notification (or the reverse). */
+  notification?: Omit<NewNotification, "bookingId"> | undefined;
 }
 
 /** Why a booking could not be inserted under the schedule lock. */
@@ -58,7 +62,8 @@ export type CreateResult =
   { created: true; booking: Awaited<ReturnType<typeof insertBooking>> } | { created: false; reason: CreateRefusal };
 
 function insertBooking(tx: Pick<PrismaClient, "booking">, data: NewBooking) {
-  const { source, status, changedBy, confirmedAt, ...fields } = data;
+  const { source, status, changedBy, confirmedAt, notification, ...fields } = data;
+  void notification; // written by the caller in the same transaction, not part of the booking row
   const initial = status ?? "pending";
   return tx.booking.create({
     data: {
@@ -105,7 +110,22 @@ export function createBookingLocked(data: NewBooking, bufferMinutes: number): Pr
     });
     if (tooClose > 0) return { created: false, reason: "buffer_conflict" } as const;
 
-    return { created: true, booking: await insertBooking(tx, data) } as const;
+    const booking = await insertBooking(tx, data);
+    if (data.notification) {
+      await tx.notification.createMany({
+        data: [
+          {
+            type: data.notification.type as NotificationType,
+            title: data.notification.title,
+            body: data.notification.body,
+            dedupeKey: data.notification.dedupeKey,
+            bookingId: booking.id,
+          },
+        ],
+        skipDuplicates: true,
+      });
+    }
+    return { created: true, booking } as const;
   });
 }
 
@@ -129,7 +149,12 @@ export async function hasBlockedOverlap(range: { artistId: string; startAt: Date
  * Cancels a pending/confirmed booking and records the history row. Returns null when the booking is no
  * longer active (someone else changed it first), so a double cancel cannot write two history rows.
  */
-export function cancelActiveBooking(id: string, fromStatus: string, reason: string | null) {
+export function cancelActiveBooking(
+  id: string,
+  fromStatus: string,
+  reason: string | null,
+  notification?: Omit<NewNotification, "bookingId">,
+) {
   return getPrisma().$transaction(async (tx) => {
     const result = await tx.booking.updateMany({
       where: { id, status: { in: [...ACTIVE_BOOKING_STATUSES] } },
@@ -145,6 +170,12 @@ export function cancelActiveBooking(id: string, fromStatus: string, reason: stri
         reason,
       },
     });
+    if (notification) {
+      await tx.notification.createMany({
+        data: [{ ...notification, type: notification.type as NotificationType, bookingId: id }],
+        skipDuplicates: true,
+      });
+    }
     return tx.booking.findUniqueOrThrow({ where: { id }, include: withRelations });
   });
 }

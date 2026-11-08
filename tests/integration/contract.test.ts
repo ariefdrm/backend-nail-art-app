@@ -418,6 +418,68 @@ suite("API contract", () => {
     );
   });
 
+  test("notifications", async () => {
+    const created = await expectContract(
+      await anon().post("/bookings", {
+        service_id: base.service.id,
+        start_at: startAt("09:00"),
+        customer_name: "Siti",
+        customer_phone: "08123456789",
+      }),
+      "POST",
+      "/bookings",
+      201,
+    );
+    expect(created["data"].booking_code).toBeDefined();
+    const list = await expectContract(await admin().get("/admin/notifications"), "GET", "/admin/notifications", 200);
+    expect(list["data"]).toHaveLength(1);
+    await expectContract(await admin().get("/admin/notifications?page=0"), "GET", "/admin/notifications", 422);
+    await expectContract(await anon().get("/admin/notifications"), "GET", "/admin/notifications", 401);
+    await expectContract(
+      await admin().get("/admin/notifications/unread-count"),
+      "GET",
+      "/admin/notifications/unread-count",
+      200,
+    );
+    await expectContract(
+      await anon().get("/admin/notifications/unread-count"),
+      "GET",
+      "/admin/notifications/unread-count",
+      401,
+    );
+    const id = list["data"][0].id;
+    await expectContract(
+      await admin().patch(`/admin/notifications/${id}/read`, {}),
+      "PATCH",
+      "/admin/notifications/{id}/read",
+      200,
+    );
+    await expectContract(
+      await admin().patch(`/admin/notifications/${UNKNOWN}/read`, {}),
+      "PATCH",
+      "/admin/notifications/{id}/read",
+      404,
+    );
+    await expectContract(
+      await admin().patch("/admin/notifications/nope/read", {}),
+      "PATCH",
+      "/admin/notifications/{id}/read",
+      422,
+    );
+    await expectContract(
+      await admin().post("/admin/notifications/read-all", {}),
+      "POST",
+      "/admin/notifications/read-all",
+      200,
+    );
+    await expectContract(
+      await anon().post("/admin/notifications/read-all", {}),
+      "POST",
+      "/admin/notifications/read-all",
+      401,
+    );
+  });
+
   test("dashboard", async () => {
     await expectContract(
       await admin().get(`/admin/dashboard/summary?date_from=${day}&date_to=${day}`),
