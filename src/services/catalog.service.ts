@@ -2,60 +2,9 @@ import type { ArtistInput, ServiceInput } from "../schemas/catalog.schema.js";
 import * as artistRepo from "../repositories/artist.repository.js";
 import * as serviceRepo from "../repositories/service.repository.js";
 import { AppError } from "../utils/errors.js";
+import { toArtistDto, toServiceDto, type ArtistDto, type ServiceDto } from "./catalog.dto.js";
 
-// Structural row types: the repositories return Prisma rows, but this layer must not import Prisma.
-interface ServiceRow {
-  id: string;
-  name: string;
-  description: string | null;
-  category: string;
-  price: number;
-  durationMinutes: number;
-  imageUrl: string | null;
-  isActive: boolean;
-}
-
-interface ArtistRow {
-  id: string;
-  name: string;
-  photoUrl: string | null;
-  isActive: boolean;
-}
-
-export interface ServiceDto {
-  id: string;
-  name: string;
-  description: string | null;
-  category: string;
-  price: number;
-  duration_minutes: number;
-  image_url: string | null;
-  is_active: boolean;
-}
-
-export interface ArtistDto {
-  id: string;
-  name: string;
-  photo_url: string | null;
-  is_active: boolean;
-}
-
-function toServiceDto(row: ServiceRow): ServiceDto {
-  return {
-    id: row.id,
-    name: row.name,
-    description: row.description,
-    category: row.category,
-    price: row.price,
-    duration_minutes: row.durationMinutes,
-    image_url: row.imageUrl,
-    is_active: row.isActive,
-  };
-}
-
-function toArtistDto(row: ArtistRow): ArtistDto {
-  return { id: row.id, name: row.name, photo_url: row.photoUrl, is_active: row.isActive };
-}
+export type { ArtistDto, ServiceDto };
 
 function toServiceData(input: ServiceInput): serviceRepo.ServiceData {
   return {

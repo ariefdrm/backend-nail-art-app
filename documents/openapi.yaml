@@ -70,6 +70,8 @@ paths:
         Tanggal (WIB) tidak boleh sebelum hari ini dan tidak boleh melebihi MAX_ADVANCE_DAYS (422).
         Hari tutup mengembalikan slots kosong; pada hari ini, slot yang waktu mulainya sudah lewat tidak ditampilkan.
         service_id atau artist_id yang tidak ada atau tidak aktif mengembalikan 404.
+        Setiap reservasi aktif menempati artist-nya sampai end_at ditambah BOOKING_BUFFER_MINUTES (jeda antar-reservasi);
+        blokir waktu, jam istirahat, dan jam tutup tidak memakai jeda.
       parameters:
         - { name: service_id, in: query, required: true, schema: { type: string, format: uuid } }
         - { name: date, in: query, required: true, schema: { type: string, format: date, example: '2026-11-10' } }
@@ -89,6 +91,11 @@ paths:
     post:
       tags: [Public]
       summary: Buat reservasi
+      description: |
+        Tanpa akun. Status awal pending. Jika artist_id kosong, sistem memilih artist yang tersedia pada slot tersebut.
+        start_at harus salah satu slot dari GET /availability; selain itu 409 SLOT_UNAVAILABLE. Tanggal di masa lalu atau
+        melebihi MAX_ADVANCE_DAYS ditolak 422. Nomor telepon diterima dalam bentuk 08..., 62..., atau +62... dan disimpan
+        sebagai E.164. Harga disalin dari layanan saat reservasi dibuat.
       requestBody:
         required: true
         content:
@@ -103,6 +110,7 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Booking' }
+        '404': { $ref: '#/components/responses/NotFound' }
         '409': { $ref: '#/components/responses/SlotUnavailable' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /bookings/{booking_code}:
@@ -149,10 +157,11 @@ paths:
                   data: { $ref: '#/components/schemas/Booking' }
         '404': { $ref: '#/components/responses/NotFound' }
         '409':
-          description: Status tidak dapat dibatalkan (INVALID_STATUS_TRANSITION)
+          description: Status tidak dapat dibatalkan, atau sudah lewat batas waktu pembatalan (INVALID_STATUS_TRANSITION)
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
+        '422': { $ref: '#/components/responses/ValidationError' }
 
   /auth/login:
     post:
@@ -759,7 +768,7 @@ components:
         artist_id: { type: string, format: uuid, nullable: true, description: Kosong = sistem memilih artist yang tersedia }
         start_at: { type: string, format: date-time }
         customer_name: { type: string, maxLength: 100 }
-        customer_phone: { type: string, example: '+6281234567890' }
+        customer_phone: { type: string, example: '+6281234567890', description: 'Format 08..., 62..., atau +62...; disimpan sebagai E.164' }
         customer_note: { type: string, maxLength: 500 }
         reference_image_url: { type: string, nullable: true }
     Booking:
@@ -780,6 +789,7 @@ components:
         source: { type: string, enum: [online, admin] }
         cancel_reason: { type: string, nullable: true }
         admin_note: { type: string, nullable: true }
+        schedule_conflict: { type: boolean, description: 'true bila reservasi aktif bertabrakan dengan blokir waktu; pemilik akan menghubungi customer' }
         created_at: { type: string, format: date-time }
         updated_at: { type: string, format: date-time }
     BusinessHour:
