@@ -24,9 +24,10 @@ export interface AvailabilityQuery {
 }
 
 export interface AvailabilityOptions {
-  /** Defaults to SLOT_STEP_MINUTES / MAX_ADVANCE_DAYS from the environment. */
+  /** Default to SLOT_STEP_MINUTES / MAX_ADVANCE_DAYS / BOOKING_BUFFER_MINUTES from the environment. */
   stepMinutes?: number;
   maxAdvanceDays?: number;
+  bufferMinutes?: number;
   now?: Date;
 }
 
@@ -50,9 +51,13 @@ export async function getAvailability(
   query: AvailabilityQuery,
   options: AvailabilityOptions = {},
 ): Promise<AvailabilityDto> {
-  const env = options.stepMinutes === undefined || options.maxAdvanceDays === undefined ? getEnv() : undefined;
+  const needsEnv =
+    options.stepMinutes === undefined || options.maxAdvanceDays === undefined || options.bufferMinutes === undefined;
+  const env = needsEnv ? getEnv() : undefined;
   const stepMinutes = options.stepMinutes ?? env?.SLOT_STEP_MINUTES ?? 30;
   const maxAdvanceDays = options.maxAdvanceDays ?? env?.MAX_ADVANCE_DAYS ?? 60;
+  const bufferMinutes = options.bufferMinutes ?? env?.BOOKING_BUFFER_MINUTES ?? 0;
+  const bufferMs = bufferMinutes * MINUTE_MS;
   const now = options.now ?? new Date();
 
   const today = jakartaDayStart(toJakartaIso(now).slice(0, 10));
@@ -83,7 +88,11 @@ export async function getAvailability(
   if (!hours?.isOpen || !hours.openTime || !hours.closeTime || artistIds.length === 0) return empty;
 
   const dayEnd = addDays(dayStart, 1);
-  const { bookings, blocks } = await availabilityRepo.findBusyRanges({ startAt: dayStart, endAt: dayEnd });
+  // A booking also occupies its artist for the buffer after it ends, so look slightly past the day edges.
+  const { bookings, blocks } = await availabilityRepo.findBusyRanges({
+    startAt: new Date(dayStart.getTime() - bufferMs),
+    endAt: new Date(dayEnd.getTime() + bufferMs),
+  });
 
   const open = toMinutes(hours.openTime);
   const close = toMinutes(hours.closeTime);
@@ -100,9 +109,15 @@ export async function getAvailability(
     if (startAt.getTime() <= now.getTime()) continue;
 
     const free = artistIds.filter((artistId) => {
-      const busy = (r: { artistId: string | null; startAt: Date; endAt: Date }) =>
-        (r.artistId === null || r.artistId === artistId) && r.startAt < endAt && r.endAt > startAt;
-      return !bookings.some(busy) && !blocks.some(busy);
+      const forArtist = (r: { artistId: string | null }) => r.artistId === null || r.artistId === artistId;
+      // Two bookings may sit side by side only if their occupied ranges [start, end + buffer) do not overlap.
+      const bookingBusy = (r: { artistId: string | null; startAt: Date; endAt: Date }) =>
+        r.artistId === artistId &&
+        startAt.getTime() < r.endAt.getTime() + bufferMs &&
+        r.startAt.getTime() < endAt.getTime() + bufferMs;
+      const blockBusy = (r: { artistId: string | null; startAt: Date; endAt: Date }) =>
+        forArtist(r) && r.startAt < endAt && r.endAt > startAt;
+      return !bookings.some(bookingBusy) && !blocks.some(blockBusy);
     });
     if (free.length === 0) continue;
 

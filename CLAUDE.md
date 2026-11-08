@@ -35,9 +35,9 @@ The backend is built module by module, in the order below, following the PRD's F
 | 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole`; logout and logout-all added later in `feature/auth-logout` | 2 | done (PR #7) |
 | 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | done (PR #17) |
 | 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | done (PR #19) |
-| 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | done |
-| 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | next |
-| 8 | `feature/admin-booking` | FR-07, FR-13: list/filter, status transitions, reschedule, manual booking, `wa.me` reminder link | 3, 7 | todo |
+| 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | done (PR #21) |
+| 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | done |
+| 8 | `feature/admin-booking` | FR-07, FR-13: list/filter, status transitions, reschedule, manual booking, `wa.me` reminder link | 3, 7 | next |
 | 9 | `feature/dashboard` | FR-10: `/admin/dashboard/summary` | 8 | todo |
 | 10 | `security/hardening` | FR-12, FR-14: rate limits (login, `POST /bookings`), helmet, CORS allowlist, `trust proxy`, protected `/docs`, contract tests against `openapi.yaml`, PRD security checklist | 8 | todo |
 | 11 | `feature/export-csv` | FR-15, FR-16 (P2, optional) | 8 | todo |
@@ -51,6 +51,8 @@ Open items to settle during the relevant module:
   - Booking confirmation is manual (`pending` to `confirmed` by the owner). `artist_id` is optional in the API and hidden by default in the frontend; when omitted the system picks an available artist.
   - `BusinessHour` gets optional `break_start` / `break_end` in the contract (module 5, contract first).
   - Blocking time that already has bookings is allowed but never silent (module 5, FR-09): `POST /admin/blocked-slots/check` previews affected `pending`/`confirmed` bookings; `POST /admin/blocked-slots` answers `409 BLOCK_HAS_BOOKINGS` (new error code, add to `ErrorCode` and the contract) unless the body has `acknowledge_conflicts: true`; nothing is cancelled automatically. Affected bookings are computed, not stored, and carry a `contact_url` (`wa.me` link with a ready-to-send message; one shared builder, reused for FR-13 `reminder_url`). The owner agrees the new time or the cancellation with the customer in chat and records it via reschedule/cancel (module 8) plus `admin_note`. Module 7 exposes `schedule_conflict` on the public booking status and takes the same advisory lock as block creation; module 12a adds a nudge for unresolved conflicts.
+  - `BOOKING_BUFFER_MINUTES` (default 15) is applied: an active booking occupies its artist for `[start_at, end_at + buffer)`, and two bookings may sit side by side only if those occupied ranges do not overlap (so the buffer also separates a new slot from a booking that follows it). Blocked slots, the break and closing time use exact times. The `bookings_no_overlap` constraint only knows the raw ranges, so `createBookingLocked` re-checks the buffer (and blocked slots) under the schedule advisory lock; admin-created bookings (module 8) must go through the same lock and check.
+  - Customer lookup/cancel treat an unparsable phone like any other mismatch (404, never 422), so the endpoints cannot be used to probe codes.
   - The backend cannot send WhatsApp messages (PRD non-goal) and cannot verify the customer's consent; it only prepares the message and records the owner's outcome.
 - Services and real business hours are not seeded yet (waiting for the `services.csv` / `jam_operasional.csv` files); the seed only creates one artist, closed hours, and the admin from `ADMIN_SEED_*` (module 4/5).
 - No login rate limit, and `req.ip` is the proxy's address until `trust proxy` is set (module 10).

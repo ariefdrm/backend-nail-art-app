@@ -94,7 +94,10 @@ suite("availability", () => {
 
     const onlyBusy = await slots(`service_id=${base.service.id}&date=${day}&artist_id=${base.artist.id}`);
     expect(onlyBusy.some((s) => s.start_at.includes("T09:00"))).toBe(false);
-    expect(onlyBusy.some((s) => s.start_at.includes("T10:30"))).toBe(true);
+    // the booking ends 10:30 and the 15 minute buffer keeps the artist busy until 10:45
+    expect(onlyBusy.some((s) => s.start_at.includes("T10:30"))).toBe(false);
+    // 11:00-12:30 would run into the break, so the next slot is after it
+    expect(onlyBusy.some((s) => s.start_at.includes("T13:00"))).toBe(true);
   });
 
   test("a studio-wide blocked slot removes the overlapping slots for everyone", async () => {

@@ -95,6 +95,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - Slot hanya muncul pada jam operasional, di luar jam istirahat, dan tidak melewati jam tutup.
 - Slot yang bertabrakan dengan reservasi `pending`/`confirmed` atau blokir waktu tidak muncul.
 - Slot berada pada kelipatan `SLOT_STEP_MINUTES` (default 30) dan durasi mengikuti layanan.
+- Reservasi aktif menempati artist-nya sampai `end_at` ditambah `BOOKING_BUFFER_MINUTES` (default 15); dua reservasi hanya boleh berdampingan bila rentang terpakai keduanya tidak bertabrakan. Blokir waktu, jam istirahat, dan jam tutup memakai waktu persis tanpa jeda.
 
 **FR-04 Buat reservasi**
 - Status awal `pending`; reservasi yang dibuat admin langsung `confirmed`.

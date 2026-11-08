@@ -1,13 +1,8 @@
 import { findActiveBookingsOverlapping, type TimeRange } from "./booking.repository.js";
 import { getPrisma } from "../utils/prisma.js";
+import { SCHEDULE_LOCK_KEY } from "./schedule-lock.js";
 
-/**
- * Key of the PostgreSQL advisory lock that serializes every code path which must not
- * run concurrently with the others: creating a blocked slot (it checks for bookings)
- * and, in the booking module, creating a booking (it checks for blocked slots).
- * Without it a block and a booking created at the same instant could both succeed.
- */
-export const SCHEDULE_LOCK_KEY = 726_001;
+export { SCHEDULE_LOCK_KEY };
 
 export interface BusinessHourData {
   dayOfWeek: number;

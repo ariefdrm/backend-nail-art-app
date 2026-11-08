@@ -30,7 +30,7 @@ await mock.module("../../../src/repositories/availability.repository.js", () => 
 
 const { getAvailability } = await import("../../../src/services/availability.service.js");
 
-const options = { stepMinutes: 30, maxAdvanceDays: 60, now: new Date("2026-11-09T01:00:00Z") };
+const options = { stepMinutes: 30, maxAdvanceDays: 60, bufferMinutes: 0, now: new Date("2026-11-09T01:00:00Z") };
 const query = { service_id: SERVICE_ID, date: "2026-11-10" };
 const starts = (r: Awaited<ReturnType<typeof getAvailability>>) => r.slots.map((s) => s.start_at.slice(11, 16));
 
@@ -110,6 +110,25 @@ describe("getAvailability", () => {
     expect(byStart.get("10:00")).toEqual([A2]);
     expect(byStart.get("10:30")).toEqual([A2]);
     expect(byStart.get("11:00")).toEqual([A1, A2]); // starts when the booking ends
+  });
+
+  test("the buffer keeps the artist busy for BOOKING_BUFFER_MINUTES around a booking", async () => {
+    // 60 minute service, booking 10:00-11:00: it occupies the artist until 11:15, and a slot needs 15 free minutes after it
+    bookings = [{ artistId: A1, startAt: at("10:00"), endAt: at("11:00") }];
+    const withBuffer = starts(await getAvailability(query, { ...options, bufferMinutes: 15 }));
+    expect(withBuffer.slice(0, 1)).toEqual(["11:30"]); // 09:00 would leave no gap before 10:00, 11:00 starts inside the buffer
+    const withoutBuffer = starts(await getAvailability(query, options));
+    expect(withoutBuffer).toContain("09:00"); // the same slots are free when there is no buffer
+    expect(withoutBuffer).toContain("11:00");
+  });
+
+  test("a buffer does not apply to blocked slots, the break or closing time", async () => {
+    blocks = [{ artistId: null, startAt: at("13:00"), endAt: at("14:00") }];
+    hours = [tuesday({ breakStart: "12:00", breakEnd: "13:00" })];
+    const result = starts(await getAvailability(query, { ...options, bufferMinutes: 15 }));
+    expect(result).toContain("11:00"); // ends exactly at the break
+    expect(result).toContain("14:00"); // starts exactly when the block ends
+    expect(result).toContain("16:00"); // ends exactly at closing time
   });
 
   test("a slot disappears when every artist is busy", async () => {
