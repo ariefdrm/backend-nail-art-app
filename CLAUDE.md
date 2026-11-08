@@ -41,11 +41,14 @@ The backend is built module by module, in the order below, following the PRD's F
 | 9 | `feature/dashboard` | FR-10: `/admin/dashboard/summary` | 8 | todo |
 | 10 | `security/hardening` | FR-12, FR-14: rate limits (login, `POST /bookings`), helmet, CORS allowlist, `trust proxy`, protected `/docs`, contract tests against `openapi.yaml`, PRD security checklist | 8 | todo |
 | 11 | `feature/export-csv` | FR-15, FR-16 (P2, optional) | 8 | todo |
+| 12a | `feature/notifications` | FR-17: `notifications` + per-admin reads, events written in the booking transaction (new online booking, customer cancel), 60 s in-process scheduler (unconfirmed nudge, upcoming reminder), `/admin/notifications*` | 7 | todo |
+| 12b | `feature/web-push` | FR-17: `push_subscriptions`, VAPID env vars, `web-push` sender driven by `notifications.pushed_at`, `/admin/push*` | 12a | todo |
 
 Open items to settle during the relevant module:
 - `BusinessHour` has nullable `break_start` / `break_end` columns that `openapi.yaml` does not define; decide whether to add them to the contract (module 5).
 - Services and real business hours are not seeded yet (waiting for the `services.csv` / `jam_operasional.csv` files); the seed only creates one artist, closed hours, and the admin from `ADMIN_SEED_*` (module 4/5).
 - No login rate limit, and `req.ip` is the proxy's address until `trust proxy` is set (module 10).
+- Notifications (12a/12b, FR-17) were designed after the PRD: Web Push is allowed (it is not the excluded WhatsApp API). Defaults to confirm during review: all admins receive them with per-admin read state, the frontend polls `unread-count` (SSE later), 15 min unconfirmed nudge, 120 min upcoming reminder, no phone numbers in any notification text or push payload. The scheduler starts in `server.ts` only, never in `app.ts`. The service worker and "enable notifications" UI belong to `nail-art-frontend-app`.
 - Commits on modules 1-3 lack a scope; that is history, so only new commits need `type(scope):`.
 
 ## Commands
