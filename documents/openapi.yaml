@@ -65,7 +65,11 @@ paths:
     get:
       tags: [Public]
       summary: Slot waktu yang tersedia pada satu tanggal
-      description: Jika artist_id tidak diisi, slot dikembalikan beserta daftar artist yang tersedia pada slot tersebut.
+      description: |
+        Jika artist_id tidak diisi, slot dikembalikan beserta daftar artist yang tersedia pada slot tersebut.
+        Tanggal (WIB) tidak boleh sebelum hari ini dan tidak boleh melebihi MAX_ADVANCE_DAYS (422).
+        Hari tutup mengembalikan slots kosong; pada hari ini, slot yang waktu mulainya sudah lewat tidak ditampilkan.
+        service_id atau artist_id yang tidak ada atau tidak aktif mengembalikan 404.
       parameters:
         - { name: service_id, in: query, required: true, schema: { type: string, format: uuid } }
         - { name: date, in: query, required: true, schema: { type: string, format: date, example: '2026-11-10' } }
@@ -79,6 +83,7 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/Availability' }
+        '404': { $ref: '#/components/responses/NotFound' }
         '422': { $ref: '#/components/responses/ValidationError' }
   /bookings:
     post:
