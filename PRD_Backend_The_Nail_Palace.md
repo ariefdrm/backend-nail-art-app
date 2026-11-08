@@ -129,6 +129,13 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - `avg_confirmation_minutes` = rata-rata selisih `confirmed_at` dan `created_at` hanya untuk reservasi online yang pernah dikonfirmasi (reservasi admin langsung `confirmed`, sehingga tidak dihitung).
 - Rasio dan rata-rata bernilai `null`, bukan 0, bila belum ada data pembaginya.
 
+**FR-15 Ekspor CSV**
+- Hanya role `owner`. Satu baris per reservasi, urut `start_at`, dikirim bertahap dari database sehingga riwayat besar tidak perlu muat di memori; filter opsional `date_from`, `date_to` (hari WIB, inklusif), dan `status`.
+- Data pribadi tidak diekspor (tanpa nama, nomor telepon, kode booking, dan catatan bebas). Customer yang sama dikenali lewat `customer_ref` (HMAC nomor telepon dengan kunci rahasia server); `has_customer_note` dan `has_reference_image` hanya menyatakan ada atau tidaknya.
+- Memuat kolom turunan untuk analisis: `lead_time_hours`, `confirmation_minutes`, `status_changes`, `last_status_change_at`, dan `cancelled_by`. Daftar kolom lengkap ada di `openapi.yaml`.
+- Sel teks yang diawali `=`, `+`, `-`, atau `@` diberi awalan `'` agar tidak dijalankan sebagai rumus oleh aplikasi spreadsheet.
+- FR-16 (titik sambung skor risiko no-show) belum dikerjakan: menunggu jawaban pertanyaan terbuka nomor 7.
+
 **FR-17 Notifikasi admin**
 - Pemicu: reservasi baru dari customer (`source=online`), pembatalan oleh customer, reservasi `pending` lebih lama dari `NOTIFY_UNCONFIRMED_AFTER_MINUTES` (default 15), dan reservasi `confirmed` yang dimulai dalam `NOTIFY_UPCOMING_MINUTES_BEFORE` (default 120).
 - Notifikasi dibuat dalam transaksi database yang sama dengan perubahan reservasi, dan tiap peristiwa hanya menghasilkan satu notifikasi (`dedupe_key` unik) walau penjadwal berjalan berulang.
