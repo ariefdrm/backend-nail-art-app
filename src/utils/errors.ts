@@ -6,6 +6,7 @@ export type ErrorCode =
   | "SLOT_UNAVAILABLE"
   | "INVALID_STATUS_TRANSITION"
   | "BLOCK_HAS_BOOKINGS"
+  | "RATE_LIMITED"
   | "INTERNAL_ERROR";
 
 export interface ErrorDetail {
@@ -61,6 +62,10 @@ export class AppError extends Error {
     message = "Ada reservasi pada waktu yang akan diblokir",
   ): AppError {
     return new AppError("BLOCK_HAS_BOOKINGS", 409, message, undefined, conflicts);
+  }
+
+  static rateLimited(message = "Terlalu banyak permintaan, coba lagi nanti"): AppError {
+    return new AppError("RATE_LIMITED", 429, message);
   }
 
   static invalidStatusTransition(message = "Perubahan status tidak diizinkan"): AppError {

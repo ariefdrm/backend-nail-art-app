@@ -7,6 +7,13 @@ process.env.SLOT_STEP_MINUTES = "30";
 process.env.BOOKING_BUFFER_MINUTES = "15";
 process.env.MAX_ADVANCE_DAYS = "60";
 process.env.CANCEL_MIN_HOURS_BEFORE = "0";
+// The suites share one IP and one process; the rate limit tests build their own small limiters.
+// One allowed origin for the CORS tests.
+process.env.CORS_ORIGINS = "https://allowed.test";
+process.env.RATE_LIMIT_LOGIN_MAX = "100000";
+process.env.RATE_LIMIT_BOOKING_MAX = "100000";
+process.env.RATE_LIMIT_LOOKUP_MAX = "100000";
+process.env.RATE_LIMIT_GENERAL_MAX = "100000";
 process.env.JWT_REFRESH_SECRET ??= "test-refresh-secret-test-refresh-secret-0123";
 // Integration tests talk to the dedicated test database only.
 process.env.DATABASE_URL = process.env.DATABASE_URL_TEST ?? "postgresql://unused:unused@127.0.0.1:1/unused";

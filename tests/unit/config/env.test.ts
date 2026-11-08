@@ -19,6 +19,41 @@ describe("parseEnv", () => {
     expect(env.CORS_ORIGINS).toEqual([]);
   });
 
+  test("rate limits default to sensible values and can be overridden", () => {
+    const env = parseEnv(valid);
+    expect([
+      env.RATE_LIMIT_LOGIN_MAX,
+      env.RATE_LIMIT_BOOKING_MAX,
+      env.RATE_LIMIT_LOOKUP_MAX,
+      env.RATE_LIMIT_GENERAL_MAX,
+    ]).toEqual([10, 10, 30, 300]);
+    expect(parseEnv({ ...valid, RATE_LIMIT_LOGIN_MAX: "3" }).RATE_LIMIT_LOGIN_MAX).toBe(3);
+    expect(() => parseEnv({ ...valid, RATE_LIMIT_LOGIN_MAX: "0" })).toThrow(EnvError);
+  });
+
+  test("TRUST_PROXY defaults to one proxy in production and none elsewhere, and an explicit value wins", () => {
+    expect(parseEnv({ ...valid, NODE_ENV: "production" }).TRUST_PROXY).toBe(1);
+    expect(parseEnv({ ...valid, NODE_ENV: "development" }).TRUST_PROXY).toBe(0);
+    expect(parseEnv(valid).TRUST_PROXY).toBe(0);
+    expect(parseEnv({ ...valid, NODE_ENV: "production", TRUST_PROXY: "2" }).TRUST_PROXY).toBe(2);
+    expect(parseEnv({ ...valid, NODE_ENV: "production", TRUST_PROXY: "0" }).TRUST_PROXY).toBe(0);
+    expect(() => parseEnv({ ...valid, TRUST_PROXY: "-1" })).toThrow(EnvError);
+  });
+
+  test("a blank TRUST_PROXY or DOCS_PASSWORD (KEY= in a .env file) counts as unset", () => {
+    const env = parseEnv({ ...valid, NODE_ENV: "production", TRUST_PROXY: "", DOCS_PASSWORD: "" });
+    expect(env.TRUST_PROXY).toBe(1);
+    expect(env.DOCS_PASSWORD).toBeUndefined();
+    expect(env.DOCS_USER).toBe("docs");
+  });
+
+  test("DOCS_PASSWORD must be at least 12 characters when set", () => {
+    expect(() => parseEnv({ ...valid, DOCS_PASSWORD: "short" })).toThrow(EnvError);
+    expect(parseEnv({ ...valid, DOCS_PASSWORD: "a-long-enough-password" }).DOCS_PASSWORD).toBe(
+      "a-long-enough-password",
+    );
+  });
+
   test("coerces numbers and splits CORS origins", () => {
     const env = parseEnv({ ...valid, PORT: "8080", CORS_ORIGINS: "https://a.test, https://b.test," });
     expect(env.PORT).toBe(8080);

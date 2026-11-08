@@ -25,6 +25,7 @@ paths:
       parameters:
         - { name: category, in: query, schema: { type: string, example: gel_polish } }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
         '200':
           description: OK
           content:
@@ -39,6 +40,7 @@ paths:
       summary: Detail layanan
       parameters: [{ $ref: '#/components/parameters/IdPath' }]
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
         '200':
           description: OK
           content:
@@ -102,6 +104,7 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/BookingCreate' }
       responses:
+        '429': { $ref: '#/components/responses/RateLimited' }
         '201':
           description: Reservasi dibuat (status awal pending)
           content:
@@ -121,6 +124,8 @@ paths:
         - { name: booking_code, in: path, required: true, schema: { type: string, example: NP-20261110-A7K2 } }
         - { name: phone, in: query, required: true, schema: { type: string, example: '+6281234567890' } }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: OK
           content:
@@ -147,6 +152,7 @@ paths:
                 phone: { type: string, example: '+6281234567890' }
                 reason: { type: string, maxLength: 255 }
       responses:
+        '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: Dibatalkan
           content:
@@ -178,6 +184,8 @@ paths:
                 email: { type: string, format: email }
                 password: { type: string, format: password }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: OK
           content:
@@ -201,6 +209,8 @@ paths:
               properties:
                 refresh_token: { type: string }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: OK
           content:
@@ -321,6 +331,7 @@ paths:
       description: Menyertakan reminder_url (tautan wa.me dengan pesan pengingat siap kirim) untuk reservasi pending/confirmed.
       security: [{ bearerAuth: [] }]
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
         '200':
           description: OK
           content:
@@ -415,6 +426,7 @@ paths:
       summary: Daftar semua layanan (termasuk nonaktif)
       security: [{ bearerAuth: [] }]
       responses:
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '200':
           description: OK
           content:
@@ -433,6 +445,7 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/ServiceInput' }
       responses:
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '201':
           description: Dibuat
           content:
@@ -454,6 +467,8 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/ServiceInput' }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '200':
           description: OK
           content:
@@ -468,6 +483,8 @@ paths:
       summary: Hapus layanan (soft delete / nonaktifkan jika sudah punya reservasi)
       security: [{ bearerAuth: [] }]
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '204': { description: Dihapus }
         '404': { $ref: '#/components/responses/NotFound' }
   /admin/artists:
@@ -476,6 +493,7 @@ paths:
       summary: Daftar semua nail artist
       security: [{ bearerAuth: [] }]
       responses:
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '200':
           description: OK
           content:
@@ -494,6 +512,8 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/ArtistInput' }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '201':
           description: Dibuat
           content:
@@ -514,6 +534,8 @@ paths:
           application/json:
             schema: { $ref: '#/components/schemas/ArtistInput' }
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '200':
           description: OK
           content:
@@ -528,6 +550,8 @@ paths:
       summary: Nonaktifkan nail artist
       security: [{ bearerAuth: [] }]
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
         '204': { description: Dinonaktifkan }
         '404': { $ref: '#/components/responses/NotFound' }
   /admin/business-hours:
@@ -657,6 +681,7 @@ paths:
       security: [{ bearerAuth: [] }]
       parameters: [{ $ref: '#/components/parameters/IdPath' }]
       responses:
+        '422': { $ref: '#/components/responses/ValidationError' }
         '204': { description: Dihapus }
         '401': { $ref: '#/components/responses/Unauthorized' }
         '404': { $ref: '#/components/responses/NotFound' }
@@ -696,6 +721,16 @@ components:
       required: true
       schema: { type: string, format: uuid }
   responses:
+    RateLimited:
+      description: |
+        Terlalu banyak permintaan dari alamat IP yang sama (RATE_LIMITED). Tunggu sesuai header Retry-After.
+        Semua respons endpoint /api/v1 menyertakan header RateLimit-Limit, RateLimit-Remaining, dan RateLimit-Reset.
+      headers:
+        Retry-After: { schema: { type: integer }, description: Detik sampai batas direset }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: RATE_LIMITED, message: 'Terlalu banyak permintaan, coba lagi nanti' } }
     NotFound:
       description: Data tidak ditemukan
       content:
