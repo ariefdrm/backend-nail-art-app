@@ -1,6 +1,7 @@
 import { Router } from "express";
 import adminScheduleRoutes from "./admin-schedule.routes.js";
 import adminCatalogRoutes from "./admin-catalog.routes.js";
+import availabilityRoutes from "./availability.routes.js";
 import authRoutes from "./auth.routes.js";
 import catalogRoutes from "./catalog.routes.js";
 import healthRoutes from "./health.routes.js";
@@ -14,6 +15,7 @@ routes.use("/health", healthRoutes);
 v1.use("/auth", authRoutes);
 v1.use("/admin", adminScheduleRoutes);
 v1.use(catalogRoutes);
+v1.use(availabilityRoutes);
 v1.use("/admin", adminCatalogRoutes);
 routes.use("/api/v1", v1);
 

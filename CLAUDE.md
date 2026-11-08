@@ -34,9 +34,9 @@ The backend is built module by module, in the order below, following the PRD's F
 | 2 | `feature/data-model` | all PRD tables, `bookings_no_overlap` EXCLUDE + CHECK constraints, seed | 1 | done (PR #7) |
 | 3 | `feature/admin-auth` | FR-06: login, refresh rotation, `/auth/me`, `authenticate` / `requireRole`; logout and logout-all added later in `feature/auth-logout` | 2 | done (PR #7) |
 | 4 | `feature/catalog` | FR-01, FR-02, FR-08: public services + artists, admin CRUD for both | 2, 3 | done (PR #17) |
-| 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | next |
-| 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | todo |
-| 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | todo |
+| 5 | `feature/schedule-management` | FR-09: business hours, blocked slots | 2, 3 | done (PR #19) |
+| 6 | `feature/availability` | FR-03: `GET /availability` slot calculation | 4, 5 | done |
+| 7 | `feature/public-booking` | FR-04, FR-05, FR-11: create / look up / cancel booking, status history, concurrency test (map `23P01` to `409 SLOT_UNAVAILABLE`) | 6 | next |
 | 8 | `feature/admin-booking` | FR-07, FR-13: list/filter, status transitions, reschedule, manual booking, `wa.me` reminder link | 3, 7 | todo |
 | 9 | `feature/dashboard` | FR-10: `/admin/dashboard/summary` | 8 | todo |
 | 10 | `security/hardening` | FR-12, FR-14: rate limits (login, `POST /bookings`), helmet, CORS allowlist, `trust proxy`, protected `/docs`, contract tests against `openapi.yaml`, PRD security checklist | 8 | todo |
