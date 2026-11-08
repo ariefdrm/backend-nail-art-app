@@ -79,7 +79,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 | FR-06 | Login admin, refresh token, profil | P0 | `/auth/*` |
 | FR-07 | Admin kelola reservasi: daftar+filter, detail, ubah status, jadwal ulang, buat manual | P0 | `/admin/bookings*` |
 | FR-08 | Admin CRUD layanan dan artist | P0 | `/admin/services*`, `/admin/artists*` |
-| FR-09 | Atur jam operasional dan blokir waktu (libur, cuti) | P0 | `/admin/business-hours`, `/admin/blocked-slots*` |
+| FR-09 | Atur jam operasional (termasuk jam istirahat) dan blokir waktu (libur, cuti), dengan penanganan reservasi yang terdampak | P0 | `/admin/business-hours`, `/admin/blocked-slots*` |
 | FR-10 | Ringkasan dashboard (status, no-show, rasio online, pendapatan, waktu konfirmasi) | P0 | `/admin/dashboard/summary` |
 | FR-11 | Riwayat perubahan status reservasi (siapa, kapan, dari-ke) | P1 | internal (tabel `booking_status_history`) |
 | FR-12 | Rate limiting dan anti-spam pada endpoint publik | P1 | middleware |
@@ -103,9 +103,17 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - Tanggal di masa lalu atau melebihi `MAX_ADVANCE_DAYS` ditolak (`422`).
 - Nomor HP dinormalisasi ke format E.164 sebelum disimpan.
 
+**FR-09 Jam operasional dan blokir waktu**
+- Jam operasional mingguan memuat tepat 7 hari (0 = Minggu sampai 6 = Sabtu); hari buka wajib punya `open_time` < `close_time`, dan jam istirahat (`break_start` / `break_end`) bersifat opsional, harus berpasangan, dan berada di dalam jam buka. Perubahan bersifat atomik dan hanya berlaku untuk slot ke depan; reservasi yang sudah ada tidak berubah.
+- Pemilik boleh memblokir waktu yang sudah berisi reservasi `pending` atau `confirmed`, melalui langkah sadar yang dipaksa server: `POST /admin/blocked-slots/check` hanya menampilkan reservasi terdampak (tanpa menyimpan), dan `POST /admin/blocked-slots` yang bertabrakan dengan reservasi ditolak `409 BLOCK_HAS_BOOKINGS` (berisi daftar konflik) kecuali body memuat `acknowledge_conflicts: true`.
+- Tidak ada pembatalan otomatis. Reservasi yang terdampak ditandai sebagai konflik jadwal (dihitung dari data, hilang sendiri bila reservasi dipindah, dibatalkan, atau blokir dihapus), dan respons blokir menyertakan `contact_url` (`wa.me` dengan pesan siap kirim, memakai pembuat tautan yang sama dengan FR-13) untuk tiap reservasi terdampak. Pesan tidak memuat alasan internal pemilik secara otomatis.
+- Kesepakatan jadwal ulang atau pembatalan terjadi antara pemilik dan customer lewat chat. Pemilik mencatat hasilnya sendiri: menjadwal ulang atau membatalkan dengan alasan (FR-07), dan menulis ringkasan kesepakatan di `admin_note`. Sistem tidak dapat memverifikasi persetujuan customer.
+- Slot yang terblokir langsung tidak tersedia untuk pemesanan baru. Pembuatan blokir dan pembuatan reservasi memakai kunci advisory PostgreSQL yang sama di dalam transaksi masing-masing agar tidak bisa berjalan bersamaan.
+
 **FR-05 Pembatalan customer**
 - Hanya untuk status `pending`/`confirmed` dan hanya sebelum `start_at` (batas waktu dapat diatur via `CANCEL_MIN_HOURS_BEFORE`, default 0).
 - Nomor HP yang tidak cocok mengembalikan `404` (bukan `403`) agar kode booking tidak bisa ditebak.
+- Respons status reservasi menyertakan `schedule_conflict: true` bila reservasi bertabrakan dengan blokir waktu (FR-09), agar halaman cek status dapat menampilkan banner bahwa pemilik akan menghubungi customer.
 
 **FR-07 Transisi status**
 - Hanya transisi yang valid (lihat `Kontrak_API_dan_Format_Data.md`, bagian 3); selainnya `409 INVALID_STATUS_TRANSITION`.
@@ -496,8 +504,8 @@ Kasus uji wajib:
 
 ## 14. Pertanyaan Terbuka
 
-1. **Konfirmasi reservasi:** manual oleh pemilik (`pending` → `confirmed`) atau otomatis? Draf memakai manual.
-2. **Artist:** karena pemilik satu-satunya pelaku, apakah `artist_id` disembunyikan dari alur customer?
+1. **Konfirmasi reservasi:** manual oleh pemilik (`pending` → `confirmed`) atau otomatis? Draf memakai manual. **Diputuskan (8 Nov 2026): manual.**
+2. **Artist:** karena pemilik satu-satunya pelaku, apakah `artist_id` disembunyikan dari alur customer? **Diputuskan (8 Nov 2026):** `artist_id` opsional di API dan disembunyikan secara default di frontend; bila kosong, sistem memilih artist yang tersedia.
 3. **Lokasi deploy:** VPS, mesin lokal, atau layanan cloud? Menentukan reverse proxy, HTTPS, dan backup.
 4. **CI:** memakai apa (GitHub Actions, GitLab CI)? Bagaimana menjalankan Podman di sana?
 5. **Backup database:** frekuensi dan lokasi penyimpanan.
