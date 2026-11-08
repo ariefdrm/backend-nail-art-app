@@ -460,7 +460,15 @@ Kasus uji wajib:
 
 ## 12. Tahapan Pengerjaan
 
-Tanggal belum ditetapkan karena menunggu jadwal program Asah; urutan di bawah dapat dipetakan ke minggu setelah tenggat diketahui.
+**Tenggat: Selasa, 8 Desember 2026** (demo prototipe ke pemilik). Urutan modul di bawah dipetakan ke titik pemeriksaan berikut; bila sebuah titik terlewat, pekerjaan yang paling akhir dalam daftar ditunda lebih dulu.
+
+| Tanggal | Target | Keputusan di titik ini |
+|---|---|---|
+| 14 Nov 2026 | Jam operasional + blokir waktu, dan cek ketersediaan slot | |
+| 21 Nov 2026 | Booking publik (buat, cek, batalkan, riwayat status) | |
+| 28 Nov 2026 | Booking admin dan dashboard: **prototipe utuh yang bisa didemokan** | Bila belum tercapai, Web Push dan ekspor CSV ditunda |
+| 3 Des 2026 | Kotak masuk notifikasi dan hardening dasar | |
+| 4-7 Des 2026 | Web Push bila sesuai jadwal, integrasi dengan frontend, latihan demo, penyangga | |
 
 | Fase | Isi | Selesai bila |
 |---|---|---|
@@ -501,7 +509,7 @@ Tanggal belum ditetapkan karena menunggu jadwal program Asah; urutan di bawah da
 3. **Lokasi deploy:** VPS, mesin lokal, atau layanan cloud? Menentukan reverse proxy, HTTPS, dan backup.
 4. **CI:** memakai apa (GitHub Actions, GitLab CI)? Bagaimana menjalankan Podman di sana?
 5. **Backup database:** frekuensi dan lokasi penyimpanan.
-6. **Tenggat Asah:** tanggal demo/penilaian untuk memetakan fase 0–4.
+6. **Tenggat Asah:** tanggal demo/penilaian untuk memetakan fase 0–4. **Diputuskan: 8 Desember 2026** (lihat bagian 12).
 7. **Pembagian kerja:** apa yang dibutuhkan tim AI engineer dari backend (mis. endpoint, webhook, skor risiko no-show)? Poin FR-15 s.d. FR-16 masih tentatif sampai ini jelas.
 8. **Hal yang perlu diverifikasi saat implementasi:** tag image PostgreSQL yang dipakai (termasuk lokasi volume data sesuai versi), versi minor Prisma 7, opsi generator `prisma-client` (`output`, `moduleFormat`, `importFileExtension`), dan ketersediaan binary prebuilt paket hash di Alpine.
 
