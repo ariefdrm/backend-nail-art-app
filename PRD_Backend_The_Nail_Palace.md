@@ -123,6 +123,12 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 - Detail reservasi admin menyertakan `reminder_url` (FR-13) untuk reservasi `pending`/`confirmed`.
 - Setiap perubahan tercatat di riwayat status (FR-11).
 
+**FR-10 Dashboard**
+- Periode dihitung dari `start_at` reservasi menurut hari WIB (`date_from` dan `date_to` inklusif, maksimal 366 hari) dan mencakup semua status.
+- `no_show_rate` = `no_show` / (`completed` + `no_show`); `online_booking_ratio` = reservasi `online` / seluruh reservasi pada periode; `revenue_completed` = jumlah `total_price` reservasi `completed`.
+- `avg_confirmation_minutes` = rata-rata selisih `confirmed_at` dan `created_at` hanya untuk reservasi online yang pernah dikonfirmasi (reservasi admin langsung `confirmed`, sehingga tidak dihitung).
+- Rasio dan rata-rata bernilai `null`, bukan 0, bila belum ada data pembaginya.
+
 **FR-17 Notifikasi admin**
 - Pemicu: reservasi baru dari customer (`source=online`), pembatalan oleh customer, reservasi `pending` lebih lama dari `NOTIFY_UNCONFIRMED_AFTER_MINUTES` (default 15), dan reservasi `confirmed` yang dimulai dalam `NOTIFY_UPCOMING_MINUTES_BEFORE` (default 120).
 - Notifikasi dibuat dalam transaksi database yang sama dengan perubahan reservasi, dan tiap peristiwa hanya menghasilkan satu notifikasi (`dedupe_key` unik) walau penjadwal berjalan berulang.

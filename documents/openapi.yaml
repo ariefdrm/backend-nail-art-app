@@ -664,6 +664,9 @@ paths:
     get:
       tags: [Admin]
       summary: Ringkasan dashboard (indikator keberhasilan)
+      description: |
+        Semua angka dihitung dari reservasi yang start_at-nya jatuh pada rentang tanggal (WIB, date_from dan date_to inklusif),
+        semua status ikut dihitung kecuali disebutkan lain. date_to tidak boleh sebelum date_from dan rentang maksimal 366 hari (422).
       security: [{ bearerAuth: [] }]
       parameters:
         - { name: date_from, in: query, required: true, schema: { type: string, format: date } }
@@ -677,6 +680,8 @@ paths:
                 type: object
                 properties:
                   data: { $ref: '#/components/schemas/DashboardSummary' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/ValidationError' }
 
 components:
   securitySchemes:
@@ -899,7 +904,7 @@ components:
       type: object
       properties:
         period: { type: object, properties: { date_from: { type: string, format: date }, date_to: { type: string, format: date } } }
-        total_bookings: { type: integer }
+        total_bookings: { type: integer, description: Semua reservasi pada periode, apa pun statusnya }
         by_status:
           type: object
           properties:
@@ -908,10 +913,10 @@ components:
             completed: { type: integer }
             cancelled: { type: integer }
             no_show: { type: integer }
-        no_show_rate: { type: number, example: 0.08, description: no_show / (completed + no_show) }
-        online_booking_ratio: { type: number, example: 0.75 }
-        revenue_completed: { type: integer, description: Rupiah }
-        avg_confirmation_minutes: { type: number, nullable: true }
+        no_show_rate: { type: number, nullable: true, example: 0.08, description: 'no_show / (completed + no_show), 0..1; null bila belum ada reservasi completed atau no_show' }
+        online_booking_ratio: { type: number, nullable: true, example: 0.75, description: 'Reservasi dengan source online / total_bookings, 0..1; null bila total_bookings = 0' }
+        revenue_completed: { type: integer, description: 'Jumlah total_price reservasi completed, dalam Rupiah' }
+        avg_confirmation_minutes: { type: number, nullable: true, description: 'Rata-rata menit dari dibuat sampai dikonfirmasi, hanya reservasi online yang pernah dikonfirmasi (reservasi admin langsung confirmed sehingga tidak dihitung); null bila belum ada' }
     Error:
       type: object
       properties:

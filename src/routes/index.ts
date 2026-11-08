@@ -6,6 +6,7 @@ import availabilityRoutes from "./availability.routes.js";
 import authRoutes from "./auth.routes.js";
 import bookingRoutes from "./booking.routes.js";
 import catalogRoutes from "./catalog.routes.js";
+import dashboardRoutes from "./dashboard.routes.js";
 import healthRoutes from "./health.routes.js";
 
 const routes = Router();
@@ -17,6 +18,7 @@ routes.use("/health", healthRoutes);
 v1.use("/auth", authRoutes);
 v1.use("/admin", adminScheduleRoutes);
 v1.use("/admin", adminBookingRoutes);
+v1.use("/admin", dashboardRoutes);
 v1.use(catalogRoutes);
 v1.use(availabilityRoutes);
 v1.use(bookingRoutes);
