@@ -153,7 +153,7 @@ Prioritas: **P0** = wajib MVP, **P1** = sangat diinginkan, **P2** = jika waktu c
 |---|---|
 | **Performa** | Endpoint baca p95 < 300 ms; `/availability` p95 < 500 ms pada beban ≤ 20 pengguna bersamaan (1 vCPU / 1 GB RAM) |
 | **Keandalan** | Graceful shutdown (SIGTERM), health check liveness dan readiness, restart otomatis, migrasi database terpisah dari proses API |
-| **Keamanan** | Hash password argon2id; access token JWT berumur pendek (15 menit) + refresh token dengan rotasi (disimpan sebagai hash); `helmet`; CORS allowlist; rate limit pada login dan `POST /bookings`; validasi semua input; query lewat Prisma (parameterized); secret hanya lewat environment/secret, tidak masuk image |
+| **Keamanan** | Hash password argon2id; access token JWT berumur pendek (15 menit) + refresh token dengan rotasi (disimpan sebagai hash, dikirim lewat body dan cookie `HttpOnly`, klien memilih); `helmet`; CORS allowlist; rate limit pada login dan `POST /bookings`; validasi semua input; query lewat Prisma (parameterized); secret hanya lewat environment/secret, tidak masuk image |
 | **Privasi** | Nomor HP dan nama customer adalah data pribadi (mengacu UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi): kumpulkan seminimal mungkin, redaksi di log, tampilkan penuh hanya ke admin |
 | **Observabilitas** | Log JSON terstruktur dengan `request_id`; level log dari environment; error tak terduga dicatat lengkap tetapi tidak dibocorkan ke klien |
 | **Kualitas kode** | TypeScript `strict`; ESLint tanpa error; cakupan unit test ≥ 80% untuk `services/` dan `utils/` |

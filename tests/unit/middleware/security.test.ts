@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { isAllowedOrigin } from "../../../src/middleware/security.js";
+import type { NextFunction, Request, Response } from "express";
+import { isAllowedOrigin, requireAllowedOrigin } from "../../../src/middleware/security.js";
 
 describe("isAllowedOrigin", () => {
   const allowed = ["https://app.example.test", "http://localhost:5173"];
@@ -28,5 +29,23 @@ describe("isAllowedOrigin", () => {
 
   test("an empty allowlist allows nothing", () => {
     expect(isAllowedOrigin("https://app.example.test", [])).toBe(false);
+  });
+});
+
+describe("requireAllowedOrigin", () => {
+  function run(origin?: string): unknown {
+    let received: unknown = "not called";
+    const req = { get: (name: string) => (name.toLowerCase() === "origin" ? origin : undefined) } as Request;
+    requireAllowedOrigin(req, {} as Response, ((err?: unknown) => (received = err)) as NextFunction);
+    return received;
+  }
+
+  test("lets a listed origin and a request without Origin through", () => {
+    expect(run("https://allowed.test")).toBeUndefined(); // CORS_ORIGINS from tests/setup.ts
+    expect(run(undefined)).toBeUndefined();
+  });
+
+  test("refuses an unlisted origin with FORBIDDEN", () => {
+    expect(run("https://evil.test")).toMatchObject({ code: "FORBIDDEN", httpStatus: 403 });
   });
 });

@@ -43,15 +43,15 @@ export function api(base: string, token?: string) {
     ...(token ? { authorization: `Bearer ${token}` } : {}),
     ...extra,
   });
-  const send = (method: string, path: string, body?: unknown) =>
+  const send = (method: string, path: string, body?: unknown, extra: Record<string, string> = {}) =>
     fetch(`${base}/api/v1${path}`, {
       method,
-      headers: headers(body === undefined ? {} : { "content-type": "application/json" }),
+      headers: headers({ ...(body === undefined ? {} : { "content-type": "application/json" }), ...extra }),
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     });
   return {
     get: (path: string) => send("GET", path),
-    post: (path: string, body: unknown) => send("POST", path, body),
+    post: (path: string, body: unknown, extra?: Record<string, string>) => send("POST", path, body, extra),
     put: (path: string, body: unknown) => send("PUT", path, body),
     patch: (path: string, body: unknown) => send("PATCH", path, body),
     delete: (path: string, body?: unknown) => send("DELETE", path, body),

@@ -150,7 +150,7 @@ describe("the real app", () => {
       const res = await call("/health/live", { headers: { origin: ALLOWED } });
       expect(res.headers.get("access-control-allow-origin")).toBe(ALLOWED);
       expect(res.headers.get("vary")).toContain("Origin");
-      expect(res.headers.get("access-control-allow-credentials")).toBeNull();
+      expect(res.headers.get("access-control-allow-credentials")).toBe("true");
       expect(res.headers.get("access-control-expose-headers")).toContain("Retry-After");
     });
 

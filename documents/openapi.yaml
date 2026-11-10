@@ -173,6 +173,13 @@ paths:
     post:
       tags: [Auth]
       summary: Login admin
+      description: |
+        Mengembalikan access token dan refresh token di body, **dan** menyetel refresh token yang sama
+        sebagai cookie `refresh_token` (`HttpOnly`, `Path=/api/v1/auth`, `SameSite` sesuai
+        `AUTH_COOKIE_SAMESITE`, `Secure` di production). Klien bebas memilih: memakai cookie
+        (`credentials: 'include'`, paling aman terhadap XSS) atau menyimpan `refresh_token` dari body
+        sendiri. Menyimpan token dari body di storage yang bisa dibaca JavaScript menghilangkan
+        perlindungan `HttpOnly`.
       requestBody:
         required: true
         content:
@@ -188,6 +195,8 @@ paths:
         '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: OK
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookie' }
           content:
             application/json:
               schema:
@@ -199,20 +208,27 @@ paths:
     post:
       tags: [Auth]
       summary: Perbarui access token
+      description: |
+        Refresh token diambil dari body (`refresh_token`) atau, bila body kosong, dari cookie
+        `refresh_token`; body diutamakan. Token diputar: response berisi access token dan refresh token
+        baru di body, dan cookie baru juga disetel. Token tidak ada, tidak dikenal, atau kedaluwarsa
+        dijawab 401. Jika header `Origin` ada tetapi tidak ada di `CORS_ORIGINS`, dijawab 403
+        (perlindungan CSRF).
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
               type: object
-              required: [refresh_token]
               properties:
-                refresh_token: { type: string }
+                refresh_token: { type: string, description: Opsional bila cookie dikirim }
       responses:
         '422': { $ref: '#/components/responses/ValidationError' }
         '429': { $ref: '#/components/responses/RateLimited' }
         '200':
           description: OK
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookie' }
           content:
             application/json:
               schema:
@@ -220,39 +236,48 @@ paths:
                 properties:
                   data: { $ref: '#/components/schemas/TokenPair' }
         '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
   /auth/logout:
     post:
       tags: [Auth]
       summary: Logout (cabut refresh token)
       description: |
-        Mencabut refresh token yang dikirim sehingga tidak bisa dipakai lagi di `/auth/refresh`.
-        Idempoten: token yang tidak dikenal atau sudah dicabut tetap dijawab 204, agar tidak
-        membocorkan apakah token itu valid. Tidak butuh access token (access token klien yang
-        sedang logout sering sudah kedaluwarsa). Hanya sesi dengan token ini yang berakhir; sesi di
-        perangkat lain tetap aktif. Access token yang sudah terbit tetap berlaku sampai kedaluwarsa
-        (maksimal 15 menit).
+        Mencabut refresh token dari body (`refresh_token`) atau, bila body kosong, dari cookie
+        `refresh_token`, sehingga tidak bisa dipakai lagi di `/auth/refresh`, lalu menghapus cookie.
+        Idempoten: token yang tidak ada, tidak dikenal, atau sudah dicabut tetap dijawab 204, agar tidak membocorkan apakah token itu valid.
+        Tidak butuh access token (access token klien yang sedang logout sering sudah kedaluwarsa).
+        Hanya sesi dengan token ini yang berakhir; sesi di perangkat lain tetap aktif. Access token yang
+        sudah terbit tetap berlaku sampai kedaluwarsa (maksimal 15 menit). Header `Origin` yang tidak
+        ada di `CORS_ORIGINS` dijawab 403.
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
               type: object
-              required: [refresh_token]
               properties:
-                refresh_token: { type: string }
+                refresh_token: { type: string, description: Opsional bila cookie dikirim }
       responses:
-        '204': { description: Sesi berakhir }
+        '204':
+          description: Sesi berakhir
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookieCleared' }
         '422': { $ref: '#/components/responses/ValidationError' }
+        '403': { $ref: '#/components/responses/Forbidden' }
   /auth/logout-all:
     post:
       tags: [Auth]
       summary: Logout dari semua perangkat
       description: |
         Mencabut semua refresh token milik admin yang sedang login (misalnya setelah perangkat hilang).
-        Access token yang sudah terbit tetap berlaku sampai kedaluwarsa (maksimal 15 menit).
+        Access token yang sudah terbit tetap berlaku sampai kedaluwarsa (maksimal 15 menit). Cookie
+        `refresh_token` di perangkat ini ikut dihapus.
       security: [{ bearerAuth: [] }]
       responses:
-        '204': { description: Semua sesi berakhir }
+        '204':
+          description: Semua sesi berakhir
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookieCleared' }
         '401': { $ref: '#/components/responses/Unauthorized' }
   /auth/me:
     get:
@@ -915,6 +940,15 @@ components:
       in: path
       required: true
       schema: { type: string, format: uuid }
+  headers:
+    RefreshCookie:
+      description: |
+        `refresh_token=<token>; Max-Age=<REFRESH_TOKEN_TTL>; Path=/api/v1/auth; HttpOnly; SameSite=<Lax|Strict|None>`
+        (ditambah `Secure` di production atau bila SameSite=None).
+      schema: { type: string }
+    RefreshCookieCleared:
+      description: Cookie `refresh_token` dihapus (Max-Age=0 / Expires di masa lalu).
+      schema: { type: string }
   responses:
     Forbidden:
       description: Role admin tidak memiliki akses ke endpoint ini
@@ -1124,9 +1158,10 @@ components:
         role: { type: string, enum: [owner, staff] }
     TokenPair:
       type: object
+      description: Refresh token juga disetel sebagai cookie HttpOnly `refresh_token`.
       properties:
         access_token: { type: string }
-        refresh_token: { type: string }
+        refresh_token: { type: string, description: Sama dengan nilai cookie `refresh_token` }
         token_type: { type: string, example: Bearer }
         expires_in: { type: integer, example: 900, description: Detik }
     Notification:

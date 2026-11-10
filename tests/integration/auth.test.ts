@@ -25,8 +25,29 @@ suite("admin auth", () => {
     });
   }
 
+  /** The refresh token the server set as a cookie (what a browser would store). */
+  function cookieOf(res: Response): string | undefined {
+    for (const line of res.headers.getSetCookie()) {
+      const match = /^refresh_token=([^;]*)/.exec(line);
+      if (match) return match[1];
+    }
+    return undefined;
+  }
+
+  /** The Cookie header a browser would send back. */
+  function withCookie(token: string | undefined, extra: Record<string, string> = {}) {
+    return { ...(token ? { cookie: `refresh_token=${token}` } : {}), ...extra };
+  }
+
   async function login(email = "owner@nailpalace.test", password = PASSWORD) {
     return post("/auth/login", { email, password });
+  }
+
+  /** Logs in and returns the access token (body) and the refresh token (cookie). */
+  async function loginTokens(email = "owner@nailpalace.test") {
+    const res = await login(email);
+    const { data } = (await res.json()) as { data: { access_token: string } };
+    return { access_token: data.access_token, refresh_token: cookieOf(res) as string };
   }
 
   beforeAll(async () => {
@@ -59,17 +80,31 @@ suite("admin auth", () => {
     expect(data.expires_in).toBe(900);
   });
 
+  test("login sets the refresh token as an HttpOnly cookie scoped to the auth routes", async () => {
+    const res = await login();
+    const cookie = res.headers.getSetCookie().find((c) => c.startsWith("refresh_token="));
+    expect(cookie).toBeDefined();
+    expect(cookie).toContain("HttpOnly");
+    expect(cookie).toContain("Path=/api/v1/auth");
+    expect(cookie).toContain("SameSite=Lax");
+    expect(cookie).toContain(`Max-Age=${7 * 24 * 3600}`);
+    // the same token is also in the body, for clients that store it themselves
+    expect(((await res.json()) as { data: { refresh_token: string } }).data.refresh_token).toBe(
+      cookieOf(res) as string,
+    );
+  });
+
   test("login stores only a hash of the refresh token, plus client info", async () => {
     const res = await post(
       "/auth/login",
       { email: "owner@nailpalace.test", password: PASSWORD },
       { "user-agent": "bun-test" },
     );
-    const { data } = (await res.json()) as { data: { refresh_token: string } };
+    const token = cookieOf(res) as string;
     const rows = await prisma.refreshToken.findMany();
     expect(rows).toHaveLength(1);
-    expect(rows[0]?.tokenHash).toBe(hashRefreshToken(data.refresh_token));
-    expect(rows[0]?.tokenHash).not.toBe(data.refresh_token);
+    expect(rows[0]?.tokenHash).toBe(hashRefreshToken(token));
+    expect(rows[0]?.tokenHash).not.toBe(token);
     expect(rows[0]?.userAgent).toBe("bun-test");
     expect(rows[0]?.adminId).toBe(adminId);
   });
@@ -119,27 +154,32 @@ suite("admin auth", () => {
   });
 
   test("refresh rotates the token; the old one cannot be used again", async () => {
-    const first = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
+    const first = await loginTokens();
 
-    const rotatedRes = await post("/auth/refresh", { refresh_token: first.refresh_token });
+    const rotatedRes = await post("/auth/refresh", {}, withCookie(first.refresh_token));
     expect(rotatedRes.status).toBe(200);
-    const second = ((await rotatedRes.json()) as { data: { refresh_token: string; access_token: string } }).data;
+    const second = { refresh_token: cookieOf(rotatedRes) as string };
+    expect(second.refresh_token).toBeTruthy();
     expect(second.refresh_token).not.toBe(first.refresh_token);
+    // the rotated token is in the body as well as in the cookie
+    expect(((await rotatedRes.json()) as { data: { refresh_token: string } }).data.refresh_token).toBe(
+      second.refresh_token,
+    );
 
     // reusing the old token is refused ...
-    const reuse = await post("/auth/refresh", { refresh_token: first.refresh_token });
+    const reuse = await post("/auth/refresh", {}, withCookie(first.refresh_token));
     expect(reuse.status).toBe(401);
 
     // ... and, as a theft response, kills the whole family including the new token
-    const afterReuse = await post("/auth/refresh", { refresh_token: second.refresh_token });
+    const afterReuse = await post("/auth/refresh", {}, withCookie(second.refresh_token));
     expect(afterReuse.status).toBe(401);
     expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(0);
   });
 
   test("the new access token from a refresh works", async () => {
-    const first = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
+    const first = await loginTokens();
     const second = (
-      (await (await post("/auth/refresh", { refresh_token: first.refresh_token })).json()) as {
+      (await (await post("/auth/refresh", {}, withCookie(first.refresh_token))).json()) as {
         data: { access_token: string };
       }
     ).data;
@@ -148,10 +188,10 @@ suite("admin auth", () => {
   });
 
   test("two concurrent refreshes of one token: one wins, the family is revoked", async () => {
-    const { refresh_token } = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
+    const { refresh_token } = await loginTokens();
     const results = await Promise.all([
-      post("/auth/refresh", { refresh_token }),
-      post("/auth/refresh", { refresh_token }),
+      post("/auth/refresh", {}, withCookie(refresh_token)),
+      post("/auth/refresh", {}, withCookie(refresh_token)),
     ]);
     const statuses = results.map((r) => r.status).sort();
     expect(statuses[1]).toBe(401);
@@ -159,64 +199,125 @@ suite("admin auth", () => {
     expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(0);
   });
 
+  test("refresh without a cookie and without a body token is a 401", async () => {
+    await loginTokens();
+    expect((await post("/auth/refresh", {})).status).toBe(401);
+    expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(1);
+  });
+
+  describe("body mode (client stores the token itself)", () => {
+    test("refresh accepts refresh_token in the body and still sets the new cookie", async () => {
+      const { refresh_token } = await loginTokens();
+      const res = await post("/auth/refresh", { refresh_token });
+      expect(res.status).toBe(200);
+      const rotated = cookieOf(res);
+      expect(rotated).toBeTruthy();
+      expect(rotated).not.toBe(refresh_token);
+      expect((await post("/auth/refresh", { refresh_token })).status).toBe(401); // already used
+    });
+
+    test("a body token wins over a different cookie", async () => {
+      const a = await loginTokens();
+      const b = await loginTokens();
+      const res = await post("/auth/refresh", { refresh_token: a.refresh_token }, withCookie(b.refresh_token));
+      expect(res.status).toBe(200);
+      // b was never presented, so it still works
+      expect((await post("/auth/refresh", {}, withCookie(b.refresh_token))).status).toBe(200);
+    });
+
+    test("logout accepts the token in the body", async () => {
+      const { refresh_token } = await loginTokens();
+      expect((await post("/auth/logout", { refresh_token })).status).toBe(204);
+      expect((await post("/auth/refresh", { refresh_token })).status).toBe(401);
+    });
+
+    test("a non-string refresh_token is a 422", async () => {
+      expect((await post("/auth/refresh", { refresh_token: 123 })).status).toBe(422);
+    });
+  });
+
+  describe("CSRF origin check on cookie endpoints", () => {
+    const EVIL = { origin: "https://evil.test" };
+
+    test("refresh and logout from an unlisted origin are refused and leave the session alone", async () => {
+      const { refresh_token } = await loginTokens();
+      for (const path of ["/auth/refresh", "/auth/logout"]) {
+        const res = await post(path, {}, withCookie(refresh_token, EVIL));
+        expect(res.status).toBe(403);
+        expect(await res.json()).toMatchObject({ error: { code: "FORBIDDEN" } });
+      }
+      expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(1);
+    });
+
+    test("an allowed origin works and gets credentialed CORS headers", async () => {
+      const { refresh_token } = await loginTokens();
+      const res = await post("/auth/refresh", {}, withCookie(refresh_token, { origin: "https://allowed.test" }));
+      expect(res.status).toBe(200);
+      expect(res.headers.get("access-control-allow-origin")).toBe("https://allowed.test");
+      expect(res.headers.get("access-control-allow-credentials")).toBe("true");
+    });
+  });
+
   test("expired and unknown refresh tokens are rejected", async () => {
-    const { refresh_token } = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
+    const { refresh_token } = await loginTokens();
     await prisma.refreshToken.updateMany({ data: { expiresAt: new Date(Date.now() - 1000) } });
-    expect((await post("/auth/refresh", { refresh_token })).status).toBe(401);
-    expect((await post("/auth/refresh", { refresh_token: "never-issued" })).status).toBe(401);
+    expect((await post("/auth/refresh", {}, withCookie(refresh_token))).status).toBe(401);
+    expect((await post("/auth/refresh", {}, withCookie("never-issued"))).status).toBe(401);
   });
 
   describe("logout", () => {
-    async function loginTokens(email = "owner@nailpalace.test") {
-      const res = await login(email);
-      return ((await res.json()) as { data: { access_token: string; refresh_token: string } }).data;
-    }
-
     test("POST /auth/logout answers 204 and the token can no longer be refreshed", async () => {
       const { refresh_token } = await loginTokens();
-      const res = await post("/auth/logout", { refresh_token });
+      const res = await post("/auth/logout", {}, withCookie(refresh_token));
       expect(res.status).toBe(204);
       expect(await res.text()).toBe("");
 
-      expect((await post("/auth/refresh", { refresh_token })).status).toBe(401);
+      expect((await post("/auth/refresh", {}, withCookie(refresh_token))).status).toBe(401);
       expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(0);
     });
 
     test("logout needs no access token", async () => {
       const { refresh_token } = await loginTokens();
-      const res = await post("/auth/logout", { refresh_token }, { authorization: "Bearer expired.or.invalid" });
+      const res = await post(
+        "/auth/logout",
+        {},
+        withCookie(refresh_token, { authorization: "Bearer expired.or.invalid" }),
+      );
       expect(res.status).toBe(204);
     });
 
     test("only the given session ends; another device stays logged in", async () => {
       const phone = await loginTokens();
       const laptop = await loginTokens();
-      await post("/auth/logout", { refresh_token: phone.refresh_token });
+      await post("/auth/logout", {}, withCookie(phone.refresh_token));
 
-      expect((await post("/auth/refresh", { refresh_token: laptop.refresh_token })).status).toBe(200);
+      expect((await post("/auth/refresh", {}, withCookie(laptop.refresh_token))).status).toBe(200);
       expect(await prisma.refreshToken.count({ where: { revokedAt: null } })).toBe(1);
     });
 
     test("is idempotent: unknown, malformed and already-revoked tokens all answer 204", async () => {
       const { refresh_token } = await loginTokens();
-      expect((await post("/auth/logout", { refresh_token })).status).toBe(204);
-      expect((await post("/auth/logout", { refresh_token })).status).toBe(204);
-      expect((await post("/auth/logout", { refresh_token: "never-issued" })).status).toBe(204);
+      expect((await post("/auth/logout", {}, withCookie(refresh_token))).status).toBe(204);
+      expect((await post("/auth/logout", {}, withCookie(refresh_token))).status).toBe(204);
+      expect((await post("/auth/logout", {}, withCookie("never-issued"))).status).toBe(204);
     });
 
     test("logging out twice does not revoke the admin's other sessions", async () => {
       const first = await loginTokens();
       const second = await loginTokens();
-      await post("/auth/logout", { refresh_token: first.refresh_token });
-      await post("/auth/logout", { refresh_token: first.refresh_token });
+      await post("/auth/logout", {}, withCookie(first.refresh_token));
+      await post("/auth/logout", {}, withCookie(first.refresh_token));
 
-      expect((await post("/auth/refresh", { refresh_token: second.refresh_token })).status).toBe(200);
+      expect((await post("/auth/refresh", {}, withCookie(second.refresh_token))).status).toBe(200);
     });
 
-    test("a missing refresh_token is a 422", async () => {
-      const res = await post("/auth/logout", {});
-      expect(res.status).toBe(422);
-      expect(await res.json()).toMatchObject({ error: { code: "VALIDATION_ERROR" } });
+    test("clears the cookie, and a missing cookie is still a 204", async () => {
+      const { refresh_token } = await loginTokens();
+      const res = await post("/auth/logout", {}, withCookie(refresh_token));
+      const cleared = res.headers.getSetCookie().find((c) => c.startsWith("refresh_token="));
+      expect(cleared).toContain("Path=/api/v1/auth");
+      expect(cleared).toMatch(/Expires=Thu, 01 Jan 1970|Max-Age=0/);
+      expect((await post("/auth/logout", {})).status).toBe(204);
     });
   });
 
@@ -235,17 +336,17 @@ suite("admin auth", () => {
           role: "staff",
         },
       });
-      const a = ((await (await login()).json()) as { data: { access_token: string; refresh_token: string } }).data;
-      const b = ((await (await login()).json()) as { data: { refresh_token: string } }).data;
-      const staff = ((await (await login("staff@nailpalace.test")).json()) as { data: { refresh_token: string } }).data;
+      const a = await loginTokens();
+      const b = await loginTokens();
+      const staff = await loginTokens("staff@nailpalace.test");
 
       const res = await post("/auth/logout-all", {}, { authorization: `Bearer ${a.access_token}` });
       expect(res.status).toBe(204);
 
       expect(await prisma.refreshToken.count({ where: { adminId: adminId, revokedAt: null } })).toBe(0);
       expect(await prisma.refreshToken.count({ where: { adminId: other.id, revokedAt: null } })).toBe(1);
-      expect((await post("/auth/refresh", { refresh_token: b.refresh_token })).status).toBe(401);
-      expect((await post("/auth/refresh", { refresh_token: staff.refresh_token })).status).toBe(200);
+      expect((await post("/auth/refresh", {}, withCookie(b.refresh_token))).status).toBe(401);
+      expect((await post("/auth/refresh", {}, withCookie(staff.refresh_token))).status).toBe(200);
     });
 
     test("the current access token keeps working until it expires (stateless JWT)", async () => {

@@ -7,10 +7,13 @@ export const loginSchemas = {
   }),
 };
 
+/** The refresh token may come in the body (clients that store it themselves) or from the cookie. */
 export const refreshSchemas = {
-  body: z.object({
-    refresh_token: z.string().min(1).max(512),
-  }),
+  body: z
+    .object({
+      refresh_token: z.string().min(1).max(512).optional(),
+    })
+    .default({}),
 };
 
 export const logoutSchemas = refreshSchemas;
