@@ -71,7 +71,8 @@ export async function login(email: string, password: string, meta: ClientMeta): 
  * issued. Presenting an already-used token is treated as theft and revokes
  * every session of that admin.
  */
-export async function refresh(presentedToken: string, meta: ClientMeta): Promise<TokenPair> {
+export async function refresh(presentedToken: string | undefined, meta: ClientMeta): Promise<TokenPair> {
+  if (!presentedToken) throw AppError.unauthorized(INVALID_REFRESH);
   const now = new Date();
   const stored = await findRefreshTokenByHash(hashRefreshToken(presentedToken));
   if (!stored) throw AppError.unauthorized(INVALID_REFRESH);
@@ -110,7 +111,8 @@ export async function refresh(presentedToken: string, meta: ClientMeta): Promise
  * which tokens exist. Unlike `refresh`, presenting a revoked token here is
  * not treated as theft and does not touch the admin's other sessions.
  */
-export async function logout(presentedToken: string): Promise<void> {
+export async function logout(presentedToken: string | undefined): Promise<void> {
+  if (!presentedToken) return;
   await revokeRefreshTokenByHash(hashRefreshToken(presentedToken), new Date());
 }
 

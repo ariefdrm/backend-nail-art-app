@@ -107,6 +107,17 @@ describe("parseEnv", () => {
     expect(parseEnv({ ...valid, ACCESS_TOKEN_TTL: "30m", REFRESH_TOKEN_TTL: "14d" }).REFRESH_TOKEN_TTL).toBe("14d");
   });
 
+  test("the refresh cookie is SameSite=lax by default and accepts only lax, strict or none", () => {
+    expect(parseEnv(valid).AUTH_COOKIE_SAMESITE).toBe("lax");
+    expect(parseEnv({ ...valid, AUTH_COOKIE_SAMESITE: "none" }).AUTH_COOKIE_SAMESITE).toBe("none");
+    expect(() => parseEnv({ ...valid, AUTH_COOKIE_SAMESITE: "bogus" })).toThrow(EnvError);
+  });
+
+  test("refuses a wildcard CORS origin, since cookies make CORS credentialed", () => {
+    expect(() => parseEnv({ ...valid, CORS_ORIGINS: "*" })).toThrow(EnvError);
+    expect(() => parseEnv({ ...valid, CORS_ORIGINS: "https://a.test,*" })).toThrow(EnvError);
+  });
+
   test("rejects an invalid port", () => {
     expect(() => parseEnv({ ...valid, PORT: "99999" })).toThrow(EnvError);
   });

@@ -162,6 +162,18 @@ describe("refresh", () => {
   });
 });
 
+describe("missing cookie", () => {
+  test("refresh without a token is a 401 and touches nothing", async () => {
+    expect(await code(refresh(undefined, {}))).toBe("UNAUTHORIZED");
+    expect(calls.revokeAll).toHaveLength(0);
+  });
+
+  test("logout without a token is a no-op", async () => {
+    await logout(undefined);
+    expect(calls.revokedHashes).toHaveLength(0);
+  });
+});
+
 describe("logout", () => {
   test("revokes only the presented token, by its hash", async () => {
     await logout("raw-token-to-revoke");

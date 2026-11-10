@@ -24,6 +24,9 @@ const baseSchema = z.object({
         .map((origin) => origin.trim())
         .filter(Boolean),
     ),
+  // Refresh token cookie. "lax"/"strict" need the frontend and the API on the same site (e.g. app.example.com and
+  // api.example.com); use "none" (forces Secure) only when they are on different sites.
+  AUTH_COOKIE_SAMESITE: z.enum(["lax", "strict", "none"]).default("lax"),
   TZ: z.string().min(1).default("Asia/Jakarta"),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   SLOT_STEP_MINUTES: z.coerce.number().int().positive().default(30),
@@ -65,6 +68,10 @@ const VAPID_KEYS = ["VAPID_PUBLIC_KEY", "VAPID_PRIVATE_KEY", "VAPID_SUBJECT"] as
 
 const envSchema = baseSchema
   .superRefine((env, ctx) => {
+    // The refresh cookie makes CORS credentialed, where a wildcard origin would let any site call the API.
+    if (env.CORS_ORIGINS.includes("*")) {
+      ctx.addIssue({ code: "custom", path: ["CORS_ORIGINS"], message: 'must list explicit origins, not "*"' });
+    }
     // A half-configured sender would silently never send, so refuse to start instead.
     const set = VAPID_KEYS.filter((key) => env[key] !== undefined);
     if (set.length === 0 || set.length === VAPID_KEYS.length) return;

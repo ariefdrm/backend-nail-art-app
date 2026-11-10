@@ -26,6 +26,11 @@ suite("API contract", () => {
   let token: string;
   let refreshToken: string;
 
+  /** The refresh token the server set as a cookie. */
+  const cookieToken = (res: Awaited<ReturnType<typeof fetch>>): string =>
+    /^refresh_token=([^;]*)/.exec(res.headers.getSetCookie().find((c) => c.startsWith("refresh_token=")) ?? "")?.[1] ??
+    "";
+
   const anon = () => api(server.base);
   const admin = () => api(server.base, token);
 
@@ -62,14 +67,10 @@ suite("API contract", () => {
     await prisma.admin.create({
       data: { email: EMAIL, passwordHash: await hashPassword(PASSWORD), name: "Owner", role: "owner" },
     });
-    const login = await expectContract(
-      await anon().post("/auth/login", { email: EMAIL, password: PASSWORD }),
-      "POST",
-      "/auth/login",
-      200,
-    );
+    const loginRes = await anon().post("/auth/login", { email: EMAIL, password: PASSWORD });
+    const login = await expectContract(loginRes, "POST", "/auth/login", 200);
     token = login["data"].access_token;
-    refreshToken = login["data"].refresh_token;
+    refreshToken = cookieToken(loginRes);
   });
 
   afterEach(() => {
@@ -173,15 +174,22 @@ suite("API contract", () => {
     await expectContract(await admin().get("/auth/me"), "GET", "/auth/me", 200);
     await expectContract(await anon().get("/auth/me"), "GET", "/auth/me", 401);
 
-    const refreshed = await expectContract(
-      await anon().post("/auth/refresh", { refresh_token: refreshToken }),
+    const refreshRes = await anon().post("/auth/refresh", {}, { cookie: `refresh_token=${refreshToken}` });
+    await expectContract(refreshRes, "POST", "/auth/refresh", 200);
+    await expectContract(
+      await anon().post("/auth/refresh", {}, { cookie: "refresh_token=nope" }),
       "POST",
       "/auth/refresh",
-      200,
+      401,
     );
-    await expectContract(await anon().post("/auth/refresh", { refresh_token: "nope" }), "POST", "/auth/refresh", 401);
     await expectContract(
-      await anon().post("/auth/logout", { refresh_token: refreshed["data"].refresh_token }),
+      await anon().post("/auth/refresh", {}, { origin: "https://evil.test" }),
+      "POST",
+      "/auth/refresh",
+      403,
+    );
+    await expectContract(
+      await anon().post("/auth/logout", {}, { cookie: `refresh_token=${cookieToken(refreshRes)}` }),
       "POST",
       "/auth/logout",
       204,
