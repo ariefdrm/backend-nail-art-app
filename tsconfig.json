@@ -16,6 +16,6 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "tests", "prisma.config.ts", "prisma/seed.ts"],
+  "include": ["src", "tests", "prisma.config.ts", "prisma/seed.ts", "prisma/seed-demo.ts"],
   "exclude": ["node_modules", "dist"]
 }
