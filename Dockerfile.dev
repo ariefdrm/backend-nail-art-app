@@ -1,5 +1,7 @@
 # Development image: Bun runs TypeScript directly with hot reload.
-FROM docker.io/oven/bun:1.4.3-alpine
+# Debian (glibc), not Alpine: node_modules is bind-mounted and shared with the host (Ubuntu, glibc),
+# so native packages such as @node-rs/argon2 must be built for the same libc on both sides.
+FROM docker.io/oven/bun:1.4.3-debian
 
 WORKDIR /app
 
@@ -10,5 +12,6 @@ COPY . .
 
 EXPOSE 3000
 
-# Generates the Prisma client, runs `prisma migrate dev`, then starts `bun --watch`.
+# Installs dependencies into the bind-mounted node_modules, generates the Prisma client,
+# applies migrations, then starts `bun --watch`.
 ENTRYPOINT [ "sh", "scripts/dev-entrypoint.sh" ]
