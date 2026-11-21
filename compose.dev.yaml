@@ -19,7 +19,8 @@ services:
     volumes:
       # :Z relabels for SELinux (Podman); with rootless Podman also run with --userns=keep-id
       - .:/app:Z
-      - /app/node_modules
+      # Shared with the host so the editor sees the dependencies (filled by scripts/dev-entrypoint.sh)
+      - ./node_modules:/app/node_modules
     depends_on:
       db:
         condition: service_healthy
