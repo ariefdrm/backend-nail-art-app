@@ -1,0 +1,5378 @@
+[
+  {
+    "booking_code": "NP-20260304-X69D",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-04T11:11:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260304-X69D",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-04T15:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260401-WUQ4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-29T18:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260401-WUQ4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-01T19:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260403-5233",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-04T17:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260403-5233",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-03T17:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260404-3VRH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-02T20:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260404-3VRH",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-04T14:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260407-K5DR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-05T09:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260407-K5DR",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-04-05T21:04:07+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20260407-SYMG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-25T19:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260407-SYMG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-07T18:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260408-N8N4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-05T12:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260408-N8N4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-08T15:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260409-TXC2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-08T20:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260409-TXC2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-09T12:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260409-UUKK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-05T09:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260409-UUKK",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-09T16:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260410-7XZZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-03-27T10:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260410-7XZZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-10T12:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260411-A6ZN",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-08T13:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260411-A6ZN",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-11T18:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260417-QCP7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-03T15:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260417-QCP7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-17T16:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260420-6W7S",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-17T20:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260420-6W7S",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-04-20T16:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260420-S6DQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-17T17:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260420-S6DQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-20T15:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260421-J6QV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-19T16:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260421-J6QV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-21T16:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260422-T4AV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-22T13:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260422-T4AV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-22T16:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260423-5B9Z",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-16T10:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260423-5B9Z",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-23T16:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260423-DZWQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-16T19:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260423-DZWQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-23T20:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260424-7H67",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-24T12:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260424-7H67",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-04-24T12:37:06+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260425-RYSZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-20T19:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260425-RYSZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-25T12:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260425-TZS4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-20T19:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260425-TZS4",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-04-25T17:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260425-UPYK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-24T12:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260425-UPYK",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-25T17:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260427-GK5J",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-17T15:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260427-GK5J",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-27T16:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260428-EX7W",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-26T08:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260428-EX7W",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-28T16:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260429-8SN8",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-25T16:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260429-8SN8",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-04-29T17:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260430-UY8B",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-20T15:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260430-UY8B",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-30T16:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260430-ZSRT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-30T12:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260430-ZSRT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-30T15:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260501-R84D",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-24T13:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260501-R84D",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-01T12:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260501-Z49T",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-29T19:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260501-Z49T",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-01T17:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-89F9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-30T15:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-89F9",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-02T12:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-NDG2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-02T15:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-NDG2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-02T17:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-R8AC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-29T10:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-R8AC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-02T19:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-S9CX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-01T20:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260502-S9CX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-02T15:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260504-VU85",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-04T12:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260504-VU85",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-04T16:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260505-4GHD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-05T14:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260505-4GHD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-05T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260507-3U9J",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-23T08:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260507-3U9J",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-07T13:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260508-XNEA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-07T20:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260508-XNEA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-08T19:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260509-VV38",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-05T19:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260509-VV38",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-09T18:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-29EU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-05T19:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-29EU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-12T15:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-CQYF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-07T12:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-CQYF",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-05-12T18:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-VE9W",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-11T16:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260512-VE9W",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-12T18:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260513-KTQP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-29T18:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260513-KTQP",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-13T14:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260515-4GPA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-13T16:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260515-4GPA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-15T15:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260516-7CB5",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T12:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260516-7CB5",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T16:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260516-N839",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-15T19:01:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260516-N839",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T18:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-EVTG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-10T10:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-EVTG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-20T19:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-S9RV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-18T10:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-S9RV",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-05-20T16:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-SMYK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-15T16:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260520-SMYK",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-05-18T06:08:53+07:00",
+    "reason": "Batal, sakit"
+  },
+  {
+    "booking_code": "NP-20260521-MRWH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T18:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260521-MRWH",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-21T17:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260521-PBGX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-06T17:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260521-PBGX",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T18:04:42+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260522-SZY7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-19T11:13:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260522-SZY7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-22T16:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-6CPK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-19T15:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-6CPK",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-05-20T23:53:32+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260523-JRS3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-22T10:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-JRS3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-23T19:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-XTG4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-16T10:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-XTG4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-23T12:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-Y6FP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-22T10:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260523-Y6FP",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-05-22T21:33:47+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260525-6GHA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-23T09:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260525-6GHA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-25T18:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260525-DT4T",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-25T13:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260525-DT4T",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-25T17:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260525-RFMT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-22T12:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260525-RFMT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-25T12:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-85BR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-21T17:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-85BR",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-05-28T17:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-9AN6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-18T11:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-9AN6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-28T18:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-XMQU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-14T15:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260528-XMQU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-28T13:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-DWZJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-29T14:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-DWZJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-29T17:01:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-UYV4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-29T09:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-UYV4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-29T12:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-V2GV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-26T20:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260529-V2GV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-29T19:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-B3N2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-28T19:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-B3N2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-30T17:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-D9QF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-20T12:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-D9QF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-30T15:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-JYUE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-27T17:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260530-JYUE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-30T12:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260601-5CK8",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-01T15:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260601-5CK8",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-01T17:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260601-XDTM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-01T09:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260601-XDTM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-01T12:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-AKDD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-28T12:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-AKDD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T19:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-JJCA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T09:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-JJCA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T11:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-Q9AB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-26T12:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260602-Q9AB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T16:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-86NM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T17:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-86NM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-03T13:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-MWGW",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-31T14:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-MWGW",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-03T19:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-XXZW",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-24T18:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260603-XXZW",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-03T14:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260604-Y7DY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-25T15:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260604-Y7DY",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-04T16:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260605-Y8JP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-04-06T16:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260605-Y8JP",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-05T16:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260606-B2ZQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-05-27T14:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260606-B2ZQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-06T18:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260608-ZMK2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-08T12:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260608-ZMK2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-08T16:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260609-3QMV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-08T13:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260609-3QMV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-09T15:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-9MGU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T09:18:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-9MGU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T12:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-FWDD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T14:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-FWDD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T16:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-TNWX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T16:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260610-TNWX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T19:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-AQVE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-06T13:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-AQVE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T12:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-H3EF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T14:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-H3EF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T18:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-PPH3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T10:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260611-PPH3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T15:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260612-4EHA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-12T14:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260612-4EHA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-12T17:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260612-Z8UY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-02T19:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260612-Z8UY",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-06-08T17:26:41+07:00",
+    "reason": "Batal, sakit"
+  },
+  {
+    "booking_code": "NP-20260613-9XVC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-12T10:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260613-9XVC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-13T15:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260613-BX69",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T17:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260613-BX69",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-13T19:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260613-USQJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-10T12:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260613-USQJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-13T12:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-BHYT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-17T15:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-BHYT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-17T17:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-MXT3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-16T12:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-MXT3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-17T12:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-Y5AX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-13T08:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260617-Y5AX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-17T15:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260618-5JM6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T13:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260618-5JM6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T17:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260618-ZN94",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T12:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260618-ZN94",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T15:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260619-74YV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-05T16:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260619-74YV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-19T17:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260619-NRXR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T14:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260619-NRXR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-19T16:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-9N59",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-19T08:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-9N59",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-20T17:11:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-FXQE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-13T11:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-FXQE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-20T13:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-Q4BX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-19T19:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260620-Q4BX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-20T18:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260622-KNU2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-22T12:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260622-KNU2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-22T14:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260623-Z2D7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T10:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260623-Z2D7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-23T15:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260624-G66Z",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-22T17:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260624-G66Z",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-24T16:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-9T4X",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-23T17:11:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-9T4X",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-25T15:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-9TDC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-11T10:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-9TDC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-25T17:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-VB9P",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-25T10:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260625-VB9P",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-25T12:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260626-PMUJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-24T20:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260626-PMUJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-26T17:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260627-2VY4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T07:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260627-2VY4",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T08:08:11+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260627-N437",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-22T15:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260627-N437",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T19:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260627-XA6W",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-23T20:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260627-XA6W",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-06-26T09:36:45+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260629-2TAF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-19T10:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260629-2TAF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-29T12:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260629-EFA7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-24T17:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260629-EFA7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-29T16:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260629-Y7ZX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T16:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260629-Y7ZX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-29T18:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260630-HEDM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-23T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260630-HEDM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-30T20:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260630-NKGU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-25T09:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260630-NKGU",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T00:40:24+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20260701-652C",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-29T09:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260701-652C",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-01T12:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260701-DUTH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T16:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260701-DUTH",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-06-30T23:21:44+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20260701-WKXD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-21T12:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260701-WKXD",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-07-01T15:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260702-5R8V",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-30T19:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260702-5R8V",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-07-02T14:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260702-C3C4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-18T09:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260702-C3C4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-02T19:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260703-KJ3Y",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-03T14:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260703-KJ3Y",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-07-03T16:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-872Y",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-04T15:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-872Y",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-04T18:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-MQTU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-01T10:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-MQTU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-04T15:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-UKNE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-27T13:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260704-UKNE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-04T11:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260706-MFG4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-05T14:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260706-MFG4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-06T15:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260707-54VP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-05T14:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260707-54VP",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T17:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260707-6Z8N",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-07T11:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260707-6Z8N",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T11:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260709-2VY2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-08T15:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260709-2VY2",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-07-08T22:19:27+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260709-M5DM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-02T12:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260709-M5DM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-09T19:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260710-JEUX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-10T17:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260710-JEUX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-10T19:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-AUZM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-10T14:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-AUZM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T17:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-DY38",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T13:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-DY38",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-07-09T22:42:05+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260711-KVRX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T12:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-KVRX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T16:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-MEU3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T09:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260711-MEU3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T14:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260713-GQNX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T16:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260713-GQNX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-13T17:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260714-8P2F",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-04T09:01:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260714-8P2F",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-14T12:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260714-UZJE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-09T12:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260714-UZJE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-14T15:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260715-XWQ5",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-15T13:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260715-XWQ5",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-15T16:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260716-MAB3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-02T16:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260716-MAB3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-16T18:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260717-DY69",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-13T18:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260717-DY69",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-17T18:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-95Y3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T18:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-95Y3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-18T19:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-A3G4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T13:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-A3G4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-18T16:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-WXNC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-15T12:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260718-WXNC",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-07-17T10:50:41+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260721-H9RG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T13:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260721-H9RG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-21T17:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260721-U3AD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-07T11:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260721-U3AD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-21T14:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260722-FZKC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-22T15:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260722-FZKC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-22T19:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260723-DAJ9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-16T10:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260723-DAJ9",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-23T18:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260723-ZTYV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-20T15:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260723-ZTYV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-23T12:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260724-FU2T",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-24T11:11:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260724-FU2T",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-24T17:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-4NJ5",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-21T16:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-4NJ5",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T19:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-BXSE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-24T12:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-BXSE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T16:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-WSJS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-11T13:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-WSJS",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T14:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-YYMM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T09:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260725-YYMM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T11:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260727-GVB5",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-27T15:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260727-GVB5",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-27T19:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260727-NJT5",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-20T11:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260727-NJT5",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-27T15:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260728-22XY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-21T09:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260728-22XY",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-28T16:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260728-U36K",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-24T19:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260728-U36K",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-28T20:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260729-C6TT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-22T18:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260729-C6TT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-29T16:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260729-SMYM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-27T13:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260729-SMYM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-29T17:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-6PXD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T13:13:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-6PXD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T19:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-9996",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T12:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-9996",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T15:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-CU64",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T09:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260730-CU64",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T12:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260731-6TET",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-17T16:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260731-6TET",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-07-31T16:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260731-ARHG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-29T11:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260731-ARHG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-31T15:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-36ZS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-25T12:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-36ZS",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-01T13:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-EWUZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-28T11:13:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-EWUZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-01T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-PUW2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-18T19:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-PUW2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-01T17:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-Y56M",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-28T17:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260801-Y56M",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-01T15:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-4K95",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-03T16:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-4K95",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-03T19:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-B4Y6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-27T17:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-B4Y6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-03T15:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-EE45",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-02T20:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260803-EE45",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-08-03T11:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-8U9A",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T16:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-8U9A",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T19:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-J9UZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T10:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-J9UZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T12:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-RFFZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T10:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-RFFZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T14:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-YEQX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T14:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260804-YEQX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-04T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260805-TN7U",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-22T11:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260805-TN7U",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-05T15:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260805-Y2QE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-02T15:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260805-Y2QE",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-05T19:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260806-DNV6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-06T15:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260806-DNV6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-06T18:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260806-ZTBS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-07-30T10:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260806-ZTBS",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-06T15:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-3AFT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-06-08T13:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-3AFT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-07T14:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-HY9S",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-05T12:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-HY9S",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-07T19:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-QYQG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-06T09:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260807-QYQG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-07T16:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-2R89",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T14:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-2R89",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T16:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-6NZG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-05T15:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-6NZG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T14:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-FU6Q",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-05T14:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-FU6Q",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T12:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-SC77",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-03T18:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260808-SC77",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T18:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260810-GD3C",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T16:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260810-GD3C",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T19:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260811-GXQG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T10:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260811-GXQG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-11T19:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260811-YWZF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T20:11:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260811-YWZF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-11T11:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260813-K2NP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T12:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260813-K2NP",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-13T18:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260813-UEX7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-11T08:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260813-UEX7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-13T16:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-ED4E",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-08T16:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-ED4E",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-15T15:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-NRPW",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T11:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-NRPW",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-15T18:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-TR7J",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-15T09:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260815-TR7J",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-15T12:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260818-5T9D",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-18T17:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260818-5T9D",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-18T19:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260818-B8ZY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-13T18:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260818-B8ZY",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-08-16T18:17:28+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260819-BCVB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-19T08:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260819-BCVB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-19T11:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-4V9R",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-16T19:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-4V9R",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-20T17:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-8RVD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-13T17:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-8RVD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-20T11:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-UAE7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-10T16:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260820-UAE7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-20T18:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260821-6JAB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-21T15:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260821-6JAB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-21T18:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260821-ADPC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-20T10:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260821-ADPC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-21T15:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260822-EK9S",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-15T20:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260822-EK9S",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-22T16:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260822-WTD2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-17T20:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260822-WTD2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-22T15:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260824-Z7RZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-24T15:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260824-Z7RZ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-24T17:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-BSHW",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-25T15:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-BSHW",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-26T12:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-CRRN",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-18T19:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-CRRN",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-26T17:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-HT66",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-24T14:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260826-HT66",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-26T18:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-G3DV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-26T15:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-G3DV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-27T12:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-P2BT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-20T11:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-P2BT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-27T18:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-PSTA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-25T18:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260827-PSTA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-27T15:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260829-3Q62",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-22T12:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260829-3Q62",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-29T20:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260829-KH6T",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-27T10:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260829-KH6T",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-29T17:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260831-NW6T",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-31T11:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260831-NW6T",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-31T16:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260901-CUFR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-30T18:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260901-CUFR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-01T19:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260901-DVN4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-31T17:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260901-DVN4",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-01T15:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260902-4D4Q",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-26T09:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260902-4D4Q",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-08-29T22:03:26+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260902-J8NC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-01T16:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260902-J8NC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-02T17:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260904-88BG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T14:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260904-88BG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T16:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260904-UD7R",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-03T20:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260904-UD7R",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T19:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-BN97",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-05T09:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-BN97",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-05T13:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-FXCJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-22T09:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-FXCJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-05T18:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-X8B9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T16:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260905-X8B9",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-05T10:57:04+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260907-KWXB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-08-31T08:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260907-KWXB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-07T17:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260910-7Z2U",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-09T09:13:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260910-7Z2U",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-09T19:43:52+07:00",
+    "reason": "Batal, no respon"
+  },
+  {
+    "booking_code": "NP-20260910-BJ34",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-02T11:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260910-BJ34",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-09-10T10:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260911-TVUH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T18:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260911-TVUH",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-09-11T15:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-CHBA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-11T15:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-CHBA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-12T12:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-UNHU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-07T08:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-UNHU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-12T19:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-XXSB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-05T11:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260912-XXSB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-12T16:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260918-UCRY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-04T14:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260918-UCRY",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-18T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-6T3H",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-16T17:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-6T3H",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T15:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-ANC2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-16T09:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-ANC2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T12:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-EY4M",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-12T19:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-EY4M",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T16:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-FHFU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-12T11:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-FHFU",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-14T21:23:30+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20260919-UDEA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-16T16:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260919-UDEA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T19:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260922-9NC2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-18T16:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260922-9NC2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-22T19:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260922-SXQY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-15T19:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260922-SXQY",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T22:43:22+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20260925-9KWY",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-25T17:18:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260925-9KWY",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-25T20:18:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260925-XJHD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-25T15:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260925-XJHD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-25T17:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260926-2UAA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-22T13:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260926-2UAA",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-24T10:07:57+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20260926-JXXF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-19T14:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260926-JXXF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-26T11:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260928-FZRV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-23T20:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260928-FZRV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-28T12:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260928-YS39",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-27T12:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260928-YS39",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-28T16:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-9JAR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-27T14:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-9JAR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-29T20:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-9T8Y",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-27T18:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-9T8Y",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-29T12:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-EAWT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-26T09:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260929-EAWT",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-09-27T18:40:00+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20260930-9EPX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-27T13:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260930-9EPX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-30T16:25:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260930-RVDD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-16T08:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20260930-RVDD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-30T19:04:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261001-R4C6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-01T14:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261001-R4C6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-01T17:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261002-R2WQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-29T12:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261002-R2WQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-02T20:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261002-R3R2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-29T12:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261002-R3R2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-02T15:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261003-6M5F",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-30T13:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261003-6M5F",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-03T11:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261003-UAGG",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-02T18:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261003-UAGG",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-03T16:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261005-3PH6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-01T20:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261005-3PH6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-05T19:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261006-F4DH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-05T13:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261006-F4DH",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-06T16:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261007-WMXU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-07T13:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261007-WMXU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-07T16:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261008-WUK8",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-24T11:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261008-WUK8",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-10-03T02:15:48+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20261009-TKB2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-09T11:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261009-TKB2",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-10-09T13:24:30+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20261010-BWK2",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-09T19:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-BWK2",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T17:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-ERPX",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-30T17:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-ERPX",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T15:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-KF6Q",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-26T11:20:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-KF6Q",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T13:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-TMUK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-09T18:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261010-TMUK",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T13:28:14+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20261012-4Y59",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-28T12:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261012-4Y59",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-12T12:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261012-N5N3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-07T16:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261012-N5N3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-12T17:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261013-HAQT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-29T16:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261013-HAQT",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T12:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261013-W78N",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T14:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261013-W78N",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T18:36:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261014-VPN6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T17:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261014-VPN6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-14T19:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261015-JN68",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-08T19:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261015-JN68",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-15T19:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261016-HGFS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T09:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261016-HGFS",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-16T15:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261016-S5FQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-16T13:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261016-S5FQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-16T18:40:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-GPDR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-15T09:59:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-GPDR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-17T11:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-NAUC",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-07T11:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-NAUC",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-17T14:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-X7U7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T19:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261017-X7U7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-17T20:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261020-XT7X",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-18T13:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261020-XT7X",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-20T16:47:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261022-HMK7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-20T15:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261022-HMK7",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-10-22T15:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261023-7C3M",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-09-10T09:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261023-7C3M",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-23T16:29:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261023-RXQD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-16T10:34:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261023-RXQD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-23T18:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261024-55G6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-19T09:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261024-55G6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-24T15:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261024-MWFD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-24T17:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261024-MWFD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-24T18:46:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261026-HERR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-26T13:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261026-HERR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-26T18:17:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261027-4Q39",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-26T17:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261027-4Q39",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-27T15:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261027-AYRQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-27T11:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261027-AYRQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-27T18:43:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261028-9FA6",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-24T13:58:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261028-9FA6",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T18:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261028-DBQF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T12:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261028-DBQF",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T13:06:32+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20261028-SBRS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-24T15:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261028-SBRS",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T11:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261029-W4KJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-29T15:54:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261029-W4KJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-29T17:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261030-7XCV",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-29T15:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261030-7XCV",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-30T20:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261030-ZHN8",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T09:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261030-ZHN8",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-10-30T13:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-H25W",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-31T12:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-H25W",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-31T16:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-JTRK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T18:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-JTRK",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-31T19:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-MQ6W",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-30T12:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-MQ6W",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-31T12:49:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-TQJB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-17T11:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261031-TQJB",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-31T18:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261102-WMZM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-30T18:15:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261102-WMZM",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-02T15:26:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261103-D3MQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-01T08:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261103-D3MQ",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-02T04:21:52+07:00",
+    "reason": "Batal, no respon"
+  },
+  {
+    "booking_code": "NP-20261103-VPNA",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-27T13:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261103-VPNA",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-03T18:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-2A33",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T09:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-2A33",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T11:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-UTHQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-28T20:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-UTHQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T15:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-XWBK",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T14:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261104-XWBK",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T17:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261105-BCR9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-05T16:03:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261105-BCR9",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-05T19:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261106-MF34",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-06T12:48:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261106-MF34",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-06T15:42:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-JSX8",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T20:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-JSX8",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-07T14:39:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-KUUD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-07T12:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-KUUD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-07T18:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-NGG3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-07T09:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261107-NGG3",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-07T12:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261109-4AQR",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T20:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261109-4AQR",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-09T18:41:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261109-BXXM",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-06T15:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261109-BXXM",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-09T03:20:55+07:00",
+    "reason": "Cancel H-1"
+  },
+  {
+    "booking_code": "NP-20261110-5QUQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-10T14:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261110-5QUQ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-10T17:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261110-GR9Y",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-03T12:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261110-GR9Y",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-10T14:06:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261111-64MU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-06T20:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261111-64MU",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-11T12:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261111-QR5R",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-04T18:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261111-QR5R",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-11T14:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261113-ZYJD",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-06T10:02:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261113-ZYJD",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-13T19:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261114-JRT3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-02T16:12:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261114-JRT3",
+    "from_status": "confirmed",
+    "to_status": "no_show",
+    "changed_by": "owner",
+    "changed_at": "2026-11-14T15:09:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261114-ZA2U",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-13T17:32:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261114-ZA2U",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-14T17:05:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261116-34WE",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-15T11:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261116-34WE",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T03:40:56+07:00",
+    "reason": "Batal, sakit"
+  },
+  {
+    "booking_code": "NP-20261116-TZ3D",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T13:57:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261116-TZ3D",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T17:28:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-8BC7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T12:10:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-8BC7",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-17T16:22:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-GA9A",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-15T18:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-GA9A",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-17T18:14:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-VZWF",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-17T07:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261117-VZWF",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-17T12:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-5MDP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-12T11:55:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-5MDP",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-19T15:38:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-WD8K",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-15T18:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-WD8K",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-19T18:07:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-ZFPJ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-09T19:37:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261119-ZFPJ",
+    "from_status": "confirmed",
+    "to_status": "completed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-19T12:33:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261121-2KEP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-20T08:27:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261121-B5DH",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T17:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261121-NBPB",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-20T19:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261121-XST9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T11:19:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261123-PBRB",
+    "from_status": null,
+    "to_status": "pending",
+    "changed_by": null,
+    "changed_at": "2026-11-20T22:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261124-BCG6",
+    "from_status": null,
+    "to_status": "pending",
+    "changed_by": null,
+    "changed_at": "2026-11-20T18:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261124-UA3D",
+    "from_status": null,
+    "to_status": "pending",
+    "changed_by": null,
+    "changed_at": "2026-11-20T18:00:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261125-4GTP",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-11T10:16:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261125-CJU7",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-21T05:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261126-5PTZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T12:53:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261126-GS47",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-21T01:24:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261127-KJ2X",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-20T16:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261127-KVPN",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-17T08:21:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261127-KVPN",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-26T18:30:20+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20261128-AW38",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-14T09:51:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261128-BVXU",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-21T04:45:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261128-BVXU",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-27T10:29:36+07:00",
+    "reason": "Dijadwalkan ulang atas permintaan customer"
+  },
+  {
+    "booking_code": "NP-20261128-F3T4",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-14T08:30:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261128-F3T4",
+    "from_status": "confirmed",
+    "to_status": "cancelled",
+    "changed_by": "owner",
+    "changed_at": "2026-11-18T13:31:29+07:00",
+    "reason": "Batal, ganti jadwal minggu dpn"
+  },
+  {
+    "booking_code": "NP-20261128-FAMQ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-18T15:50:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261130-ZP24",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-16T08:52:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261201-CKCZ",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-21T05:08:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261203-5CHT",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-19T15:56:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261204-P9MS",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-20T13:44:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261205-KNW9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-21T06:31:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261209-M5X3",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-10T18:23:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261212-BKVW",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-10-13T20:35:00+07:00",
+    "reason": null
+  },
+  {
+    "booking_code": "NP-20261214-DMT9",
+    "from_status": null,
+    "to_status": "confirmed",
+    "changed_by": "owner",
+    "changed_at": "2026-11-20T12:00:00+07:00",
+    "reason": null
+  }
+]

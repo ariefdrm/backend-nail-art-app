@@ -1,0 +1,152 @@
+[
+  {
+    "service_code": "S01",
+    "name": "Manicure Basic",
+    "description": null,
+    "category": "manicure",
+    "price": 60000,
+    "duration_minutes": 60,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S02",
+    "name": "Pedicure Basic",
+    "description": null,
+    "category": "pedicure",
+    "price": 80000,
+    "duration_minutes": 60,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S03",
+    "name": "Manicure + Pedicure",
+    "description": null,
+    "category": "paket",
+    "price": 130000,
+    "duration_minutes": 120,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S04",
+    "name": "Gel Polish Polos",
+    "description": null,
+    "category": "gel_polish",
+    "price": 100000,
+    "duration_minutes": 60,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S05",
+    "name": "Gel Polish + Nail Art Simple",
+    "description": "Kisaran harga Rp150.000–Rp175.000. Tergantung tingkat kerumitan.",
+    "category": "gel_polish",
+    "price": 150000,
+    "duration_minutes": 90,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S06",
+    "name": "Gel Polish + Nail Art Full",
+    "description": "Kisaran harga Rp200.000–Rp260.000. Harga naik jika pakai charm atau 3D.",
+    "category": "nail_art",
+    "price": 200000,
+    "duration_minutes": 120,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S07",
+    "name": "French Tip / Ombre",
+    "description": "Kisaran harga Rp140.000–Rp170.000.",
+    "category": "nail_art",
+    "price": 140000,
+    "duration_minutes": 90,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S08",
+    "name": "Nail Extension (Soft Gel)",
+    "description": "Kisaran harga Rp250.000–Rp290.000. Harga per set, panjang kuku memengaruhi.",
+    "category": "extension",
+    "price": 250000,
+    "duration_minutes": 150,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S09",
+    "name": "Nail Extension + Art",
+    "description": "Kisaran harga Rp320.000–Rp400.000.",
+    "category": "extension",
+    "price": 320000,
+    "duration_minutes": 180,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S10",
+    "name": "Refill Extension",
+    "description": "Kisaran harga Rp180.000–Rp220.000. Maksimal 4 minggu dari extension terakhir.",
+    "category": "extension",
+    "price": 180000,
+    "duration_minutes": 120,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S11",
+    "name": "Cat Eye / Chrome",
+    "description": "Kisaran harga Rp170.000–Rp200.000.",
+    "category": "nail_art",
+    "price": 170000,
+    "duration_minutes": 90,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S12",
+    "name": "Remove Gel",
+    "description": null,
+    "category": "tambahan",
+    "price": 40000,
+    "duration_minutes": 30,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S13",
+    "name": "Remove Extension",
+    "description": "Gratis jika extension dikerjakan di sini.",
+    "category": "tambahan",
+    "price": 60000,
+    "duration_minutes": 45,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S14",
+    "name": "Nail Repair (per kuku)",
+    "description": "Harga per kuku.",
+    "category": "tambahan",
+    "price": 15000,
+    "duration_minutes": 15,
+    "image_url": null,
+    "is_active": true
+  },
+  {
+    "service_code": "S15",
+    "name": "Paket Wisuda / Bridal",
+    "description": "Kisaran harga Rp400.000–Rp550.000. Sudah termasuk remove gel.",
+    "category": "paket",
+    "price": 400000,
+    "duration_minutes": 180,
+    "image_url": null,
+    "is_active": true
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "artist_id": null,
+    "start_at": "2026-04-14T00:00:00+07:00",
+    "end_at": "2026-04-15T00:00:00+07:00",
+    "reason": "Tutup (keperluan pribadi)",
+    "jenis": "pribadi",
+    "status_tanggal": "pasti"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-04-15T00:00:00+07:00",
+    "end_at": "2026-04-16T00:00:00+07:00",
+    "reason": "Tutup (keperluan pribadi)",
+    "jenis": "pribadi",
+    "status_tanggal": "pasti"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-05-14T00:00:00+07:00",
+    "end_at": "2026-05-15T00:00:00+07:00",
+    "reason": "Kenaikan Isa Almasih",
+    "jenis": "libur_nasional",
+    "status_tanggal": "perkiraan"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-05-27T00:00:00+07:00",
+    "end_at": "2026-05-28T00:00:00+07:00",
+    "reason": "Idul Adha",
+    "jenis": "libur_nasional",
+    "status_tanggal": "perkiraan"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-06-16T00:00:00+07:00",
+    "end_at": "2026-06-17T00:00:00+07:00",
+    "reason": "1 Muharram",
+    "jenis": "libur_nasional",
+    "status_tanggal": "perkiraan"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-07-20T00:00:00+07:00",
+    "end_at": "2026-07-21T00:00:00+07:00",
+    "reason": "Tutup (keperluan pribadi)",
+    "jenis": "pribadi",
+    "status_tanggal": "pasti"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-08-17T00:00:00+07:00",
+    "end_at": "2026-08-18T00:00:00+07:00",
+    "reason": "HUT RI",
+    "jenis": "libur_nasional",
+    "status_tanggal": "pasti"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-08-25T00:00:00+07:00",
+    "end_at": "2026-08-26T00:00:00+07:00",
+    "reason": "Maulid Nabi",
+    "jenis": "libur_nasional",
+    "status_tanggal": "perkiraan"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-09-08T00:00:00+07:00",
+    "end_at": "2026-09-09T00:00:00+07:00",
+    "reason": "Tutup (keperluan pribadi)",
+    "jenis": "pribadi",
+    "status_tanggal": "pasti"
+  },
+  {
+    "artist_id": null,
+    "start_at": "2026-09-09T00:00:00+07:00",
+    "end_at": "2026-09-10T00:00:00+07:00",
+    "reason": "Tutup (keperluan pribadi)",
+    "jenis": "pribadi",
+    "status_tanggal": "pasti"
+  }
+]
