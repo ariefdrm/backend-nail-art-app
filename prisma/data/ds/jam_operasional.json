@@ -1,0 +1,65 @@
+[
+  {
+    "day_of_week": 0,
+    "day_name": "Minggu",
+    "is_open": false,
+    "open_time": null,
+    "close_time": null,
+    "break_start": null,
+    "break_end": null
+  },
+  {
+    "day_of_week": 1,
+    "day_name": "Senin",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "12:00",
+    "break_end": "13:00"
+  },
+  {
+    "day_of_week": 2,
+    "day_name": "Selasa",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "12:00",
+    "break_end": "13:00"
+  },
+  {
+    "day_of_week": 3,
+    "day_name": "Rabu",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "12:00",
+    "break_end": "13:00"
+  },
+  {
+    "day_of_week": 4,
+    "day_name": "Kamis",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "12:00",
+    "break_end": "13:00"
+  },
+  {
+    "day_of_week": 5,
+    "day_name": "Jumat",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "11:30",
+    "break_end": "13:00"
+  },
+  {
+    "day_of_week": 6,
+    "day_name": "Sabtu",
+    "is_open": true,
+    "open_time": "10:00",
+    "close_time": "19:00",
+    "break_start": "12:00",
+    "break_end": "13:00"
+  }
+]

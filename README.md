@@ -139,7 +139,7 @@ backend-nail-art-app/
 ├── prisma/                      # Prisma ORM schema and migrations
 │   ├── migrations/
 │   ├── schema.prisma
-│   ├── seed.ts                  # Idempotent seed (admin, artist, closed business hours)
+│   ├── seed.ts                  # Idempotent seed (admin, artist, services and business hours from prisma/data/ds; demo bookings with SEED_DEMO_BOOKINGS=true)
 ├── prisma.config.ts             # Prisma 7 configuration (schema, migrations, datasource)
 ├── PRD_Backend_The_Nail_Palace.md  # Product requirements
 ├── scripts/
